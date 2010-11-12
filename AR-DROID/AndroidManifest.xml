@@ -3,7 +3,7 @@
       package="ar.droid"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+      <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".Test"
                   android:label="@string/app_name">
             <intent-filter>
@@ -11,8 +11,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <uses-library android:name="com.google.android.maps" />
     </application>
-
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
 </manifest> 
