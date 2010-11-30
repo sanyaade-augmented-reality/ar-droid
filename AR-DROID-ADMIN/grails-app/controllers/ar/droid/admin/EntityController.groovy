@@ -1,5 +1,10 @@
 package ar.droid.admin
 
+import java.util.ArrayList;
+import java.util.TreeMap.AscendingSubMap.AscendingEntrySetView;
+
+import grails.converters.JSON
+
 class EntityController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -18,6 +23,18 @@ class EntityController {
         entityInstance.properties = params
         return [entityInstance: entityInstance]
     }
+	
+	/*de prueba para conexion desde android*/
+	def entityJson ={
+		def entityInstance1 = new Entity(name:"1",description:"entidad 1",url:"http:\\marisa.com")
+		def entityInstance2 = new Entity(name:"2",description:"entidad 2",url:"http:\\marisa.com")
+		List ls = new ArrayList<Entity>();
+		ls.add entityInstance1;
+		ls.add entityInstance2;
+		def mapEnt = ["entities":ls]
+		//render TypeActivity.list() as JSON
+		render mapEnt as JSON
+	}
 
     def save = {
         def entityInstance = new Entity(params)
