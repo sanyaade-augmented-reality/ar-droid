@@ -37,7 +37,7 @@ public class TestOverlay extends ItemizedOverlay<OverlayItem>{
 	}
 	
 	public TestOverlay(Drawable defaultMarker, Context context) {
-		  super(defaultMarker);
+		  this(defaultMarker);
 		  mContext = context;
 	}
 	
