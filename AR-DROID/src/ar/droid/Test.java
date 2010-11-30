@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -41,17 +42,29 @@ public class Test extends MapActivity {
 		@Override
 		public void onLocationChanged(Location location) {
 			GeoPoint position = new GeoPoint((int)(location.getLatitude()*1E6),(int)(location.getLongitude()*1E6));
-			
+		
 			
 	        List<Overlay> mapOverlays = mapView.getOverlays();
 			Drawable drawable = resources.getDrawable(R.drawable.androidmarker);
 			//drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
 
-			TestOverlay itemizedoverlay = new TestOverlay(drawable);     
+			TestOverlay itemizedoverlay = new TestOverlay(drawable,mapView.getContext());     
 	 		OverlayItem overlayitem = new OverlayItem(position, "Hola, Mundo!", "Estoy Aqui!");
 			
 			itemizedoverlay.addOverlay(overlayitem);
 			mapOverlays.add(itemizedoverlay);
+			
+			/*de prueba para probar conexion al servidor ar-droid*/
+			Log.i("antes de conectar ","hola");
+			
+			ResourceHelper resourceHelper = new ResourceHelper();
+			List entities = resourceHelper.getEntities();
+			
+			Log.i("entidades ", entities.toString());
+			Log.i("entidades ", ""+entities.size());
+			
+			/*de prueba para probar conexion al servidor ar-droid*/
+			
 			
 			// move to location
 			mapView.getController().animateTo(position);
