@@ -63,6 +63,12 @@
       <version>${jstl.version}</version>
     </dependency>
     
+    <dependency>
+		<groupId>servletapi</groupId>
+		<artifactId>servlet-api</artifactId>	
+		<version>2.4</version>
+	</dependency>
+    
     <!-- Grails defaults to Ehache for the second-level Hibernate cache. -->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -99,10 +105,7 @@
           <artifactId>jms</artifactId>
         </exclusion>
         
-        <exclusion>
-          <artifactId>servlet-api</artifactId>
-        </exclusion>
-        
+                
         <exclusion>
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-api</artifactId>
