@@ -25,14 +25,18 @@ function initializeMap(id_map, lat, long, zoom) {
     mapInstance = new google.maps.Map(document.getElementById(id_map), options);
 }
 
-function placeMarker(location, reset) {
+function placeMarker(location, title, reset) {
 	var marker = new google.maps.Marker({
 		position: location, 
-		map: mapInstance
+		map: mapInstance,
+		title: title,
+		icon: '/AR-DROID-ADMIN/images/marker/arrow.png'
 	});
+	
 	if(reset){
 		deleteOverlays();
 	}
+	
 	addMarker(marker);
 	showOverlays();
 }

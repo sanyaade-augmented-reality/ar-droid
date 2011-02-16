@@ -1,5 +1,4 @@
-
-
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="ar.droid.admin.Entity" %>
 <html>
     <head>
@@ -7,6 +6,31 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'entity.label', default: 'Entity')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
+        
+        <g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
+		<g:javascript src="maps.js" />
+		<g:javascript library="prototype" />
+		<g:javascript>
+			Event.observe(window, 'load', initialize, true);
+			
+			function initialize() {
+				initializeMap('map_canvas', $('latitude').value, $('longitude').value, 12);
+				
+				google.maps.event.addListener(mapInstance, 'click', function(event){
+  					placeMarker(event.latLng, event.latLng.lat() + '@' + event.latLng.lng(), true);
+  					var clickedLocation = new google.maps.LatLng(event.latLng);
+  					
+  					$('latitude').value = event.latLng.lat();
+  					$('longitude').value = event.latLng.lng();
+  				});
+  				
+  				if($('latitude').value != '' && $('longitude').value != ''){
+  					var latlng = new google.maps.LatLng($('latitude').value, $('longitude').value);
+  					placeMarker(latlng, $('latitude').value + '@' + $('longitude').value, true);
+  				}
+  			}
+  			
+		</g:javascript>
     </head>
     <body>
         <div class="nav">
@@ -61,7 +85,7 @@
                                   <label for="description"><g:message code="entity.description.label" default="Description" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'description', 'errors')}">
-                                    <g:textField name="description" value="${entityInstance?.description}" />
+                                    <g:textArea name="description" value="${entityInstance?.description}" />
                                 </td>
                             </tr>
                         
@@ -70,7 +94,9 @@
                                   <label for="geoPoint"><g:message code="entity.geoPoint.label" default="Geo Point" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'geoPoint', 'errors')}">
-                                    
+                                    <div id="map_canvas" style="width: 500px; height: 250px;"></div>
+                                    <g:hiddenField  name="latitude" value="${entityInstance?.geoPoint.latitude}" />
+                                    <g:hiddenField  name="longitude" value="${entityInstance?.geoPoint.longitude}" />
                                 </td>
                             </tr>
                         
