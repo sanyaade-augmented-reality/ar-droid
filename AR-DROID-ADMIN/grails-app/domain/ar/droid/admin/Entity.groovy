@@ -1,5 +1,7 @@
 package ar.droid.admin
 
+import java.math.BigDecimal;
+
 
 
 class Entity {
@@ -24,13 +26,14 @@ class Entity {
 	/**con la siguiente sentencia se declaran validaciones, existen muchas predefinidas
 	 * como la de url, etc*/
 	static constraints = {
-		url(url:true)		
+		url(url:true)	
+		name(blank: false)
 	}
 }
 
 
 /**De esta forma se mapea una composicion, GeoPoint NO se transforma en una tabla*/
 class GeoPoint {
-	Double latitude;
-	Double longitude;
+	BigDecimal latitude;
+	BigDecimal longitude;
 }
