@@ -1,14 +1,12 @@
 package ar.droid.admin
 
 import java.util.ArrayList;
-import java.util.TreeMap.AscendingSubMap.AscendingEntrySetView;
-
 import grails.converters.JSON
 
 class EntityController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
+	
     def index = {
         redirect(action: "list", params: params)
     }
@@ -20,6 +18,7 @@ class EntityController {
 
     def create = {
         def entityInstance = new Entity()
+		entityInstance.geoPoint = new GeoPoint()
         entityInstance.properties = params
         return [entityInstance: entityInstance]
     }
@@ -38,12 +37,28 @@ class EntityController {
 
     def save = {
         def entityInstance = new Entity(params)
-        if (entityInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
-            redirect(action: "show", id: entityInstance.id)
-        }
+		
+		// crear y asignar punto
+		def point = new GeoPoint()
+		
+		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
+             entityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar un punto')
+			 entityInstance.geoPoint = point
+			 render(view: "create", model: [entityInstance: entityInstance])
+		}        
         else {
-            render(view: "create", model: [entityInstance: entityInstance])
+		
+			point.latitude = new BigDecimal(params.latitude)
+			point.longitude = new BigDecimal(params.longitude)
+			entityInstance.geoPoint = point
+		
+			if (entityInstance.save(flush: true)) {
+				flash.message = "${message(code: 'default.created.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
+				redirect(action: "show", id: entityInstance.id)
+			}
+			else {
+				render(view: "create", model: [entityInstance: entityInstance])
+			}
         }
     }
 
