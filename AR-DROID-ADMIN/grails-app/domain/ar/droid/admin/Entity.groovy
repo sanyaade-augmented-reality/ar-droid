@@ -1,6 +1,5 @@
 package ar.droid.admin
 
-import java.math.BigDecimal;
 
 
 
@@ -41,4 +40,9 @@ class Entity {
 class GeoPoint {
 	BigDecimal latitude;
 	BigDecimal longitude;
+	
+	@Override
+	public String toString() {
+		return this.latitude + '@' + this.longitude;
+	}
 }
