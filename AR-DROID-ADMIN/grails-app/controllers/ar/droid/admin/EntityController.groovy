@@ -36,7 +36,9 @@ class EntityController {
 	}
 
     def save = {
-        def entityInstance = new Entity(params)
+		def gphoto = request.getFile('photo')
+		def entityInstance = new Entity(params)
+		entityInstance.photo = gphoto.getBytes();
 		
 		// crear y asignar punto
 		def point = new GeoPoint()
@@ -73,6 +75,14 @@ class EntityController {
         }
     }
 
+	def showImage ={
+		def entityInstance = Entity.get(params.id)
+		response.contentType = "image/jpeg"
+		response.contentLength = entityInstance?.photo.length
+		response.outputStream.write(entityInstance?.photo)
+	}
+
+	
     def edit = {
         def entityInstance = Entity.get(params.id)
         if (!entityInstance) {
