@@ -28,7 +28,10 @@ class Entity {
 	static constraints = {
 		url(url:true)	
 		name(blank: false)
+		readerActivity(nullable:true)
+		readerNews(nullable:true)
 	}
+	
 }
 
 
