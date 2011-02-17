@@ -31,7 +31,9 @@ class Entity {
 		readerActivity(nullable:true)
 		readerNews(nullable:true)
 	}
-	
+	static mapping = {
+		description type: 'text'
+	}
 }
 
 
