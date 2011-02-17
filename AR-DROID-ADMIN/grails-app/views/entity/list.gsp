@@ -32,7 +32,7 @@
                         
                             <g:sortableColumn property="name" title="${message(code: 'entity.name.label', default: 'Name')}" />
                         
-                            <g:sortableColumn property="photo" title="${message(code: 'entity.photo.label', default: 'Photo')}" />
+                            
                         
                         </tr>
                     </thead>
@@ -50,7 +50,6 @@
                         
                             <td>${fieldValue(bean: entityInstance, field: "name")}</td>
                         
-                            <td>${fieldValue(bean: entityInstance, field: "photo")}</td>
                         
                         </tr>
                     </g:each>

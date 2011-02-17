@@ -73,7 +73,11 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="entity.photo.label" default="Photo" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: entityInstance, field: "photo")}</td>
+                            <td valign="top" class="value">
+                            <g:if test="${entityInstance.photo}">
+  								<img class="avatar" src="${createLink(controller:'entity', action:'showImage', id:entityInstance.id)}" />
+							</g:if>
+       	</td>
                             
                         </tr>
                     
