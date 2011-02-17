@@ -16,15 +16,6 @@
 			
 			function initialize() {
 				initializeMap('map_canvas', $('latitude').value, $('longitude').value, 12);
-				
-				google.maps.event.addListener(mapInstance, 'click', function(event){
-  					placeMarker(event.latLng, event.latLng.lat() + '@' + event.latLng.lng(), true);
-  					var clickedLocation = new google.maps.LatLng(event.latLng);
-  					
-  					$('latitude').value = event.latLng.lat();
-  					$('longitude').value = event.latLng.lng();
-  				});
-  				
   				if($('latitude').value != '' && $('longitude').value != ''){
   					var latlng = new google.maps.LatLng($('latitude').value, $('longitude').value);
   					placeMarker(latlng, $('latitude').value + '@' + $('longitude').value, true);
