@@ -262,12 +262,18 @@ th.desc a {
 .buttons input.delete {
     background: transparent url(../images/skin/database_delete.png) 5px 50% no-repeat;
     padding-left: 28px;
+    padding-right: 10px;
+    width: auto;
 }
 .buttons input.edit {
     background: transparent url(../images/skin/database_edit.png) 5px 50% no-repeat;
     padding-left: 28px;
+    padding-right: 10px;
+    width: auto;
 }
 .buttons input.save {
     background: transparent url(../images/skin/database_save.png) 5px 50% no-repeat;
     padding-left: 28px;
+    padding-right: 10px;
+    width: auto;
 }
