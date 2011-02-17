@@ -32,6 +32,7 @@ class Entity {
 	}
 	static mapping = {
 		description type: 'text'
+		photo type: 'blob' // para archivos grandes
 	}
 }
 
