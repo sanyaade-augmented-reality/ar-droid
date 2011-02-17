@@ -109,14 +109,26 @@
                                 </td>
                             </tr>
                         
+                         
                             <tr class="prop">
                                 <td valign="top" class="name">
                                   <label for="photo"><g:message code="entity.photo.label" default="Photo" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'photo', 'errors')}">
                                     <input type="file" id="photo" name="photo" />
+                                  
                                 </td>
                             </tr>
+                            <tr class="prop">
+                            <td valign="top" class="name"></td>
+                            
+                            <td valign="top" class="value">
+                            <g:if test="${entityInstance.photo}">
+  								<img class="avatar" src="${createLink(controller:'entity', action:'showImage', id:entityInstance.id)}" />
+							</g:if>
+       	</td>
+                            
+                        </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
