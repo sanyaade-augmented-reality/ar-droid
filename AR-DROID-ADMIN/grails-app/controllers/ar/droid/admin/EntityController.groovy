@@ -36,11 +36,9 @@ class EntityController {
 	}
 
     def save = {
-		def gphoto = request.getFile('photo')
 		def entityInstance = new Entity(params)
-		entityInstance.photo = gphoto.getBytes();
-		
-		// crear y asignar punto
+	
+			// crear y asignar punto
 		def point = new GeoPoint()
 		
 		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
@@ -106,8 +104,12 @@ class EntityController {
                     return
                 }
             }
-            entityInstance.properties = params
-            if (!entityInstance.hasErrors() && entityInstance.save(flush: true)) {
+			def photo = entityInstance.photo;
+			entityInstance.properties = params;
+			if ( params.get("photo").size ==0 ){
+				entityInstance.photo = photo;
+			}
+		    if (!entityInstance.hasErrors() && entityInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
                 redirect(action: "show", id: entityInstance.id)
             }
