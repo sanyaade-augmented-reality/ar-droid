@@ -1,5 +1,8 @@
 var mapInstance;
 var markersArray = [];
+var geocoder;
+
+
 
 /**
  * Inicializa un mapa de google maps.
@@ -22,10 +25,15 @@ function initializeMap(id_map, lat, long, zoom) {
     	center: latlng,
     	mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+    geocoder = new google.maps.Geocoder();
     mapInstance = new google.maps.Map(document.getElementById(id_map), options);
 }
 
 function placeMarker(location, title, reset) {
+	codeLatLng(location, title, reset);
+}
+
+function addPlaceMarker(location, title, reset) {
 	var marker = new google.maps.Marker({
 		position: location, 
 		map: mapInstance,
@@ -72,3 +80,23 @@ function deleteOverlays() {
 	    markersArray.length = 0;
 	}
 }
+
+function codeLatLng(location, title, reset) {
+	var latlngStr = title.split("@",2);
+    var lat = parseFloat(latlngStr[0]);
+	var lng = parseFloat(latlngStr[1]);
+    var latlng = new google.maps.LatLng(lat,lng);
+    if (geocoder) {
+    	geocoder.geocode({'latLng': latlng}, function(results, status) {
+    	if (status == google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+        	  //alert(results[1].formatted_address);
+        	   var xTitle = results[0].formatted_address;
+        	   addPlaceMarker(location, xTitle, reset);
+          }        
+        } 
+      });
+    }
+  }
+
+	
