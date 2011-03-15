@@ -1,9 +1,7 @@
 package ar.droid.ra;
 
 import android.content.Context;
-import android.graphics.PixelFormat;
 import android.hardware.Camera;
-import android.hardware.Camera.Parameters;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -15,12 +13,7 @@ public class CustomCameraView extends SurfaceView  {
 	public CustomCameraView(Context context) {
 		super(context);
 		previewHolder = this.getHolder();
-        previewHolder.setType 
-          (SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        previewHolder.addCallback(new SurfaceHolderListener(camera,previewHolder));
+        previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        previewHolder.addCallback(new SurfaceHolderListener(camera, previewHolder));
 	}
-
-
-
-
 }
