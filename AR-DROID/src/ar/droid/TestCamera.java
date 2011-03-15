@@ -40,7 +40,7 @@ public class TestCamera extends Activity {
 		   sensorMan.registerListener(new SensorAccelerometerEventListener(), sensorMan.getDefaultSensor(SensorManager.SENSOR_ACCELEROMETER), SensorManager.SENSOR_DELAY_FASTEST);
 		   
 		   LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-	       locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1, new ar.droid.location.LocationListenerGPS());
+	       locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,100,1, new ar.droid.location.LocationListenerGPS(null));
 	    
 	}
 	
