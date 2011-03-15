@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_ar"
+          android:icon="@drawable/camera"
+          android:title="Vista RA" />
+    <item android:id="@+id/menu_position"
+          android:icon="@drawable/flag"
+          android:title="Mi posición" />
+    <item android:id="@+id/menu_find"
+          android:icon="@drawable/find"
+          android:title="Buscar" />
+    <item android:id="@+id/menu_show"
+          android:icon="@drawable/marker"
+          android:title="Mostrar" />
+    <item android:id="@+id/menu_close"
+          android:icon="@drawable/exit"
+          android:title="Salir" />
+</menu>
