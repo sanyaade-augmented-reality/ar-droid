@@ -7,18 +7,15 @@
 
     <com.google.android.maps.MapView
         android:id="@+id/mapview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
         android:clickable="true"
-        android:apiKey="0hrra9BicsBQslgZ1F6QOTeNay5gwSc8b7fhYjw"
-    />
+		android:apiKey="0YEg4_mBtjxMcQUC2HySimkZpkMKUL9UqSyo-rg" />
 
 	<LinearLayout
     	android:id="@+id/zoomview"
     	android:layout_width="wrap_content"	
     	android:layout_height="wrap_content"
     	android:layout_alignBottom="@id/mapview"
-    	android:layout_centerHorizontal="true"
-	/>
-
+    	android:layout_centerHorizontal="true" />
 </RelativeLayout>
