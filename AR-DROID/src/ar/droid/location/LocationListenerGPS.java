@@ -1,44 +1,34 @@
 package ar.droid.location;
 
+import com.google.android.maps.MapView;
+
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.util.Log;
 
 public class LocationListenerGPS implements LocationListener {
-
-	private Location curLocation;
-    private boolean locationChanged = false; 
-
+	static String TAG = "LocationListenerGPS";
+	private MapView mapView;
+	
+	public LocationListenerGPS(MapView map){
+		mapView = map;
+	}
+	
 	@Override
 	public void onLocationChanged(Location location) {
-		if(curLocation == null)   {
-           curLocation = location;
-           locationChanged = true;
-        }
-        if(curLocation.getLatitude() == location.getLatitude() &&
-              curLocation.getLongitude() == location.getLongitude())
-           locationChanged = false;
-        else
-           locationChanged = true;
-        curLocation = location;
-    }
-
-	@Override
-	public void onProviderDisabled(String arg0) {
-		// TODO Auto-generated method stub
-
+    	Log.d(TAG, "Posición recibida de GPS");
 	}
 
 	@Override
-	public void onProviderEnabled(String arg0) {
-		// TODO Auto-generated method stub
-
+	public void onProviderDisabled(String provider) {
 	}
 
 	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-		// TODO Auto-generated method stub
-
+	public void onProviderEnabled(String provider) {
 	}
 
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
 }
