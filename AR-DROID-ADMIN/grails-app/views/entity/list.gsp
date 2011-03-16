@@ -24,35 +24,20 @@
                 <table id="tableDir">
                     <thead>
                         <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'entity.id.label', default: 'Id')}" />
-                        
+                        	<g:sortableColumn property="name" title="${message(code: 'entity.name.label', default: 'Name')}" />
+                            <g:sortableColumn property="typeEntity" title="${message(code: 'entity.typeEntity.label', default: 'Entity Type')}" />
                             <g:sortableColumn property="url" title="${message(code: 'entity.url.label', default: 'Url')}" />
-                        
-                            <g:sortableColumn property="description" title="${message(code: 'entity.description.label', default: 'Description')}" />
-                        
                             <th><g:message code="entity.geoPoint.label" default="Geo Point" /></th>
-                         
-                            <g:sortableColumn property="name" title="${message(code: 'entity.name.label', default: 'Name')}" />
-                        
-                            
-                        
                         </tr>
                     </thead>
                     <tbody>
                     
                     <g:each in="${entityInstanceList}" status="i" var="entityInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${entityInstance.id}">${fieldValue(bean: entityInstance, field: "id")}</g:link></td>
-                        
+                            <td><g:link action="show" id="${entityInstance.id}">${fieldValue(bean: entityInstance, field: "name")}</g:link></td>
+                            <td>${fieldValue(bean: entityInstance, field: "typeEntity")}</td>
                             <td>${fieldValue(bean: entityInstance, field: "url")}</td>
-                        
-                            <td>${fieldValue(bean: entityInstance, field: "description")}</td>
-                        	
                         	<td >${fieldValue(bean: entityInstance, field: "geoPoint")}</td>
-                            
-                            <td>${fieldValue(bean: entityInstance, field: "name")}</td>
                         
                         
                         </tr>

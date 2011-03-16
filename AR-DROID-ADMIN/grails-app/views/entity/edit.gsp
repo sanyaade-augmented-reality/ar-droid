@@ -57,6 +57,13 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
+                                    <label for="name"><g:message code="entity.name.label" default="Name" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'name', 'errors')}">
+                                    <g:textField name="name" value="${entityInstance?.name}" />
+                                </td>
+                                
+                                <td valign="top" class="name">
                                   <label for="url"><g:message code="entity.url.label" default="Url" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'url', 'errors')}">
@@ -66,26 +73,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="activities"><g:message code="entity.activities.label" default="Activities" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'activities', 'errors')}">
-                                    
-<ul>
-<g:each in="${entityInstance?.activities?}" var="a">
-    <li><g:link controller="activity" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
-</g:each>
-</ul>
-<g:link controller="activity" action="create" params="['entity.id': entityInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'activity.label', default: 'Activity')])}</g:link>
-
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                   <label for="description"><g:message code="entity.description.label" default="Description" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'description', 'errors')}">
-                                    <g:textArea name="description" value="${entityInstance?.description}" />
+                                <td colspan="3" valign="top" class="value ${hasErrors(bean: entityInstance, field: 'description', 'errors')}">
+                                    <g:textArea name="description" value="${entityInstance?.description}" class="w100" />
                                 </td>
                             </tr>
                         
@@ -98,53 +89,16 @@
                                     <g:hiddenField  name="latitude" value="${entityInstance?.geoPoint.latitude}" />
                                     <g:hiddenField  name="longitude" value="${entityInstance?.geoPoint.longitude}" />
                                 </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="name"><g:message code="entity.name.label" default="Name" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'name', 'errors')}">
-                                    <g:textField name="name" value="${entityInstance?.name}" />
-                                </td>
-                            </tr>
-                        
-                         
-                            <tr class="prop">
+                                
                                 <td valign="top" class="name">
                                   <label for="photo"><g:message code="entity.photo.label" default="Photo" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'photo', 'errors')}">
                                     <input type="file" id="photo" name="photo" />
-                                  
-                                </td>
-                            </tr>
-                            <tr class="prop">
-                            <td valign="top" class="name"></td>
-                            
-                            <td valign="top" class="value">
-                            <g:if test="${entityInstance.photo}">
-  								<img class="avatar" src="${createLink(controller:'entity', action:'showImage', id:entityInstance.id)}" />
-							</g:if>
-       	</td>
-                            
-                        </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="readerActivity"><g:message code="entity.readerActivity.label" default="Reader Activity" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerActivity', 'errors')}">
-                                    <g:select name="readerActivity.id" from="${ar.droid.admin.ReaderActivity.list()}" optionKey="id" value="${entityInstance?.readerActivity?.id}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="readerNews"><g:message code="entity.readerNews.label" default="Reader News" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerNews', 'errors')}">
-                                    <g:select name="readerNews.id" from="${ar.droid.admin.ReaderNews.list()}" optionKey="id" value="${entityInstance?.readerNews?.id}"  />
+                                    <g:if test="${entityInstance.photo}">
+                                    	<br /><br />
+  										<img class="avatar" src="${createLink(controller:'entity', action:'showImage', id:entityInstance.id)}" />
+									</g:if>
                                 </td>
                             </tr>
                         
@@ -155,6 +109,33 @@
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'typeEntity', 'errors')}">
                                     <g:select name="typeEntity.id" from="${ar.droid.admin.TypeEntity.list()}" optionKey="id" value="${entityInstance?.typeEntity?.id}"  />
                                 </td>
+                                
+                                <td valign="top" class="name">
+                                  <label for="readerNews"><g:message code="entity.readerNews.label" default="Reader News" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerNews', 'errors')}">
+                                    <g:select name="readerNews.id" from="${ar.droid.admin.ReaderNews.list()}" optionKey="id" value="${entityInstance?.readerNews?.id}"  />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                  <label for="activities"><g:message code="entity.activities.label" default="Activities" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'activities', 'errors')}">
+                                    <ul>
+									<g:each in="${entityInstance?.activities?}" var="a">
+   										<li><g:link controller="activity" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
+									</g:each>
+									</ul>
+                                </td>
+                                
+                                <td valign="top" class="name">
+                                  <label for="readerActivity"><g:message code="entity.readerActivity.label" default="Reader Activity" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerActivity', 'errors')}">
+                                    <g:select name="readerActivity.id" from="${ar.droid.admin.ReaderActivity.list()}" optionKey="id" value="${entityInstance?.readerActivity?.id}"  />
+                                </td>
                             </tr>
                         
                         </tbody>
@@ -163,6 +144,7 @@
                 <div class="buttons">
                     <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    <span class="button"><g:actionSubmit class="add" action="newevent" params="['entity.id': entityInstance?.id]" value="${message(code: 'default.add.label', args: [message(code: 'event.label', default: 'Event')])}" /></span>
                 </div>
             </g:form>
         </div>
