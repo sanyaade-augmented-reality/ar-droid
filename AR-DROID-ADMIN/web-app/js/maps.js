@@ -99,4 +99,29 @@ function codeLatLng(location, title, reset) {
     }
   }
 
+function tableToDirection(pTable){
+	var someNodeList = $(pTable);
+ 	var nodes =$A(someNodeList.getElementsByTagName('TR'));
+	nodes.each(function(row){
+		var tds = $A(row.getElementsByTagName('TD'));
+		if (tds.length>0){
+			var latlngStr = tds[3].innerHTML.split("@",2);
+			var lat = parseFloat(latlngStr[0]);
+			var lng = parseFloat(latlngStr[1]);
+			var latlng = new google.maps.LatLng(lat,lng);
+			var geocoder = new google.maps.Geocoder();
+			if (geocoder) {
+				geocoder.geocode({'latLng': latlng}, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+						if (results[1]) {
+  		 				var xTitle = results[0].formatted_address;
+  						tds[3].innerHTML  = xTitle;
+   				 	}        
+				} 
+				});
+	 	}	
+	}
+	});         
+	
+}
 	
