@@ -1,20 +1,23 @@
 package ar.droid.admin
 
+import org.codehaus.groovy.grails.validation.BlankConstraint;
+
 class Event {
+	
+	static hasMany = [activities: Activity]
+	
 	String title
 	String description
-	GeoPoint geoPoint;
-	EventCalendar eventCalenar 
-	static embedded = ['geoPoint']/**Esto indicar que el GeoPoint es una composición*/
-	
-	/**Conocimiento bidireccional con Activity y con la propiedad belongTo cada vez que se
-	* elimine una Actividad se eliminan sus eventos*/
-	static belongsTo = [activity:Activity]
-	
-	/**template encuenta*/
+	GeoPoint geoPoint
+	EventCalendar eventCalenar
+	byte[] photo
+	static embedded = ['geoPoint'] /**Esto indicar que el GeoPoint es una composición*/
+		
+	/* template encuesta */
 	SurveyTemplate surveyTemplate
 	
 	static constraints = {
+		title(blank: false)
     }
 }
 
