@@ -141,4 +141,9 @@ class EntityController {
             redirect(action: "list")
         }
     }
+	
+	def newevent = {
+        def entityInstance = Entity.get(params.id)
+		redirect(controller: "event", action: "create", entity: params.id)
+	}
 }

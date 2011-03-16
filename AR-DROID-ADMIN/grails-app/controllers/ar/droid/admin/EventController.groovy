@@ -16,6 +16,9 @@ class EventController {
     def create = {
         def eventInstance = new Event()
         eventInstance.properties = params
+		if(params.entity){
+			eventInstance.entity = Entity.get(params.entity)
+		}
         return [eventInstance: eventInstance]
     }
 
