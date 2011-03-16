@@ -43,17 +43,16 @@ input, select, textarea {
     font: 11px verdana, arial, helvetica, sans-serif;
     margin: 2px 0;
     padding: 2px 4px;
-    width: 300px;
+    width: 100%;
 }
 select {
    padding: 2px 2px 2px 0;
-   width: 300px;
+    width: 100%;
 }
 textarea {
-	width: 250px;
-	height: 150px;
+	height: 100px;
 	vertical-align: top;
-	width: 300px;
+    width: 100%;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -62,7 +61,7 @@ input:focus, select:focus, textarea:focus {
 
 .body {
     float: left;
-    margin: 0 15px 10px 15px;
+    margin: 0 15px 5px 15px;
 }
 
 /* NAVIGATION MENU */
@@ -71,8 +70,8 @@ input:focus, select:focus, textarea:focus {
     background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
     border: 1px solid #ccc;
     border-style: solid none solid none;
-    margin-top: 5px;
-    padding: 7px 12px;
+    margin-top: 0;
+    padding: 5px 10px;
 }
 
 .menuButton {
@@ -228,12 +227,15 @@ th.desc a {
 }
 .prop .name {
     text-align: left;
-    width: 15%;
+    width: 10%;
     white-space: nowrap;
+    padding-right: 10px;
+    text-align: right;
+    text-decoration: underline;
 }
 .prop .value {
     text-align: left;
-    width: 85%;
+    width: 40%;
 }
 
 /* ACTION BUTTONS */
@@ -276,4 +278,15 @@ th.desc a {
     padding-left: 28px;
     padding-right: 10px;
     width: auto;
+}
+.buttons input.add {
+    background: transparent url(../images/skin/database_add.png) 5px 50% no-repeat;
+    padding-left: 28px;
+    padding-right: 10px;
+    width: auto;
+}
+
+/* UTIL */
+.w100 {
+	width: 100%;
 }
