@@ -2,15 +2,12 @@ package ar.droid.admin
 
 import javax.swing.SpringLayout.Constraints;
 
-
-
-
 class Entity {
 	
 	/**Mapeo uno a muchos, para que se actulize en casada
 	 * es decir si borro una entidad se borre una actividad
 	 * en la entidad Activity hay que definir la propiedad belongTo*/
-	static hasMany = [activities:Activity]
+	static hasMany = [activities: Activity]
 	
 	String name
 	String description
@@ -19,7 +16,6 @@ class Entity {
 	TypeEntity typeEntity
 	GeoPoint geoPoint;
 	static embedded = ['geoPoint']
-	
 	
 	ReaderNews readerNews
 	ReaderActivity readerActivity
@@ -38,15 +34,13 @@ class Entity {
 	}
 }
 
-
 /**De esta forma se mapea una composicion, GeoPoint NO se transforma en una tabla*/
 class GeoPoint {
-	Double latitude;//cambie a double porque con bigdecimal lo creaba con 2 decimales
-	Double longitude;
+	BigDecimal latitude;
+	BigDecimal longitude;
 	
 	@Override
 	public String toString() {
 		return this.latitude + '@' + this.longitude;
 	}
-	
 }
