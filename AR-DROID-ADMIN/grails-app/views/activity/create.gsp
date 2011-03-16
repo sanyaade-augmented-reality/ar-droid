@@ -28,14 +28,6 @@
                     <table>
                         <tbody>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="url"><g:message code="activity.url.label" default="Url" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: activityInstance, field: 'url', 'errors')}">
-                                    <g:textField name="url" value="${activityInstance?.url}" />
-                                </td>
-                            </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
