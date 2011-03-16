@@ -1,5 +1,7 @@
 package ar.droid.admin
 
+import javax.swing.SpringLayout.Constraints;
+
 
 
 
@@ -32,18 +34,19 @@ class Entity {
 	}
 	static mapping = {
 		description type: 'text'
-		photo type: 'blob' // para archivos grandes
+		photo sqlType: 'blob' // para archivos grandes
 	}
 }
 
 
 /**De esta forma se mapea una composicion, GeoPoint NO se transforma en una tabla*/
 class GeoPoint {
-	BigDecimal latitude;
-	BigDecimal longitude;
+	Double latitude;//cambie a double porque con bigdecimal lo creaba con 2 decimales
+	Double longitude;
 	
 	@Override
 	public String toString() {
 		return this.latitude + '@' + this.longitude;
 	}
+	
 }
