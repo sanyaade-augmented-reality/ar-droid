@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
 import ar.droid.location.LocationListenerGPS;
 import ar.droid.location.MyLocationOverlayFirstRun;
 
@@ -31,10 +33,15 @@ public class MainMap extends MapActivity {
 	private MapView mapView;
     private MyLocationOverlay myLocationOverlay;
 	private Resources resources;
+	private LocationManager locationManager;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // crear location manager
+        if(locationManager == null)
+        	locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
         // pantalla completa
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -52,20 +59,18 @@ public class MainMap extends MapActivity {
     	// inicializar mapa
     	this.initMap();
 
-    	// salir si ya esta creada la instancia
-    	if(savedInstanceState != null)
-        	return;
-    	
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        
-        // si el GPS no esta habilitado informar
+    	// si el GPS no esta habilitado informar
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
         	Log.d(TAG, "GPS deshabilitado");
         	this.showMsgGPSDisabled();
         }
         
+    	// salir si ya esta creada la instancia
+    	if(savedInstanceState != null)
+        	return;
+        
         // crear lisener para el GPS
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, new LocationListenerGPS(mapView));
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, new LocationListenerGPS(getApplicationContext(), this));
     }
     
 	private void initMap(){
@@ -89,6 +94,14 @@ public class MainMap extends MapActivity {
     	       .setNegativeButton("No hacer nada", new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
     	                dialog.cancel();
+
+    	                // mostrar notificación
+    	                Toast.makeText(getApplicationContext(), "El GPS está deshabilitado", Toast.LENGTH_LONG).show();
+    	                
+    	                // ubucación no disponible
+    	        		TextView textView = (TextView) findViewById(R.id.address);
+    	        		textView.setText("Ubicación no disponible");
+    	        		textView.invalidate();
     	           }
     	       });
     	AlertDialog alert = builder.create();  
@@ -139,7 +152,13 @@ public class MainMap extends MapActivity {
 		    	android.os.Process.killProcess(pid); 
 		        return true;
 		    case R.id.menu_ar:
-		    	
+		    	// puede iniciar RA?
+		    	if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+		    		
+		    		// mostrar notificación
+	                Toast.makeText(getApplicationContext(), "El GPS está deshabilitado, no puede iniciar la Vista RA", Toast.LENGTH_LONG).show();
+	                return true;
+	    		}
 		    	// abrir realidad aumentada
 		    	try{
 		    		Intent myIntent = new Intent(MainMap.this, MainAR.class);
@@ -153,7 +172,13 @@ public class MainMap extends MapActivity {
 		    case R.id.menu_find:
 		        return true;
 		    case R.id.menu_position:
-		    	
+		    	// el GPS esta habilitado?
+		    	if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+		    		
+		    		// mostrar notificación
+	                Toast.makeText(getApplicationContext(), "El GPS está deshabilitado, no se puede determinar su posición", Toast.LENGTH_LONG).show();
+	                return true;
+	    		}
 		    	// ir a mi posición
 		    	new MyLocationOverlayFirstRun(mapView, myLocationOverlay).run();
 		        return true;

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
+import ar.droid.location.LocationListenerGPS;
 import ar.droid.ra.SensorAccelerometerEventListener;
 import ar.droid.ra.SurfaceHolderListener;
 import ar.droid.ra.view.Radar;
@@ -23,6 +25,7 @@ import ar.droid.ra.view.Radar;
 public class MainAR extends Activity {
 	static String TAG = MainAR.class.getName();
 	public static SensorManager sensorMan;
+	private LocationManager locationManager;
 	
 	private SurfaceView preview;
 	private SurfaceHolder previewHolder;
@@ -30,6 +33,10 @@ public class MainAR extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // crear location manager
+        if(locationManager == null)
+        	locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         
         // pantalla completa
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -43,6 +50,13 @@ public class MainAR extends Activity {
 
         // agregar radar
         this.addRadar();
+        
+        // salir si ya esta creada la instancia
+    	if(savedInstanceState != null)
+        	return;
+        
+        // crear lisener para el GPS
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, new LocationListenerGPS(getApplicationContext(), this));
 	}
 
 	/**
