@@ -1,15 +1,14 @@
 package ar.droid.admin
 
-
 class Activity {
 	
 	String name	
 	String description
 	GeoPoint geoPoint	
 	TypeActivity typeActivity
-	Entity entity
+	Event event
 	
-	static belongsTo = [entity: Entity]
+	static belongsTo = [event: Event]
 	
 	static mapping = { 
 		description type: 'text'
@@ -19,5 +18,10 @@ class Activity {
 	}
 	
 	/**Esto indicar que el GeoPoint es una composición*/
-	static embedded = ['geoPoint'] 
+	static embedded = ['geoPoint']
+	
+	@Override
+	public String toString() {
+		return name
+	}
 }

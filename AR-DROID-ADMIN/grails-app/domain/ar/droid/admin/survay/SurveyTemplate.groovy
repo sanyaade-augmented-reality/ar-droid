@@ -4,9 +4,10 @@ class SurveyTemplate {
 
 	String description
 	
-	/**una plantilla tienen  N preguntas*/
+	/** una plantilla tienen  N preguntas */
 	static hasMany = [questions:Question]
 		
 	static constraints = {
+		description(blank: false)
     }
 }

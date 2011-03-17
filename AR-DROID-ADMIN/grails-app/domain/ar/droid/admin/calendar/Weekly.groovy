@@ -1,11 +1,12 @@
 package ar.droid.admin
 
 import java.util.Calendar;
+import java.util.List;
 
 
 class Weekly extends RepeatCalendar {
 
-	//static hashMany [diasDelMes:Integer]
+	List<Integer> days;
 	
 	static constraints = {
     }

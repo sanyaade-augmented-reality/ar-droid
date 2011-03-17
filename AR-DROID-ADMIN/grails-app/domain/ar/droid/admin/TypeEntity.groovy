@@ -7,15 +7,15 @@ class TypeEntity {
 	
     static constraints = {
 		description(blank: false)
-		icon(nullable:true)
+		icon(nullable: false)
     }
+	
+	static mapping = {
+		icon sqlType: 'blob'
+	}
 	
 	@Override
 	public String toString() {
 		return description
-	}
-	
-	static mapping = {
-		icon sqlType: 'blob'
 	}
 }

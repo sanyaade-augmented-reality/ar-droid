@@ -6,14 +6,14 @@ class Question {
 
 	String question
 	
-	static hasMany = [templates:SurveyTemplate]
+	static hasMany = [templates: SurveyTemplate]
 	static belongsTo = SurveyTemplate
 	
-	static mapping ={
+	static mapping = {
 		tablePerHierarchy false
 	}
 	
 	static constraints = {
-		
+		question(blank: false)
     }
 }

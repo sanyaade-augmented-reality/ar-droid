@@ -1,13 +1,12 @@
 package ar.droid.admin
 
-import javax.swing.SpringLayout.Constraints;
 
 class Entity {
 	
 	/**Mapeo uno a muchos, para que se actulize en casada
 	 * es decir si borro una entidad se borre una actividad
 	 * en la entidad Activity hay que definir la propiedad belongTo*/
-	static hasMany = [activities: Activity]
+	static hasMany = [events: Event]
 	
 	String name
 	String description
@@ -31,6 +30,11 @@ class Entity {
 	static mapping = {
 		description type: 'text'
 		photo sqlType: 'blob' // para archivos grandes
+	}
+	
+	@Override
+	public String toString() {
+		return name
 	}
 }
 

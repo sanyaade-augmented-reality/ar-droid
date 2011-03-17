@@ -1,10 +1,12 @@
 package ar.droid.admin
 
-import org.codehaus.groovy.grails.validation.BlankConstraint;
 
 class Event {
 	
-	static hasMany = [activities: Activity]
+	static hasMany = [activities: Activity, responses: SurveyResponse]
+	Entity entity
+	
+	static belongsTo = [entity: Entity]
 	
 	String title
 	String description
@@ -19,5 +21,10 @@ class Event {
 	static constraints = {
 		title(blank: false)
     }
+	
+	@Override
+	public String toString() {
+		return title
+	}
 }
 
