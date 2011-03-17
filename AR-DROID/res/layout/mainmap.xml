@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainlayout"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+	android:id="@+id/mainlayout" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-    <com.google.android.maps.MapView
-        android:id="@+id/mapview"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-        android:clickable="true"
+	<com.google.android.maps.MapView
+		android:id="@+id/mapview" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:clickable="true"
 		android:apiKey="0YEg4_mBtjxMcQUC2HySimkZpkMKUL9UqSyo-rg" />
 
-	<LinearLayout
-    	android:id="@+id/zoomview"
-    	android:layout_width="wrap_content"	
-    	android:layout_height="wrap_content"
-    	android:layout_alignBottom="@id/mapview"
-    	android:layout_centerHorizontal="true" />
+	<LinearLayout android:id="@+id/zoomview"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignBottom="@id/mapview"
+		android:layout_centerHorizontal="true" />
+
+	<TextView android:layout_alignParentBottom="true"
+		android:text="Esperando ubicación..." android:id="@+id/address"
+		android:layout_height="wrap_content" android:layout_width="fill_parent"
+		android:gravity="bottom|right" android:textSize="15sp"
+		android:paddingBottom="10sp" android:paddingRight="10sp"
+		android:textColor="#FF0000" />
 </RelativeLayout>
