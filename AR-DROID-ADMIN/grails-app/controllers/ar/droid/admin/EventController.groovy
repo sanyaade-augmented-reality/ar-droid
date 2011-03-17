@@ -19,7 +19,8 @@ class EventController {
 		if(params.entity){
 			eventInstance.entity = Entity.get(params.entity)
 		}
-        return [eventInstance: eventInstance]
+		eventInstance
+        return [eventInstance: eventInstance, activities: []]
     }
 
     def save = {

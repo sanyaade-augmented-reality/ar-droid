@@ -20,7 +20,8 @@ class EntityController {
         def entityInstance = new Entity()
 		entityInstance.geoPoint = new GeoPoint()
         entityInstance.properties = params
-        return [entityInstance: entityInstance]
+		def lsReaderNews = ["1", "2", "3"];
+        return [entityInstance: entityInstance, lsReaderNews: lsReaderNews ]
     }
 	
 	/*de prueba para conexion desde android*/
