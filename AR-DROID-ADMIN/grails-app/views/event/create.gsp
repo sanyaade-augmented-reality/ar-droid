@@ -30,10 +30,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="activity"><g:message code="event.activity.label" default="Activity" /></label>
+                                    <label for="e"><g:message code="event.label" default="Entity" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'activity', 'errors')}">
-                                    <g:select name="activity.id" from="${ar.droid.admin.Activity.list()}" optionKey="id" value="${eventInstance?.activity?.id}"  />
+                                <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'entity', 'errors')}">
+                                    <g:select name="entity.id" from="${ar.droid.admin.Entity.list()}" optionKey="id" value="${eventInstance?.entity?.id}"  />
                                 </td>
                             </tr>
                         

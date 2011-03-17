@@ -116,7 +116,7 @@
                                     <label for="readerNews"><g:message code="entity.readerNews.label" default="Reader News" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerNews', 'errors')}">
-                                    <g:select name="readerNews.id" from="${ar.droid.admin.ReaderNews.list()}" optionKey="id" value="${entityInstance?.readerNews?.id}"  />
+                                    <g:select name="readerNews.id" from="${lsReaderNews}" value="${entityInstance?.readerNews?.id}"  />
                                 </td>
                             </tr>
                         
