@@ -8,7 +8,7 @@ import ar.droid.admin.survay.response.SurveyResponse;
 class Event {
 	
 	static hasMany = [activities: Activity, responses: SurveyResponse]
-	Entity entity
+	//Entity entity
 	
 	static belongsTo = [entity: Entity]
 	
