@@ -1,4 +1,4 @@
-package ar.droid.admin
+package ar.droid.admin.survay.response
 
 abstract class SurveyResponse {
 	String comment;

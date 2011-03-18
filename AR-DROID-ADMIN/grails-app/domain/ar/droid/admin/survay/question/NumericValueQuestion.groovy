@@ -1,4 +1,4 @@
-package ar.droid.admin
+package ar.droid.admin.survay.question
 
 class NumericValueQuestion extends Question{
 

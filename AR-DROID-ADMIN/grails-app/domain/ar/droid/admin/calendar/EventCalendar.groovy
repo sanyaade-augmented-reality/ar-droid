@@ -1,4 +1,4 @@
-package ar.droid.admin
+package ar.droid.admin.calendar
 
 import java.sql.Time;
 

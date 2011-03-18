@@ -1,4 +1,6 @@
-package ar.droid.admin
+package ar.droid.admin.survay
+
+import ar.droid.admin.survay.question.Question;
 
 class SurveyTemplate {
 

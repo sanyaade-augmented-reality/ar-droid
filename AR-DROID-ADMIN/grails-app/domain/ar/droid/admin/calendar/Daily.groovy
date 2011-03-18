@@ -1,6 +1,5 @@
-package ar.droid.admin
+package ar.droid.admin.calendar
 
-import junit.extensions.RepeatedTest;
 
 class Daily extends RepeatCalendar{
 	

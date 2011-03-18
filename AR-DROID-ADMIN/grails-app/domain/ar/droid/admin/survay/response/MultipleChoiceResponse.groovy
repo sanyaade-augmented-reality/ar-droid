@@ -1,4 +1,7 @@
-package ar.droid.admin
+package ar.droid.admin.survay.response
+
+import ar.droid.admin.survay.Choice;
+import ar.droid.admin.survay.question.MultipleChoiceQuestion;
 
 class MultipleChoiceResponse extends Response{
 
