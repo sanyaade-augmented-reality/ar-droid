@@ -1,5 +1,7 @@
 package ar.droid.admin
 
+import ar.droid.admin.calendar.EventCalendar;
+
 class EventCalendarController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]

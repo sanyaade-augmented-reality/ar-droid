@@ -1,5 +1,7 @@
 package ar.droid.admin
 
+import ar.droid.admin.survay.response.Response;
+
 class ResponseController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]

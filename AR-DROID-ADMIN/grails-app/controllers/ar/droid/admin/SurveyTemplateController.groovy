@@ -1,5 +1,7 @@
 package ar.droid.admin
 
+import ar.droid.admin.survay.SurveyTemplate;
+
 class SurveyTemplateController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
