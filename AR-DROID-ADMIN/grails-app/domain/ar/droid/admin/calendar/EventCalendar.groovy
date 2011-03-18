@@ -2,7 +2,7 @@ package ar.droid.admin.calendar
 
 import java.sql.Time;
 
-abstract class EventCalendar {
+ class EventCalendar {
 	Date startDate;
 	Date endDate
 	Time startTime
