@@ -1,6 +1,9 @@
 package ar.droid.admin
 
+import ar.droid.admin.calendar.*
+
 class EventController {
+	def eventService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -16,22 +19,23 @@ class EventController {
     def create = {
         def eventInstance = new Event()
         eventInstance.properties = params
+		eventInstance.geoPoint = new GeoPoint()
 		if(params.entity){
-			eventInstance.entity = Entity.get(params.entity)
+			eventInstance.entity.id = params.entity
 		}
-		eventInstance
         return [eventInstance: eventInstance, activities: []]
     }
 
     def save = {
-        def eventInstance = new Event(params)
-        if (eventInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
-            redirect(action: "show", id: eventInstance.id)
-        }
-        else {
-            render(view: "create", model: [eventInstance: eventInstance])
-        }
+        def eventInstance = eventService.saveEvent(params)
+		if(eventInstance.hasErrors()){
+			request.eventCalendar_select = eventInstance.eventCalendar.class
+			render(view: "create", model: [eventInstance: eventInstance])
+		}
+		else {
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
+			redirect(action: "show", id: eventInstance.id)
+		}
     }
 
     def show = {
@@ -52,35 +56,21 @@ class EventController {
             redirect(action: "list")
         }
         else {
-            return [eventInstance: eventInstance]
+			request.eventCalendar_select = entityInstance.eventCalendar.class
+            return [eventInstance: eventInstance, activities: entityInstance.activities]
         }
     }
 
-    def update = {
-        def eventInstance = Event.get(params.id)
-        if (eventInstance) {
-            if (params.version) {
-                def version = params.version.toLong()
-                if (eventInstance.version > version) {
-                    
-                    eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Event')] as Object[], "Another user has updated this Event while you were editing")
-                    render(view: "edit", model: [eventInstance: eventInstance])
-                    return
-                }
-            }
-            eventInstance.properties = params
-            if (!eventInstance.hasErrors() && eventInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
-                redirect(action: "show", id: eventInstance.id)
-            }
-            else {
-                render(view: "edit", model: [eventInstance: eventInstance])
-            }
-        }
-        else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
-            redirect(action: "list")
-        }
+    def update = {		
+		def eventInstance = eventService.updateEvent(params)
+		if(eventInstance.hasErrors()){
+			 eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Event')] as Object[], "Another user has updated this Event while you were editing")
+             render(view: "edit", model: [eventInstance: eventInstance])
+		}
+		else{
+			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
+            redirect(action: "show", id: eventInstance.id)
+		}
     }
 
     def delete = {

@@ -1,6 +1,6 @@
 package ar.droid.admin
 
-import ar.droid.admin.survay.response.Response;
+import ar.droid.admin.survey.response.Response;
 
 class ResponseController {
 

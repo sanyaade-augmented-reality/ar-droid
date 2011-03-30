@@ -1,6 +1,6 @@
 package ar.droid.admin
 
-import ar.droid.admin.survay.question.Question;
+import ar.droid.admin.survey.question.Question;
 
 class QuestionController {
 

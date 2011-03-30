@@ -1,10 +1,12 @@
 package ar.droid.admin
 
-import java.util.ArrayList;
+import java.util.ArrayList
 import grails.converters.JSON
+import ar.droid.admin.reader.*;
 
 class EntityController {
-
+	def entityService
+	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
     def index = {
@@ -20,47 +22,21 @@ class EntityController {
         def entityInstance = new Entity()
 		entityInstance.geoPoint = new GeoPoint()
         entityInstance.properties = params
-		def lsReaderNews = ["1", "2", "3"];
-        return [entityInstance: entityInstance, lsReaderNews: lsReaderNews ]
+			
+        return [entityInstance: entityInstance]
     }
-	
-	/*de prueba para conexion desde android*/
-	def entityJson ={
-		def entityInstance1 = new Entity(name:"1",description:"entidad 1",url:"http:\\marisa.com")
-		def entityInstance2 = new Entity(name:"2",description:"entidad 2",url:"http:\\marisa.com")
-		List ls = new ArrayList<Entity>();
-		ls.add entityInstance1;
-		ls.add entityInstance2;
-		def mapEnt = ["entities":ls]
-		//render TypeActivity.list() as JSON
-		render mapEnt as JSON
-	}
 
-    def save = {
-		def entityInstance = new Entity(params)
-	
-			// crear y asignar punto
-		def point = new GeoPoint()
-		
-		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-             entityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar un punto')
-			 entityInstance.geoPoint = point
-			 render(view: "create", model: [entityInstance: entityInstance])
-		}        
-        else {
-		
-			point.latitude = new BigDecimal(params.latitude)
-			point.longitude = new BigDecimal(params.longitude)
-			entityInstance.geoPoint = point
-		
-			if (entityInstance.save(flush: true)) {
-				flash.message = "${message(code: 'default.created.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
-				redirect(action: "show", id: entityInstance.id)
-			}
-			else {
-				render(view: "create", model: [entityInstance: entityInstance])
-			}
-        }
+    def save = {		
+		def entityInstance = entityService.saveEntity(params)	
+		if(entityInstance.hasErrors()){
+			request.readerActivity_select = entityInstance.readerActivity.class
+			request.readerNews_select = entityInstance.readerNews.class
+			render(view: "create", model: [entityInstance: entityInstance])
+		}
+		else{
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
+			redirect(action: "show", id: entityInstance.id)
+		}
     }
 
     def show = {
@@ -80,48 +56,31 @@ class EntityController {
 		response.contentLength = entityInstance?.photo.length
 		response.outputStream.write(entityInstance?.photo)
 	}
-
 	
-    def edit = {
+    def edit = {		
         def entityInstance = Entity.get(params.id)
         if (!entityInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entity.label', default: 'Entity'), params.id])}"
             redirect(action: "list")
         }
         else {
+			request.readerActivity_select = entityInstance.readerActivity.class
+			request.readerNews_select = entityInstance.readerNews.class
             return [entityInstance: entityInstance]
         }
     }
 
     def update = {
-        def entityInstance = Entity.get(params.id)
-        if (entityInstance) {
-            if (params.version) {
-                def version = params.version.toLong()
-                if (entityInstance.version > version) {
-                    
-                    entityInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'entity.label', default: 'Entity')] as Object[], "Another user has updated this Entity while you were editing")
-                    render(view: "edit", model: [entityInstance: entityInstance])
-                    return
-                }
-            }
-			def photo = entityInstance.photo;
-			entityInstance.properties = params;
-			if ( params.get("photo").size ==0 ){
-				entityInstance.photo = photo;
-			}
-		    if (!entityInstance.hasErrors() && entityInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
-                redirect(action: "show", id: entityInstance.id)
-            }
-            else {
-                render(view: "edit", model: [entityInstance: entityInstance])
-            }
-        }
-        else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entity.label', default: 'Entity'), params.id])}"
-            redirect(action: "list")
-        }
+		def entityInstance = entityService.updateEntity(params)
+		if(entityInstance.hasErrors()){
+			request.readerActivity_select = entityInstance.readerActivity.class
+			request.readerNews_select = entityInstance.readerNews.class
+			render(view: "edit", model: [entityInstance: entityInstance])
+		}
+		else{
+			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
+			redirect(action: "show", id: entityInstance.id)
+		}
     }
 
     def delete = {

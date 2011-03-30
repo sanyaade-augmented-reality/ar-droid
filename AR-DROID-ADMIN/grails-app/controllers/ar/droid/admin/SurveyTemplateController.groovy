@@ -1,6 +1,6 @@
 package ar.droid.admin
 
-import ar.droid.admin.survay.SurveyTemplate;
+import ar.droid.admin.survey.SurveyTemplate;
 
 class SurveyTemplateController {
 

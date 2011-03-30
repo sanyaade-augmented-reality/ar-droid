@@ -64,7 +64,12 @@ class TypeEntityController {
                     return
                 }
             }
-            typeEntityInstance.properties = params
+			
+			def icon = typeEntityInstance.icon;
+			typeEntityInstance.properties = params;
+			if (params.get("icon").size == 0){
+				typeEntityInstance.icon = icon;
+			}
             if (!typeEntityInstance.hasErrors() && typeEntityInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), typeEntityInstance.id])}"
                 redirect(action: "show", id: typeEntityInstance.id)
@@ -97,4 +102,11 @@ class TypeEntityController {
             redirect(action: "list")
         }
     }
+	
+	def showIcon = {
+		def typeEntityInstance = TypeEntity.get(params.id)
+		response.contentType = "image/jpeg"
+		response.contentLength = typeEntityInstance?.icon.length
+		response.outputStream.write(typeEntityInstance?.icon)
+	}
 }
