@@ -8,8 +8,12 @@ class RequestController {
 		render TypeEntity.list() as JSON
 	}
 	
-	def typeAvtivities = {
+	def typeActivities = {
 		render TypeActivity.list() as JSON
+	}
+
+    def typeEvents = {
+		render TypeEvent.list() as JSON
 	}
 
     def entities = {
