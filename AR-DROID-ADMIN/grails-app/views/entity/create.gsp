@@ -9,6 +9,7 @@
 
 		<g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
 		<g:javascript src="maps.js" />
+		<g:javascript src="viewparams.js" />
 		<g:javascript library="prototype" />
 		<g:javascript>
 			Event.observe(window, 'load', initialize, true);
@@ -28,6 +29,10 @@
   					var latlng = new google.maps.LatLng($('latitude').value, $('longitude').value);
   					placeMarker(latlng, $('latitude').value + '@' + $('longitude').value, true);
   				}
+  				
+  				// asignar parametros de lectores
+  				viewParams($('readerNews_select'));
+  				viewParams($('readerActivity_select'));
   			}
   			
 		</g:javascript>
@@ -47,7 +52,7 @@
                 <g:renderErrors bean="${entityInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save"  enctype="multipart/form-data">
+            <g:uploadForm action="save">
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -109,14 +114,16 @@
                                     <label for="readerActivity"><g:message code="entity.readerActivity.label" default="Reader Activity" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerActivity', 'errors')}">
-                                    <g:select name="readerActivity.id" from="${ar.droid.admin.ReaderActivity.list()}" optionKey="id" value="${entityInstance?.readerActivity?.id}"  />
+                                    <g:select name="readerActivity_select" from="${application.lsReaderActivities}" optionKey="class" value="${request.readerActivity_select}" onchange="viewParams(this);" />
+                                    <div style="display: none" id="readerActivity_parameter"><div class="subtitle2"><g:message code="entity.param.label" default="Parameter" /></div><g:textField class="input_param2" name="readerActivity.parameter" id="readerActivity.parameter" value="${entityInstance?.readerActivity?.parameter}" /></div>
                                 </td>
                                 
                                 <td valign="top" class="name">
                                     <label for="readerNews"><g:message code="entity.readerNews.label" default="Reader News" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerNews', 'errors')}">
-                                    <g:select name="readerNews.id" from="${lsReaderNews}" value="${entityInstance?.readerNews?.id}"  />
+                                    <g:select name="readerNews_select" from="${application.lsReaderNews}" optionKey="class" value="${request.readerNews_select}" onchange="viewParams(this);" />
+                                    <div style="display: none" id="readerNews_parameter"><div class="subtitle2"><g:message code="entity.param.label" default="Parameter" /></div><g:textField class="input_param2" name="readerNews.parameter" id="readerNews.parameter" value="${entityInstance?.readerNews?.parameter}" /></div>
                                 </td>
                             </tr>
                         
@@ -126,7 +133,7 @@
                 <div class="buttons">
                     <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
-            </g:form>
+            </g:uploadForm>
         </div>
     </body>
 </html>

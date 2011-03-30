@@ -77,21 +77,21 @@
                        	     <td valign="top" class="value"><g:link controller="typeEntity" action="show" id="${entityInstance?.typeEntity?.id}">${entityInstance?.typeEntity?.encodeAsHTML()}</g:link></td>
                        	     
                             <td valign="top" class="name"><g:message code="entity.readerNews.label" default="Reader News" /></td>
-                            <td valign="top" class="value"><g:link controller="readerNews" action="show" id="${entityInstance?.readerNews?.id}">${entityInstance?.readerNews?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value">${entityInstance?.readerNews?.encodeAsHTML()} (${entityInstance?.readerNews?.parameter})</td>
                         </tr>
                     
                         <tr class="prop">
-                        	<td valign="top" class="name"><g:message code="entity.activities.label" default="Activities" /></td>
+                        	<td valign="top" class="name"><g:message code="entity.events.label" default="Events" /></td>
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
-                                <g:each in="${entityInstance.activities}" var="a">
-                                    <li><g:link controller="activity" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
+                                <g:each in="${entityInstance.events}" var="a">
+                                    <li><g:link controller="event" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
                                 </g:each>
                                 </ul>
                             </td>
                             
                             <td valign="top" class="name"><g:message code="entity.readerActivity.label" default="Reader Activity" /></td>
-                            <td valign="top" class="value"><g:link controller="readerActivity" action="show" id="${entityInstance?.readerActivity?.id}">${entityInstance?.readerActivity?.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value">${entityInstance?.readerActivity?.encodeAsHTML()} (${entityInstance?.readerActivity?.parameter})</td>
                         </tr>
                     </tbody>
                 </table>

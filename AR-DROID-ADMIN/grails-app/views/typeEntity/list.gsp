@@ -22,9 +22,8 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'typeEntity.id.label', default: 'Id')}" />
-                        
                             <g:sortableColumn property="description" title="${message(code: 'typeEntity.description.label', default: 'Description')}" />
+                            <g:sortableColumn  property="icon" title="${message(code: 'typeEntity.icon.label', default: 'Icon')}" />
                         
                         </tr>
                     </thead>
@@ -32,10 +31,12 @@
                     <g:each in="${typeEntityInstanceList}" status="i" var="typeEntityInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${typeEntityInstance.id}">${fieldValue(bean: typeEntityInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: typeEntityInstance, field: "description")}</td>
-                        
+                            <td><g:link action="show" id="${typeEntityInstance.id}">${fieldValue(bean: typeEntityInstance, field: "description")}</g:link></td>
+                        	<td>
+                        		<g:if test="${typeEntityInstance.icon}">
+  									<img width="16" class="avatar" src="${createLink(controller:'typeEntity', action:'showIcon', id:typeEntityInstance.id)}" />
+								</g:if>
+                        	</td>
                         </tr>
                     </g:each>
                     </tbody>

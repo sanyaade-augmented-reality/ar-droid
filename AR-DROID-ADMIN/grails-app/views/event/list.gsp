@@ -22,17 +22,13 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'event.id.label', default: 'Id')}" />
+                            <g:sortableColumn property="title" title="${message(code: 'event.title.label', default: 'Title')}" />
                         
-                            <th><g:message code="event.activity.label" default="Activity" /></th>
-                        
-                            <g:sortableColumn property="description" title="${message(code: 'event.description.label', default: 'Description')}" />
+                            <th><g:message code="event.entity.label" default="Entity" /></th>
                         
                             <th><g:message code="event.geoPoint.label" default="Geo Point" /></th>
                         
                             <th><g:message code="event.surveyTemplate.label" default="Survey Template" /></th>
-                        
-                            <g:sortableColumn property="title" title="${message(code: 'event.title.label', default: 'Title')}" />
                         
                         </tr>
                     </thead>
@@ -42,15 +38,13 @@
                         
                             <td><g:link action="show" id="${eventInstance.id}">${fieldValue(bean: eventInstance, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: eventInstance, field: "activity")}</td>
+                            <td>${fieldValue(bean: eventInstance, field: "title")}</td>
                         
-                            <td>${fieldValue(bean: eventInstance, field: "description")}</td>
+                            <td>${fieldValue(bean: eventInstance, field: "entity")}</td>
                         
                             <td>${fieldValue(bean: eventInstance, field: "geoPoint")}</td>
                         
                             <td>${fieldValue(bean: eventInstance, field: "surveyTemplate")}</td>
-                        
-                            <td>${fieldValue(bean: eventInstance, field: "title")}</td>
                         
                         </tr>
                     </g:each>

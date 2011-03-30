@@ -9,6 +9,7 @@
         
         <g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
 		<g:javascript src="maps.js" />
+		<g:javascript src="viewparams.js" />
 		<g:javascript library="prototype" />
 		<g:javascript>
 			Event.observe(window, 'load', initialize, true);
@@ -28,6 +29,10 @@
   					var latlng = new google.maps.LatLng($('latitude').value, $('longitude').value);
   					placeMarker(latlng, $('latitude').value + '@' + $('longitude').value, true);
   				}
+  				
+  				// asignar parametros de lectores
+  				viewParams($('readerNews_select'));
+  				viewParams($('readerActivity_select'));
   			}
   			
 		</g:javascript>
@@ -48,7 +53,7 @@
                 <g:renderErrors bean="${entityInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form method="post"  enctype="multipart/form-data">
+            <g:uploadForm method="post">
                 <g:hiddenField name="id" value="${entityInstance?.id}" />
                 <g:hiddenField name="version" value="${entityInstance?.version}" />
                 <div class="dialog">
@@ -111,30 +116,32 @@
                                 </td>
                                 
                                 <td valign="top" class="name">
-                                  <label for="readerNews"><g:message code="entity.readerNews.label" default="Reader News" /></label>
+                                  <label for="readerActivity"><g:message code="entity.readerActivity.label" default="Reader Activity" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerNews', 'errors')}">
-                                    <g:select name="readerNews.id" from="${ar.droid.admin.ReaderNews.list()}" optionKey="id" value="${entityInstance?.readerNews?.id}"  />
+                                    <g:select name="readerActivity_select" from="${application.lsReaderActivities}" optionKey="class" value="${request.readerActivity_select}" onchange="viewParams(this);" />
+                                    <div style="display: none" id="readerActivity_parameter"><div class="subtitle2"><g:message code="entity.parameter.label" default="Parameter" /></div><g:textField class="input_param2" name="readerActivity.parameter" value="${entityInstance?.readerActivity?.parameter}" /></div>
                                 </td>
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="activities"><g:message code="entity.activities.label" default="Activities" /></label>
+                                  <label for="events"><g:message code="entity.events.label" default="Events" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'activities', 'errors')}">
                                     <ul>
-									<g:each in="${entityInstance?.activities?}" var="a">
+									<g:each in="${entityInstance?.events?}" var="a">
    										<li><g:link controller="activity" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
 									</g:each>
 									</ul>
                                 </td>
                                 
                                 <td valign="top" class="name">
-                                  <label for="readerActivity"><g:message code="entity.readerActivity.label" default="Reader Activity" /></label>
+                                  <label for="readerNews"><g:message code="entity.readerNews.label" default="Reader News" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerActivity', 'errors')}">
-                                    <g:select name="readerActivity.id" from="${ar.droid.admin.ReaderActivity.list()}" optionKey="id" value="${entityInstance?.readerActivity?.id}"  />
+                                    <g:select name="readerNews_select" from="${application.lsReaderNews}" optionKey="class" value="${request.readerNews_select}" onchange="viewParams(this);" />
+                                    <div style="display: none" id="readerNews_parameter"><div class="subtitle2"><g:message code="entity.parameter.label" default="Parameter" /></div><g:textField class="input_param2" name="readerNews.parameter" value="${entityInstance?.readerNews?.parameter}" /></div>
                                 </td>
                             </tr>
                         
@@ -146,7 +153,7 @@
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                     <span class="button"><g:actionSubmit class="add" action="newevent" params="['entity.id': entityInstance?.id]" value="${message(code: 'default.add.label', args: [message(code: 'event.label', default: 'Event')])}" /></span>
                 </div>
-            </g:form>
+            </g:uploadForm>
         </div>
     </body>
 </html>

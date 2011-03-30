@@ -21,10 +21,8 @@
                 <table>
                     <thead>
                         <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'typeActivity.id.label', default: 'Id')}" />
-                        
                             <g:sortableColumn property="description" title="${message(code: 'typeActivity.description.label', default: 'Description')}" />
+                            <g:sortableColumn property="color" title="${message(code: 'typeActivity.color.label', default: 'Color')}" />
                         
                         </tr>
                     </thead>
@@ -32,11 +30,10 @@
                     <g:each in="${typeActivityInstanceList}" status="i" var="typeActivityInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${typeActivityInstance.id}">${fieldValue(bean: typeActivityInstance, field: "id")}</g:link></td>
+                            <td><g:link action="show" id="${typeActivityInstance.id}">${fieldValue(bean: typeActivityInstance, field: "description")}</g:link></td>
+                            <td><span style="background-color: ${fieldValue(bean: typeActivityInstance, field: "color")}; width: 10px; height: 10px; border: 1px solid gray;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> #${fieldValue(bean: typeActivityInstance, field: "color")}</td>
                         
-                            <td>${fieldValue(bean: typeActivityInstance, field: "description")}</td>
-                        
-                        </tr>
+                        </tr> 
                     </g:each>
                     </tbody>
                 </table>

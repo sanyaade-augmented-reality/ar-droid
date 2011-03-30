@@ -24,7 +24,7 @@
                 <g:renderErrors bean="${typeEntityInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form method="post" >
+            <g:uploadForm method="post" action="update">
                 <g:hiddenField name="id" value="${typeEntityInstance?.id}" />
                 <g:hiddenField name="version" value="${typeEntityInstance?.version}" />
                 <div class="dialog">
@@ -38,6 +38,17 @@
                                 <td valign="top" class="value ${hasErrors(bean: typeEntityInstance, field: 'description', 'errors')}">
                                     <g:textField name="description" value="${typeEntityInstance?.description}" />
                                 </td>
+                                
+                                <td valign="top" class="name">
+                                    <label for="description"><g:message code="typeEntity.icon.label" default="Icon" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: typeEntityInstance, field: 'icon', 'errors')}">
+                                    <input type="file" id="icon" name="icon" />
+                                    <g:if test="${typeEntityInstance.icon}">
+                                    	<br /><br />
+  										<img class="avatar" src="${createLink(controller:'typeEntity', action:'showIcon', id:typeEntityInstance.id)}" />
+									</g:if>
+                                </td>
                             </tr>
                         
                         </tbody>
@@ -47,7 +58,7 @@
                     <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </div>
-            </g:form>
+            </g:uploadForm>
         </div>
     </body>
 </html>

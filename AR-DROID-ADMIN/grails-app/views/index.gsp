@@ -1,6 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <head>
-        <title>Welcome to Grails</title>
+        <title>Administración de AR-DROID</title>
         <meta name="layout" content="main" />
         <style type="text/css" media="screen">
 
@@ -81,18 +82,27 @@
             </div>
         </div>
         <div id="pageBody">
-            <h1>Welcome to Grails</h1>
+            <h1>Administración AD-DROID</h1>
             <p>Congratulations, you have successfully started your first Grails application! At the moment
             this is the default page, feel free to modify it to either redirect to a controller or display whatever
             content you may choose. Below is a list of controllers that are currently deployed in this application,
             click on each to execute its default action:</p>
 
             <div id="controllerList" class="dialog">
-                <h2>Available Controllers:</h2>
+                <h2>Administrar:</h2>
                 <ul>
                     <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
                         <li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
                     </g:each>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li class="controller"><g:link controller="typeEntity">Tipos de entidades</g:link></li>
+                    <li class="controller"><g:link controller="typeEvent">Tipos de eventos</g:link></li>
+                    <li class="controller"><g:link controller="typeActivity">Tipos de actividades</g:link></li>
+                    <li class="controller">&nbsp;</li>
+                    <li class="controller"><g:link controller="entity">Entidades</g:link></li>
+                    <li class="controller"><g:link controller="event">Eventos</g:link></li>
+                    <li class="controller"><g:link controller="activity">Actividades</g:link></li>
                 </ul>
             </div>
         </div>

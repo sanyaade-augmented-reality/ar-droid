@@ -24,16 +24,21 @@
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="typeEntity.id.label" default="Id" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: typeEntityInstance, field: "id")}</td>
                             
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="typeEntity.description.label" default="Description" /></td>
-                            
                             <td valign="top" class="value">${fieldValue(bean: typeEntityInstance, field: "description")}</td>
                             
+                        </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="typeEntity.icon.label" default="Icon" /></td>
+                            <td valign="top" class="value">
+                            	<g:if test="${typeEntityInstance.icon}">
+  									<img class="avatar" src="${createLink(controller:'typeEntity', action:'showIcon', id:typeEntityInstance.id)}" />
+								</g:if>
+                            </td>
+                                                        
                         </tr>
                     
                     </tbody>

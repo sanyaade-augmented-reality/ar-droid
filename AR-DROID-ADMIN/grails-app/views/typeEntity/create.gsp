@@ -23,7 +23,7 @@
                 <g:renderErrors bean="${typeEntityInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:uploadForm action="save">
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -35,6 +35,13 @@
                                 <td valign="top" class="value ${hasErrors(bean: typeEntityInstance, field: 'description', 'errors')}">
                                     <g:textField name="description" value="${typeEntityInstance?.description}" />
                                 </td>
+                                
+                                <td valign="top" class="name">
+                                    <label for="description"><g:message code="typeEntity.icon.label" default="Icon" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: typeEntityInstance, field: 'icon', 'errors')}">
+                                    <input type="file" id="icon" name="icon" />
+                                </td>
                             </tr>
                         
                         </tbody>
@@ -43,7 +50,7 @@
                 <div class="buttons">
                     <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
-            </g:form>
+            </g:uploadForm>
         </div>
     </body>
 </html>

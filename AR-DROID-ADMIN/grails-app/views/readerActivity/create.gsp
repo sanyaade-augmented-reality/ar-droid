@@ -29,6 +29,13 @@
                         <tbody>
                         
                             <tr class="prop">
+                            	<td valign="top" class="name">
+                                    <label for="url"><g:message code="readerActivity.name.label" default="Name" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: readerActivityInstance, field: 'name', 'errors')}">
+                                    <g:textField name="name" value="${readerActivityInstance?.name}" />
+                                </td>
+                                
                                 <td valign="top" class="name">
                                     <label for="url"><g:message code="readerActivity.url.label" default="Url" /></label>
                                 </td>
