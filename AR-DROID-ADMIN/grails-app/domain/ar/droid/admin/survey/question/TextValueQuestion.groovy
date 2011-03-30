@@ -1,8 +1,10 @@
-package ar.droid.admin.survay.question
+package ar.droid.admin.survey.question
 
-class TextValueQuestion extends Question{
+class TextValueQuestion extends Question {
 	
-	Integer maxLength
+	static mapping = {
+		tablePerHierarchy false
+	}
 	
     static constraints = {
     }

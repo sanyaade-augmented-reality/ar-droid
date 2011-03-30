@@ -1,17 +1,17 @@
-package ar.droid.admin.survay.question
+package ar.droid.admin.survey.question
 
-import ar.droid.admin.survay.Choice;
+import ar.droid.admin.survey.Choice;
 
 class MultipleChoiceQuestion extends Question{
-
 	Integer maxOptions
+	
+	static mapping = {
+		tablePerHierarchy false
+	}
 	
 	static hasMany = [options:Choice]
            	
     static constraints = {
+		maxOptions(nullable:true)
     }
-	
-	static mapping ={
-		table 'chooseQuestion'		
-   }
 }

@@ -1,21 +1,15 @@
-package ar.droid.admin.survay.question
+package ar.droid.admin.survey.question
 
 import org.hamcrest.core.IsNull;
 
-import ar.droid.admin.survay.SurveyTemplate;
-
-
+import ar.droid.admin.survey.SurveyTemplate;
 
 class Question {
 
 	String question
+	SurveyTemplate surveyTemplate;
 	
-	static hasMany = [templates: SurveyTemplate]
-	static belongsTo = SurveyTemplate
-	
-	static mapping = {
-		tablePerHierarchy false
-	}
+	static belongsTo = [surveyTemplate: SurveyTemplate]
 	
 	static constraints = {
 		question(blank: false)
