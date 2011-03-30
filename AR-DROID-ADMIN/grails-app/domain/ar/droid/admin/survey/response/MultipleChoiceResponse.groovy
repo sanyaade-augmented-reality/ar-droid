@@ -1,16 +1,18 @@
-package ar.droid.admin.survay.response
+package ar.droid.admin.survey.response
 
-import ar.droid.admin.survay.Choice;
-import ar.droid.admin.survay.question.MultipleChoiceQuestion;
+import ar.droid.admin.survey.Choice;
+import ar.droid.admin.survey.question.MultipleChoiceQuestion;
 
-class MultipleChoiceResponse extends Response{
-
-	static hasMany =[options:Choice]
-	
+class MultipleChoiceResponse extends Response {
 	MultipleChoiceQuestion multipleChoiceQuestion
 	
+	static hasMany =[options:Choice]
+	
+	static mapping = {
+		tablePerHierarchy false
+	}
+	
     static constraints = {
+		multipleChoiceQuestion(nullable:true)
     }
-	
-	
 }
