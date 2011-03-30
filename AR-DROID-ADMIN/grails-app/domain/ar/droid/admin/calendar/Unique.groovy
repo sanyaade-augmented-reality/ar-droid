@@ -1,9 +1,17 @@
 package ar.droid.admin.calendar
 
-import junit.extensions.RepeatedTest;
 
 class Unique extends EventCalendar{
 	
+	static mapping = {
+		tablePerHierarchy false
+	}
+	
 	static constraints = {
+	}
+	
+	@Override
+	public String toString() {
+		return "Unique";
 	}
 }

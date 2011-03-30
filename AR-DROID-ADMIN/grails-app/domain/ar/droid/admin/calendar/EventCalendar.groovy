@@ -1,17 +1,21 @@
 package ar.droid.admin.calendar
 
-import java.sql.Time;
+import ar.droid.admin.Entity
 
- class EventCalendar {
-	Date startDate;
+class EventCalendar {
+	Date startDate
 	Date endDate
-	Time startTime
-	Time endTime
+	Entity entity
+	
+	static belongsTo = [entity: Entity]
 	
     static constraints = {
 		startDate(nullable: false)
 		endDate(nullable: false)
-		startTime(nullable: false)
-		endTime(nullable: false)
     }
+	
+	public static EventCalendar fromString(String keyValue) {
+		def domainClass = keyValue.substring(6)
+		return Class.forName(domainClass, true, new GroovyClassLoader()).newInstance()			
+	}
 }

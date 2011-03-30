@@ -1,29 +1,28 @@
 package ar.droid.admin
 
-import ar.droid.admin.calendar.EventCalendar;
-import ar.droid.admin.survay.SurveyTemplate;
-import ar.droid.admin.survay.response.SurveyResponse;
-
+import ar.droid.admin.calendar.EventCalendar
+import ar.droid.admin.survey.SurveyTemplate
+import ar.droid.admin.survey.response.SurveyResponse
 
 class Event {
-	
-	static hasMany = [activities: Activity, responses: SurveyResponse]
-	//Entity entity
-	
-	static belongsTo = [entity: Entity]
-	
 	String title
+	Entity entity
 	String description
 	GeoPoint geoPoint
-	EventCalendar eventCalenar
+	EventCalendar eventCalendar
 	byte[] photo
-	static embedded = ['geoPoint'] /**Esto indicar que el GeoPoint es una composición*/
-		
-	/* template encuesta */
+	TypeEvent typeEvent
 	SurveyTemplate surveyTemplate
+	
+	static hasMany = [activities: Activity, responses: SurveyResponse]
+	static belongsTo = [entity: Entity]
+	
+	/**Esto indicar que el GeoPoint es una composición*/
+	static embedded = ['geoPoint']
 	
 	static constraints = {
 		title(blank: false)
+		description(blank: false)
     }
 	
 	@Override

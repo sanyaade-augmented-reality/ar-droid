@@ -1,13 +1,18 @@
 package ar.droid.admin.calendar
 
-import java.util.Calendar;
-import java.util.List;
-
-
 class Weekly extends RepeatCalendar {
-
-	List<Integer> days;
+	Integer dayOfWeek;
+	
+	static mapping = {
+		tablePerHierarchy false
+	}
 	
 	static constraints = {
+		dayOfWeek(nullable:true)
     }
+	
+	@Override
+	public String toString() {
+		return "Weekly";
+	}
 }

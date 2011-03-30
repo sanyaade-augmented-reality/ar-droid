@@ -1,5 +1,6 @@
 package ar.droid.admin
 
+import ar.droid.admin.reader.*
 
 class Entity {
 	
@@ -13,19 +14,18 @@ class Entity {
 	String url
 	byte[] photo
 	TypeEntity typeEntity
-	GeoPoint geoPoint;
+	GeoPoint geoPoint
 	static embedded = ['geoPoint']
 	
 	ReaderNews readerNews
 	ReaderActivity readerActivity
 	
-	/**con la siguiente sentencia se declaran validaciones, existen muchas predefinidas
-	 * como la de url, etc*/
+	/**con la siguiente sentencia se declaran validaciones, existen muchas predefinidas como la de url, etc*/
 	static constraints = {
 		url(url:true)	
 		name(blank: false)
-		readerActivity(nullable:true)
-		readerNews(nullable:true)
+		readerActivity(nullable: false)
+		readerNews(nullable: false)
 	}
 	static mapping = {
 		description type: 'text'
@@ -40,8 +40,8 @@ class Entity {
 
 /**De esta forma se mapea una composicion, GeoPoint NO se transforma en una tabla*/
 class GeoPoint {
-	BigDecimal latitude;
-	BigDecimal longitude;
+	Double latitude;
+	Double longitude;
 	
 	@Override
 	public String toString() {

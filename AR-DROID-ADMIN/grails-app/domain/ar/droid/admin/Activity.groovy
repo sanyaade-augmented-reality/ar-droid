@@ -6,7 +6,7 @@ class Activity {
 	String description
 	GeoPoint geoPoint	
 	TypeActivity typeActivity
-	//Event event
+	Event event
 	
 	static belongsTo = [event: Event]
 	
