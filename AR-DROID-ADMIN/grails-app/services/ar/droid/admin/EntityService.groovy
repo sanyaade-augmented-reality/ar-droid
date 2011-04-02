@@ -1,4 +1,4 @@
-package ar.droid.admin
+package ar.droid.admin;
 
 import ar.droid.admin.reader.ReaderNews
 import ar.droid.admin.reader.ReaderActivity
@@ -42,10 +42,9 @@ class EntityService {
 					return entityInstance
 				}
 			}
+			def photo = entityInstance.photo;
 			entityInstance.properties = params
 			
-			// verificar si cambiar o mantener imagen
-			def photo = entityInstance.photo;
 			if(params.get("photo").size == 0){
 				entityInstance.photo = photo;
 			}
