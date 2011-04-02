@@ -1,6 +1,6 @@
 package ar.droid.admin.survey.response
 
-import ar.droid.admin.survey.Choice;
+import ar.droid.admin.survey.question.Choice;
 import ar.droid.admin.survey.question.MultipleChoiceQuestion;
 
 class MultipleChoiceResponse extends Response {

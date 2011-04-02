@@ -12,4 +12,8 @@ class SurveyTemplate {
 	static constraints = {
 		description(blank: false)
     }
+	@Override
+	public String toString() {
+		return description;
+	}
 }
