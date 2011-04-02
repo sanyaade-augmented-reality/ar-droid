@@ -8,7 +8,7 @@ class EventService {
 	def Event saveEvent(params) {
 		def eventInstance = new Event()
 		eventInstance.properties = params
-		eventInstance.eventCalendar = EventCalendar.fromString(params.readerActivity_select)
+		eventInstance.eventCalendar = EventCalendar.fromString(params.eventCalendar_select)
 		
 		// crear composiciones
 		eventInstance.eventCalendar.properties = params.eventCalendar
