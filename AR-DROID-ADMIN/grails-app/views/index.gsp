@@ -103,6 +103,8 @@
                     <li class="controller"><g:link controller="entity">Entidades</g:link></li>
                     <li class="controller"><g:link controller="event">Eventos</g:link></li>
                     <li class="controller"><g:link controller="activity">Actividades</g:link></li>
+                    <li class="controller"><g:link controller="surveyTemplate">Plantillas</g:link></li>
+                    <li class="controller"><g:link controller="question">Preguntas</g:link></li>
                 </ul>
             </div>
         </div>
