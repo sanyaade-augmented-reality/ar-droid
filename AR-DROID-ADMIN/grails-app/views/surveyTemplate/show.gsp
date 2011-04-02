@@ -1,5 +1,5 @@
 
-<%@ page import="ar.droid.admin.SurveyTemplate" %>
+<%@ page import="ar.droid.admin.survey.SurveyTemplate" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -42,7 +42,7 @@
                             <td valign="top" style="text-align: left;" class="value">
                                 <ul>
                                 <g:each in="${surveyTemplateInstance.questions}" var="q">
-                                    <li><g:link controller="question" action="show" id="${q.id}">${q?.encodeAsHTML()}</g:link></li>
+                                    <li><g:link controller="question" action="show" id="${q.id}">${q?.type}: ${q?.question}</g:link></li>
                                 </g:each>
                                 </ul>
                             </td>

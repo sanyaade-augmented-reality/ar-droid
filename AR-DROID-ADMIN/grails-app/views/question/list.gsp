@@ -1,5 +1,5 @@
 
-<%@ page import="ar.droid.admin.Question" %>
+<%@ page import="ar.droid.admin.survey.question.Question" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -25,6 +25,10 @@
                             <g:sortableColumn property="id" title="${message(code: 'question.id.label', default: 'Id')}" />
                         
                             <g:sortableColumn property="question" title="${message(code: 'question.question.label', default: 'Question')}" />
+                            
+                            <g:sortableColumn property="type" title="${message(code: 'question.typeQuestion.label', default: 'Type Question')}" />
+                        
+                            <th><g:message code="question.surveyTemplate.label" default="Survey Template" /></th>
                         
                         </tr>
                     </thead>
@@ -35,6 +39,10 @@
                             <td><g:link action="show" id="${questionInstance.id}">${fieldValue(bean: questionInstance, field: "id")}</g:link></td>
                         
                             <td>${fieldValue(bean: questionInstance, field: "question")}</td>
+                            
+                            <td>${questionInstance?.type}</td>
+                        
+                            <td>${fieldValue(bean: questionInstance, field: "surveyTemplate")}</td>
                         
                         </tr>
                     </g:each>

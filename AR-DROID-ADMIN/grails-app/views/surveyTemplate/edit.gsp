@@ -1,6 +1,6 @@
 
 
-<%@ page import="ar.droid.admin.SurveyTemplate" %>
+<%@ page import="ar.droid.admin.survey.SurveyTemplate" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -45,7 +45,14 @@
                                   <label for="questions"><g:message code="surveyTemplate.questions.label" default="Questions" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: surveyTemplateInstance, field: 'questions', 'errors')}">
-                                    <g:select name="questions" from="${ar.droid.admin.Question.list()}" multiple="yes" optionKey="id" size="5" value="${surveyTemplateInstance?.questions*.id}" />
+                                    
+<ul>
+<g:each in="${surveyTemplateInstance?.questions?}" var="q">
+    <li><g:link controller="question" action="show" id="${q.id}">${q?.type}: ${q?.question}</g:link></li>
+</g:each>
+</ul>
+<g:link controller="question" action="create" params="['surveyTemplate.id': surveyTemplateInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'question.label', default: 'Question')])}</g:link>
+
                                 </td>
                             </tr>
                         

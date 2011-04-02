@@ -1,10 +1,17 @@
 
-<%@ page import="ar.droid.admin.Question" %>
+<%@ page import="ar.droid.admin.survey.question.Question" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
+         <g:javascript src="viewparams.js" />
+		<g:javascript library="prototype" />
+			<g:javascript>
+				document.observe("dom:loaded", function() {
+					  showDataForQuestion($('typeQuestion'));
+				});		
+		</g:javascript>
+	    <g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -23,31 +30,54 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="question.id.label" default="Id" /></td>
+                         	<td valign="top" class="name"><g:message code="question.surveyTemplate.label" default="Survey Template" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: questionInstance, field: "id")}</td>
+                            <td valign="top" class="value"><g:link controller="surveyTemplate" action="show" id="${questionInstance?.surveyTemplate?.id}">${questionInstance?.surveyTemplate?.encodeAsHTML()}</g:link></td>
+                           
+                            <td valign="top" class="name"><g:message code="question.typeQuestion.label" default="Type Question" /></td>
+                            
+                            <td valign="top" class="value"><g:hiddenField name="typeQuestion" value="${typeQuestion}" />
+                            ${fieldValue(bean: questionInstance, field: "type")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
+                         	<td valign="top" class="name"><g:message code="question.id.label" default="Id" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: questionInstance, field: "id")}</td>
+                            
                             <td valign="top" class="name"><g:message code="question.question.label" default="Question" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: questionInstance, field: "question")}</td>
                             
                         </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="question.templates.label" default="Templates" /></td>
-                            
-                            <td valign="top" style="text-align: left;" class="value">
-                                <ul>
-                                <g:each in="${questionInstance.templates}" var="t">
-                                    <li><g:link controller="surveyTemplate" action="show" id="${t.id}">${t?.encodeAsHTML()}</g:link></li>
-                                </g:each>
-                                </ul>
-                            </td>
-                            
+                        <tr class="prop" id="trNumericType">
+                                <td valign="top" class="name">
+                                    <label for="limitTo"><g:message code="question.NumericValueQuestion.LimitTo.label" default="limit To" /></label>
+                                </td>
+                                <td valign="top" class="value">${limitTo}</td>
+                                <td valign="top" class="name">
+                                    <label for="limitFrom"><g:message code="question.NumericValueQuestion.LimitFrom.label" default="limitFrom" /></label>
+                                </td>
+                                <td valign="top" class="value">${limitFrom} </td>
+                                
                         </tr>
+                        
+                        <tr class="prop" id="trMultipleChoiceType">
+                                <td valign="top" class="name">
+                                    <label for="limitTo"><g:message code="question.MultipleChoiceQuestion.maxOptions.label" default="max Options" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: questionInstance, field: 'maxOptions', 'errors')}">${maxOptions}</td>
+                                <td>
+                                	   <ul>
+                               				 <g:each in="${options}" var="q">
+                                    			<li>${q?.description}</li>
+                                			</g:each>
+                                	   </ul>
+                                </td>
+                                <td>&nbsp;</td>                                
+                          </tr>
+                     
                     
                     </tbody>
                 </table>

@@ -1,5 +1,5 @@
 
-<%@ page import="ar.droid.admin.SurveyTemplate" %>
+<%@ page import="ar.droid.admin.survey.SurveyTemplate" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
