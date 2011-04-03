@@ -50,16 +50,3 @@ function showDataForQuestion(input){
 	}
 }
 
-function createOption(button){
-	var tr = new Element('tr', { 'class': 'prop','name':'trChoice'}).update("<tr><td><label for='choice'>Opcion</label></td><td><input type='text' name='choice' id='choice'></td><td>&nbsp;</td><td>&nbsp;</td></tr>");
-	Element.insert($('tableQuestion'), tr);
-}
-
-function deleteOptions(){
-	var trs = $('tableQuestion').getElementsBySelector('[name="trChoice"]');
-	//alert($A(trs).length);
-	trs.each(function(row){
-		Element.remove(row);
-	});
-	
-}
