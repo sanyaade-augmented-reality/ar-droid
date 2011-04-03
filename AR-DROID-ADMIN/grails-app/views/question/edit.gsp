@@ -6,6 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:javascript src="viewparams.js" />
+        <g:javascript src="surveytemplate.js" />
 		<g:javascript library="prototype" />
 		<g:javascript>
 				document.observe("dom:loaded", function() {
@@ -84,9 +85,18 @@
                                 <td valign="top" class="value ${hasErrors(bean: questionInstance, field: 'maxOptions', 'errors')}">
                                     <g:textField name="maxOptions" value="${maxOptions}" />
                                 </td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>                                
+                                <td><input type="button" name="createChoice" id="createChoice" value="${message(code: 'default.button.create.Choice.label', default: 'Create Choice')}" onclick="createOption(this)"></td>
+                                <td>&nbsp;</td>                               
                           </tr>
+                           <g:each in="${options}" var="q">
+                                  <tr>
+                                  	<td><label for='choice'>Opcion</label></td>
+                                  	<td>${q?.description}&nbsp;&nbsp;<g:link controller="choice" action="delete" id="${q.id}" params="['choicedelete': q?.id,question:questionInstance?.id]">Eliminar</g:link>
+                                  	</td>
+                                  	<td></td>
+                                  	<td>&nbsp;</td>
+                                  </tr>
+                           </g:each>
                         
                         </tbody>
                     </table>

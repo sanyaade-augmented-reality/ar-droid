@@ -6,6 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:javascript src="viewparams.js" />
+        <g:javascript src="surveytemplate.js" />
 		<g:javascript library="prototype" />
 		<g:javascript>
 				document.observe("dom:loaded", function() {
@@ -84,6 +85,15 @@
                                 <td><input type="button" name="createChoice" id="createChoice" value="${message(code: 'default.button.create.Choice.label', default: 'Create Choice')}" onclick="createOption(this)"></td>
                                 <td>&nbsp;</td>                                
                           </tr>
+                          
+                           <g:each in="${options}" var="q">
+                                  <tr>
+                                 	 <td><label for='choice'>Opcion</label></td>
+                                  	 <td><input type='text' name='choice' id='choice' value="${q?.description}"></td>
+                                  	 <td><input type='button' name='deleteChoice' id='deleteChoice' value='Eliminar' onClick='deleteOption(this)'></td>
+                                 	 <td>&nbsp;</td>
+                                </tr>
+                           </g:each>
                                               
                         </tbody>
                     </table>
