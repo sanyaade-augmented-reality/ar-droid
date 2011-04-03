@@ -16,23 +16,28 @@ class QuestionService {
 	
 	def Question saveQuestion(params) {
 		def questionInstance = getTypeQuestions().getAt(params.typeQuestion)
-		def choices = params.choice
-		for (i in choices) {
-			println "Hello ${i}"
-			def value = i
-			def choice = new Choice(description:i)
-			choice.multipleChoiceQuestion = questionInstance
-			questionInstance.addOption(choice)
-		}
-		
+		addChoices(questionInstance,params)
 		questionInstance.properties = params
 		questionInstance.save(flush: true)
 		return questionInstance
 	}
 	
+	private def addChoices(questionInstance,params){
+		def choices = params.choice
+		if (choices instanceof java.lang.String){
+			choices = []
+			choices.add(params.choice)
+		}
+		for (i in choices) {
+			def choice = new Choice(description:i)
+			choice.multipleChoiceQuestion = questionInstance
+			questionInstance.addOption(choice)
+		}
+	}
 	
 	def Question updateQuestion(params) {
 		def questionInstance = Question.get(params.id)
+		addChoices(questionInstance,params)
         if (questionInstance) {
             if (params.version) {
                 def version = params.version.toLong()
