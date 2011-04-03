@@ -27,10 +27,11 @@ class QuestionController {
     def save = {
 		def questionInstance = questionService.saveQuestion(params)		
 		if (questionInstance.hasErrors()) {
-			request.limitTo = questionInstance.limitTo()
+			/*request.limitTo = questionInstance.limitTo()
 			request.limitFrom = questionInstance.limitFrom()
-			request.maxOptions = questionInstance.maxOptions()
-			render(view: "create", model: [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions(),typeQuestion:params.typeQuestion])
+			request.maxOptions = questionInstance.maxOptions()*/
+			//render(view: "create", model: [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions(),typeQuestion:params.typeQuestion,options:questionInstance.getxxx()])
+			render(view: "create", model: getParameters(questionInstance,false))
 	    }
         else {
 			flash.message = "${message(code: 'default.created.message', args: [message(code: 'question.label', default: 'Question'), questionInstance.id])}"
@@ -45,11 +46,12 @@ class QuestionController {
             redirect(action: "list")
         }
         else {
-			request.limitTo = questionInstance.limitTo()
+			/*request.limitTo = questionInstance.limitTo()
 			request.limitFrom = questionInstance.limitFrom()
 			request.maxOptions = questionInstance.maxOptions()
 			def val = questionService.getTypeQuestions().find{it.value.type == questionInstance.type}?.key
-            [questionInstance: questionInstance,typeQuestion:val,options:questionInstance.getxxx()]
+            [questionInstance: questionInstance,typeQuestion:val,options:questionInstance.getxxx()]*/
+			return getParameters(questionInstance,true)
         }
     }
 
@@ -60,53 +62,30 @@ class QuestionController {
             redirect(action: "list")
         }
         else {
-			request.limitTo = questionInstance.limitTo()
+			/*request.limitTo = questionInstance.limitTo()
 			request.limitFrom = questionInstance.limitFrom()
 			request.maxOptions = questionInstance.maxOptions()
 			def val = questionService.getTypeQuestions().find{it.value.type == questionInstance.type}?.key
-			return [questionInstance: questionInstance,typeQuestion:val,typeQuestions:questionService.getTypeQuestions()]
+			return [questionInstance: questionInstance,typeQuestion:val,typeQuestions:questionService.getTypeQuestions(),options:questionInstance.getxxx()]*/
+			return getParameters(questionInstance,true)
         }
     }
 
     def update = {
 		def questionInstance = questionService.updateQuestion(params)
 		if (questionInstance.hasErrors()) {
-			request.limitTo = questionInstance.limitTo()
+			/*request.limitTo = questionInstance.limitTo()
 			request.limitFrom = questionInstance.limitFrom()
 			request.maxOptions = questionInstance.maxOptions()
 			render(view: "edit", model: [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions(),typeQuestion:params.typeQuestion])
+			*/
+			render(view: "edit", model: getParameters(questionInstance,false))
 		}
 		else{
 			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'question.label', default: 'Question'), questionInstance.id])}"
 			redirect(action: "show", id: questionInstance.id)
 		}
-        //def questionInstance = Question.get(params.id)
-        /*if (questionInstance) {
-            if (params.version) {
-                def version = params.version.toLong()
-                if (questionInstance.version > version) {
-                    
-                    questionInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'question.label', default: 'Question')] as Object[], "Another user has updated this Question while you were editing")
-                    render(view: "edit", model: [questionInstance: questionInstance])
-                    return
-                }
-            }
-            questionInstance.properties = params
-            if (!questionInstance.hasErrors() && questionInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'question.label', default: 'Question'), questionInstance.id])}"
-                redirect(action: "show", id: questionInstance.id)
-            }
-            else {
-				request.limitTo = questionInstance.limitTo
-				request.limitFrom = questionInstance.limitFrom
-			    render(view: "edit", model: [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions(),typeQuestion:params.typeQuestion])
-            }
-        }
-        else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'question.label', default: 'Question'), params.id])}"
-            redirect(action: "list")
-        }*/
-    }
+      }
 
     def delete = {
         def questionInstance = Question.get(params.id)
@@ -126,4 +105,21 @@ class QuestionController {
             redirect(action: "list")
         }
     }
+	
+	def deletechoice = {
+		def idchoice =  params.choicedelete
+		println idchoice
+		redirect(controller: "choice", action: "delete", id: idchoice,question:params.id)
+	}
+	
+	def getParameters(questionInstance,pEval) { 
+		request.limitTo = questionInstance.limitTo()
+		request.limitFrom = questionInstance.limitFrom()
+		request.maxOptions = questionInstance.maxOptions()
+		def val = params.typeQuestion
+		if (pEval){
+			val = questionService.getTypeQuestions().find{it.value.type == questionInstance.type}?.key
+		}
+		return [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions(),typeQuestion:val,options:questionInstance.getxxx()]
+	}
 }
