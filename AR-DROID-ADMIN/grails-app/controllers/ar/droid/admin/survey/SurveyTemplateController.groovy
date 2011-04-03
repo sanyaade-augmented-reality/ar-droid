@@ -97,4 +97,8 @@ class SurveyTemplateController {
             redirect(action: "list")
         }
     }
+	
+	def addnewquestion = {
+		redirect(controller: "question", action: "create", surveyTemplate: params.id)
+	}
 }
