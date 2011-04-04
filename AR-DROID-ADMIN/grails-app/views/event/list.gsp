@@ -4,6 +4,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
+        <g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
+		<g:javascript library="prototype" />
+		<g:javascript src="maps.js" />
+		<g:javascript>
+				document.observe("dom:loaded", function() {
+					  tableToDirection('tableDir',2);  	
+				});		
+		</g:javascript>
         <g:set var="entityName" value="${message(code: 'event.label', default: 'Event')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>

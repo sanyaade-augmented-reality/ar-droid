@@ -9,6 +9,11 @@
         <g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
 		<g:javascript library="prototype" />
 		<g:javascript src="maps.js" />
+		<g:javascript>
+				document.observe("dom:loaded", function() {
+					  tableToDirection('tableDir',3);  	
+				});		
+		</g:javascript>
 	 </head>
     <body >
         <div class="nav">
@@ -48,9 +53,6 @@
             <div class="paginateButtons">
                 <g:paginate total="${entityInstanceTotal}" />
             </div>
-            <g:javascript >
-            	tableToDirection('tableDir');  	
-            </g:javascript>
         </div>
     </body>
 </html>
