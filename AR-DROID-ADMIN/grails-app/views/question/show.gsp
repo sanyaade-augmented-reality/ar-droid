@@ -69,14 +69,14 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: questionInstance, field: 'maxOptions', 'errors')}">${maxOptions}</td>
                                 <td>
-                                	   <ul>
+                                	   <ul >${message(code: 'question.MultipleChoiceQuestion.choices', default: 'Options')}
                                				 <g:each in="${options}" var="q">
                                     			<li>${q?.description}</li>
                                 			</g:each>
                                 	   </ul>
                                 </td>
                                 <td>&nbsp;</td>                                
-                          </tr>
+                         </tr>
                      
                     
                     </tbody>

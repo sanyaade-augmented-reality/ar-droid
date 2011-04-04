@@ -20,7 +20,7 @@
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new2.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
@@ -90,8 +90,8 @@
                           </tr>
                            <g:each in="${options}" var="q">
                                   <tr>
-                                  	<td><label for='choice'>Opcion</label></td>
-                                  	<td>${q?.description}&nbsp;&nbsp;<g:link controller="choice" action="delete" id="${q.id}" params="['choicedelete': q?.id,question:questionInstance?.id]">Eliminar</g:link>
+                                  	<td><label for='choice'>${message(code: 'choice.description.label', default: 'Choice')}</label></td>
+                                  	<td>${q?.description}&nbsp;&nbsp;<g:link controller="choice" action="delete" id="${q.id}" params="['choicedelete': q?.id,question:questionInstance?.id]">${message(code: 'default.button.delete.label', default: 'Delete')}</g:link>
                                   	</td>
                                   	<td></td>
                                   	<td>&nbsp;</td>
