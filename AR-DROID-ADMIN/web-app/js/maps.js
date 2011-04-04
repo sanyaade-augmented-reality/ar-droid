@@ -99,7 +99,7 @@ function codeLatLng(location, title, reset) {
     }
   }
 
-function tableToDirection(pTable){
+function tableToDirection(pTable,index){
 	var someNodeList = $(pTable);
  	var nodes =$A(someNodeList.getElementsByTagName('TR'));
 	nodes.each(function(row){
