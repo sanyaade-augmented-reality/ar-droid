@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
     <head>
         <title>Administración de AR-DROID</title>
         <meta name="layout" content="main" />
@@ -107,6 +107,27 @@
                     <li class="controller"><g:link controller="question">Preguntas</g:link></li>
                 </ul>
             </div>
+            	<div id="fb-root">	</div>
+            	<fbg:resources locale="${Locale.getDefault()}" />
+				<script src="http://connect.facebook.net/en_US/all.js"></script>
+				<script>
+						function facebookLogin() {
+							FB.getLoginStatus(function(response) {
+							if (response.session) {
+								// logged in and connected user, someone you know
+								//window.location ="${createLink(controller:'auth', action:'facebookLogin')}";
+								//${'fb-root'}.innerHtml = "${createLink(controller:'auth', action:'facebookLogin')}";
+							}
+						});
+						}
+							
+						FB.init({appId: 'dee43c69e966353759baac72862b8164', cookie: true, xfbml: true, status: true});
+				</script>
+				<fb:login-button perms="email,publish_stream" onlogin="facebookLogin();" size="large">
+					<g:message  code="auth.login.facebook"/>
+				</fb:login-button>
+			
+            
         </div>
     </body>
 </html>
