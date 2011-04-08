@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE events SYSTEM "http://api.ardroid.com.ar/1.0/API.dtd">
+<events xmlns="http://api.ardroid.com.ar/1.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://api.ardroid.com.ar/1.0/ http://api.ardroid.com.ar/1.0/facebook.xsd"
+	list="true">
+	<!-- id must be unique and asending numeric value -->
+	<event id="{id}">
+		<title><![CDATA[{title}]]></title>
+		<description><![CDATA[{description}]]></description>
+		<!-- geoPoint is optional -->
+		<geoPoint>
+			<latitude>{latitude}</latitude>
+			<longitude>{longitude}</longitude>
+		</geoPoint>
+		<!-- {eventCalendar_type} must be predefined constant -->
+		<eventCalendar type="{eventCalendar_type}">
+			<startDate>{startDate}</startDate>
+			<endDate>{endDate}</endDate>
+			<dayOfMonth>{dayOfMonth}</dayOfMonth>
+			<dayOfWeek>{dayOfWeek}</dayOfWeek>			
+		</eventCalendar>		
+		<!-- {photo} must be absolute URL to an image - optional -->
+		<photo>{photo}</photo>
+		<!-- {typeEvent} must be predefined constant -->
+		<typeEvent>{typeEvent}</typeEvent>
+		<activities>
+			<!-- list of event activities -->
+			<activity>
+				<name><![CDATA[{name}]]></name>
+				<description><![CDATA[{description}]]></description>
+				<!-- geoPoint is optional, by default is the position of parent event -->
+				<geoPoint>
+					<latitude>{latitude}</latitude>
+					<longitude>{longitude}</longitude>
+				</geoPoint>
+				<!-- {typeActivity} must be predefined constant -->
+				<typeActivity>{typeActivity}</typeActivity>
+			</activity>
+		</activities>
+	</event>
+</events>
