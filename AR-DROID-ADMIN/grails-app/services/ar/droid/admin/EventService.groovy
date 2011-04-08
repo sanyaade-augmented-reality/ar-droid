@@ -1,5 +1,8 @@
 package ar.droid.admin
 
+import java.text.SimpleDateFormat
+
+import ar.droid.admin.DateUtils;
 import ar.droid.admin.calendar.EventCalendar
 
 class EventService {	
@@ -9,10 +12,11 @@ class EventService {
 		def eventInstance = new Event()
 		eventInstance.properties = params
 		eventInstance.eventCalendar = EventCalendar.fromString(params.eventCalendar_select)
-		
-		// crear composiciones
+				
+		// crear composiciones y agregar fechas
 		eventInstance.eventCalendar.properties = params.eventCalendar
-		
+		eventInstance.eventCalendar.startDate = DateUtils.getDate(params.eventCalendar.startDate_day, params.eventCalendar.startDate_month, params.eventCalendar.startDate_year, params.eventCalendar.startDate_hour, params.eventCalendar.startDate_minute)
+		eventInstance.eventCalendar.endDate = DateUtils.getDate(params.eventCalendar.endDate_day, params.eventCalendar.endDate_month, params.eventCalendar.endDate_year, params.eventCalendar.endDate_hour, params.eventCalendar.endDate_minute)
 		eventInstance.geoPoint = new GeoPoint()
 		
 		// validar posición

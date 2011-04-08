@@ -121,8 +121,8 @@
                                 </td>
                                 <td valign="top" class="date value ${hasErrors(bean: eventInstance, field: 'eventCalendar', 'errors')}">
                                     <g:select name="eventCalendar_select" from="${application.lsEventCalendars}" optionKey="class" value="${request.eventCalendar_select}" onchange="viewParams(this);" class="w100" />
-                                    <g:hiddenField name="event.eventCalendar.startDate" value="date.struct" />
-                                    <g:hiddenField name="event.eventCalendar.endDate" value="date.struct" />
+                                    <g:hiddenField name="eventCalendar.startDate" value="struct" />
+                                    <g:hiddenField name="eventCalendar.endDate" value="struct" />
                                     <div><div class="dates"><g:message code="event.eventCalendar.startDate" default="Init" /></div><g:datePicker name="eventCalendar.startDate" value="${new Date()}" years="${2011..2020}" /></div>
                                     <div><div class="dates"><g:message code="event.eventCalendar.endDate" default="End" /></div><g:datePicker name="eventCalendar.endDate" value="${new Date()}" years="${2011..2020}" /></div>
                                     
