@@ -23,6 +23,7 @@ class Event {
 	static constraints = {
 		title(blank: false)
 		description(blank: false)
+		photo(nullable: true)
     }
 	
 	@Override
