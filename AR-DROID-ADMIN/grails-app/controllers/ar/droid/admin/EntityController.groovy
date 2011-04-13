@@ -106,4 +106,13 @@ class EntityController {
         def entityInstance = Entity.get(params.id)
 		redirect(controller: "event", action: "create", entity: params.id)
 	}
+	
+	def sinevent = {
+		def entityInstance = Entity.get(params.id)
+		params.facebookdata = session?.facebook
+		entityService.synchronizeEvents(entityInstance,params);
+		redirect(action: "show", id: params.id)
+	}
+	
+
 }
