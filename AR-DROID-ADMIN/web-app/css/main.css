@@ -279,6 +279,13 @@ th.desc a {
     padding-right: 10px;
     width: auto;
 }
+
+.buttons input.sinc {
+    background: transparent url(../images/skin/sincronizar.png) 5px 50% no-repeat;
+    padding-left: 28px;
+    padding-right: 10px;
+    width: auto;
+}
 .buttons input.add {
     background: transparent url(../images/skin/database_add.png) 5px 50% no-repeat;
     padding-left: 28px;
