@@ -6,12 +6,12 @@ import ar.droid.admin.survey.response.SurveyResponse
 
 class Event {
 	String title
-	Entity entity
 	String description
 	GeoPoint geoPoint
 	EventCalendar eventCalendar
 	byte[] photo
 	TypeEvent typeEvent
+	String eid
 	SurveyTemplate surveyTemplate
 	
 	static hasMany = [activities: Activity, responses: SurveyResponse]
@@ -20,10 +20,17 @@ class Event {
 	/**Esto indicar que el GeoPoint es una composición*/
 	static embedded = ['geoPoint']
 	
+	static mapping = {
+		description type: 'text'
+		photo sqlType: 'blob' // para archivos grandes
+	}
+	
 	static constraints = {
 		title(blank: false)
 		description(blank: false)
-		photo(nullable: true)
+		eid(nullable:true)
+		surveyTemplate(nullable:true)
+		photo(nullable:true)
     }
 	
 	@Override
