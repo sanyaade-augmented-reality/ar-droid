@@ -63,6 +63,8 @@ log4j = {
     // Example of changing the log pattern for the default console
     // appender:
     //
+   rootLogger="debug,stdout"
+   
    appenders {
        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
    }
@@ -79,3 +81,13 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate', 'org.mortbay.log'
 }
+facebook.applicationSecret='a511dae2169d13558351bd2aa4ff2966'
+facebook.applicationId='122540491154119'
+facebook.secure=false
+
+/*
+ * ID de la aplicación 122540491154119
+Clave API 6e208071fb05d660ce44117b05ef3c9d
+Código secreto de la aplicación a511dae2169d13558351bd2aa4ff2966
+ Gabr*/
+//nimble es para login de usuarios 
