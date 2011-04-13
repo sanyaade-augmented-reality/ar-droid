@@ -6,7 +6,7 @@ class Activity {
 	String description
 	GeoPoint geoPoint	
 	TypeActivity typeActivity
-	Event event
+	
 	
 	static belongsTo = [event: Event]
 	
@@ -15,6 +15,7 @@ class Activity {
 	}
 	static constraints = { 
 		name(blank: false)
+		geoPoint(nullable: true)
 	}
 	
 	/**Esto indicar que el GeoPoint es una composición*/
