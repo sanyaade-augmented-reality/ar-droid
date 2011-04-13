@@ -14,4 +14,8 @@ class ReaderActivityApi extends ReaderActivity {
 	public String toString(){
 		return "API AR-Droid"
 	}
+	
+	def synchronizeEvents(entityInstance,params){
+		
+	}
 }

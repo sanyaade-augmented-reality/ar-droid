@@ -2,6 +2,7 @@ package ar.droid.admin.reader
 
 class ReaderActivityFacebook extends ReaderActivity {
 	
+	def readerActivityService
 	static mapping = {
 		tablePerHierarchy false
 	}
@@ -13,5 +14,9 @@ class ReaderActivityFacebook extends ReaderActivity {
 	@Override
 	public String toString(){
 		return "Facebook"
+	}
+	
+	def synchronizeEvents(entityInstance,params){
+		readerActivityService.synchronizeEventsFacebook(entityInstance,params);
 	}
 }

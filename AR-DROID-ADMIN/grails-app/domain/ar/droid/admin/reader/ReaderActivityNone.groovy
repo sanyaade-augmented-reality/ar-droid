@@ -14,4 +14,8 @@ class ReaderActivityNone extends ReaderActivity {
 	public String toString(){
 		return "Ninguno"
 	}
+	
+	def synchronizeEvents(entityInstance,params){
+		//No hace nada
+	}
 }
