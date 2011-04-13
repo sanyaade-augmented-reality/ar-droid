@@ -1,11 +1,9 @@
 package ar.droid.admin.calendar
 
-class Monthly extends RepeatCalendar {
+class Monthly extends EventCalendar {
 	Integer dayOfMonth;
 	
-	static mapping = {
-		tablePerHierarchy false
-	}
+
 	
     static constraints = {
 		dayOfMonth(range:1..31, nullable:true);

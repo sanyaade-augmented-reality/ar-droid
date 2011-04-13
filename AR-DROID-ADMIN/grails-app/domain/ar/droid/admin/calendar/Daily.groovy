@@ -1,11 +1,9 @@
 package ar.droid.admin.calendar
 
 
-class Daily extends RepeatCalendar{
+class Daily extends EventCalendar{
 	
-	static mapping = {
-		tablePerHierarchy false
-	}
+
 	
 	static constraints = {
 	}

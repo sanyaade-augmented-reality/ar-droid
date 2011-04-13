@@ -1,12 +1,9 @@
 package ar.droid.admin.calendar
 
-class Weekly extends RepeatCalendar {
+class Weekly extends EventCalendar {
 	Integer dayOfWeek;
 	
-	static mapping = {
-		tablePerHierarchy false
-	}
-	
+
 	static constraints = {
 		dayOfWeek(nullable:true)
     }
