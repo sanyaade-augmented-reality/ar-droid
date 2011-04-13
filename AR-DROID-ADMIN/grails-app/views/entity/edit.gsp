@@ -114,6 +114,12 @@
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'typeEntity', 'errors')}">
                                     <g:select name="typeEntity.id" from="${ar.droid.admin.TypeEntity.list()}" optionKey="id" value="${entityInstance?.typeEntity?.id}"  />
                                 </td>
+                                <td>&nbsp;</td> 
+                                <td>&nbsp;</td>
+                               
+                            </tr>
+                            
+                             <tr class="prop">
                                 
                                 <td valign="top" class="name">
                                   <label for="readerActivity"><g:message code="entity.readerActivity.label" default="Reader Activity" /></label>
@@ -121,6 +127,14 @@
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerNews', 'errors')}">
                                     <g:select name="readerActivity_select" from="${application.lsReaderActivities}" optionKey="class" value="${request.readerActivity_select}" onchange="viewParams(this);" />
                                     <div style="display: none" id="readerActivity_parameter"><div class="subtitle2"><g:message code="entity.parameter.label" default="Parameter" /></div><g:textField class="input_param2" name="readerActivity.parameter" value="${entityInstance?.readerActivity?.parameter}" /></div>
+                                </td>
+                                
+                                 <td valign="top" class="name">
+                                  <label for="readerNews"><g:message code="entity.readerNews.label" default="Reader News" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerActivity', 'errors')}">
+                                    <g:select name="readerNews_select" from="${application.lsReaderNews}" optionKey="class" value="${request.readerNews_select}" onchange="viewParams(this);" />
+                                    <div style="display: none" id="readerNews_parameter"><div class="subtitle2"><g:message code="entity.parameter.label" default="Parameter" /></div><g:textField class="input_param2" name="readerNews.parameter" value="${entityInstance?.readerNews?.parameter}" /></div>
                                 </td>
                             </tr>
                         
@@ -134,15 +148,9 @@
    										<li><g:link controller="activity" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></li>
 									</g:each>
 									</ul>
-                                </td>
-                                
-                                <td valign="top" class="name">
-                                  <label for="readerNews"><g:message code="entity.readerNews.label" default="Reader News" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerActivity', 'errors')}">
-                                    <g:select name="readerNews_select" from="${application.lsReaderNews}" optionKey="class" value="${request.readerNews_select}" onchange="viewParams(this);" />
-                                    <div style="display: none" id="readerNews_parameter"><div class="subtitle2"><g:message code="entity.parameter.label" default="Parameter" /></div><g:textField class="input_param2" name="readerNews.parameter" value="${entityInstance?.readerNews?.parameter}" /></div>
-                                </td>
+                                </td>                                
+                                <td>&nbsp;</td> 
+                                <td>&nbsp;</td>
                             </tr>
                         
                         </tbody>
@@ -152,6 +160,7 @@
                     <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                     <span class="button"><g:actionSubmit class="add" action="newevent" params="['entity.id': entityInstance?.id]" value="${message(code: 'default.add.label', args: [message(code: 'event.label', default: 'Event')])}" /></span>
+                    <span class="button"><g:actionSubmit class="sinc" action="sinevent" value="${message(code: 'default.sinc.label', default: 'Sincronize Event')}" /></span>
                 </div>
             </g:uploadForm>
         </div>

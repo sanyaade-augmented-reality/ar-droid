@@ -121,15 +121,14 @@
                                 </td>
                                 <td valign="top" class="date value ${hasErrors(bean: eventInstance, field: 'eventCalendar', 'errors')}">
                                     <g:select name="eventCalendar_select" from="${application.lsEventCalendars}" optionKey="class" value="${request.eventCalendar_select}" onchange="viewParams(this);" class="w100" />
-                                    <g:hiddenField name="eventCalendar.startDate" value="struct" />
-                                    <g:hiddenField name="eventCalendar.endDate" value="struct" />
-                                    <div><div class="dates"><g:message code="event.eventCalendar.startDate" default="Init" /></div><g:datePicker name="eventCalendar.startDate" value="${new Date()}" years="${2011..2020}" /></div>
-                                    <div><div class="dates"><g:message code="event.eventCalendar.endDate" default="End" /></div><g:datePicker name="eventCalendar.endDate" value="${new Date()}" years="${2011..2020}" /></div>
+                                    <div><div class="dates"><g:message code="event.eventCalendar.startDate" default="Init" /></div><g:datePicker name="event.eventCalendar.startDate" value="${new Date()}" years="${2011..2020}" /></div>
+                                    <div><div class="dates"><g:message code="event.eventCalendar.endDate" default="End" /></div><g:datePicker name="event.eventCalendar.endDate" value="${new Date()}" years="${2011..2020}" /></div>
                                     
-                                    <div style="display: none" id="dayOfTheWeek"><div class="dates2"><g:message code="event.eventCalendar.dayOfTheWeek" default="Day of the Week" /></div><g:select name="eventCalendar.dayOfWeek" optionKey="key" optionValue="value" from="${application.mpDayOfTheWeek}" /></div>
-                                    <div style="display: none" id="dayOfTheMonth"><div class="dates2"><g:message code="event.eventCalendar.dayOfTheMonth" default="Day of the Month" /></div><g:select name="eventCalendar.dayOfMonth" from="${1..31}" /></div>
+                                    <div style="display: none" id="dayOfTheWeek" ><g:message code="event.eventCalendar.dayOfTheWeek" default="Day of the Week" /><g:select name="eventCalendar.dayOfWeek" optionKey="key" optionValue="value" from="${application.mpDayOfTheWeek}" /></div>
+                                    <div style="display: none" id="dayOfTheMonth"><g:message code="event.eventCalendar.dayOfTheMonth" default="Day of the Month" /><g:select name="eventCalendar.dayOfMonth" from="${1..31}" /></div>
                                 </td>
                             </tr>
+ 
                         
                         </tbody>
                     </table>

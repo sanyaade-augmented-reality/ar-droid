@@ -1,10 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+
+
 <%@ page import="ar.droid.admin.TypeEvent" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'typeActivity.label', default: 'TypeEvent')}" />
+        <g:set var="entityName" value="${message(code: 'typeEvent.label', default: 'TypeEvent')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -17,9 +18,9 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${typeActivityInstance}">
+            <g:hasErrors bean="${typeEventInstance}">
             <div class="errors">
-                <g:renderErrors bean="${typeActivityInstance}" as="list" />
+                <g:renderErrors bean="${typeEventInstance}" as="list" />
             </div>
             </g:hasErrors>
             <g:form action="save" >

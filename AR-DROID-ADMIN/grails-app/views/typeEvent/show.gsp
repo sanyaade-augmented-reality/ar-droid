@@ -1,11 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+
 <%@ page import="ar.droid.admin.TypeEvent" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'typeEvent.label', default: 'TypeEvent')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
         <div class="nav">
@@ -23,8 +23,17 @@
                     <tbody>
                     
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="typeEvent.id.label" default="Id" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: typeEventInstance, field: "id")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="typeEvent.name.label" default="Name" /></td>
+                            
                             <td valign="top" class="value">${fieldValue(bean: typeEventInstance, field: "name")}</td>
+                            
                         </tr>
                     
                     </tbody>

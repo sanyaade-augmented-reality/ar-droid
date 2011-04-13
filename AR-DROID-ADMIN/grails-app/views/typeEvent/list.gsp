@@ -1,11 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+
 <%@ page import="ar.droid.admin.TypeEvent" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'typeActivity.label', default: 'TypeEvent')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <g:set var="entityName" value="${message(code: 'typeEvent.label', default: 'TypeEvent')}" />
+        <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
         <div class="nav">
@@ -21,16 +21,22 @@
                 <table>
                     <thead>
                         <tr>
-                            <g:sortableColumn property="name" title="${message(code: 'typeActivity.name.label', default: 'Name')}" />
-                           </tr>
+                        
+                            <g:sortableColumn property="id" title="${message(code: 'typeEvent.id.label', default: 'Id')}" />
+                        
+                            <g:sortableColumn property="name" title="${message(code: 'typeEvent.name.label', default: 'Name')}" />
+                        
+                        </tr>
                     </thead>
                     <tbody>
-                    <g:each in="${typeActivityInstanceList}" status="i" var="typeActivityInstance">
+                    <g:each in="${typeEventInstanceList}" status="i" var="typeEventInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${typeActivityInstance.id}">${fieldValue(bean: typeActivityInstance, field: "name")}</g:link></td>
+                            <td><g:link action="show" id="${typeEventInstance.id}">${fieldValue(bean: typeEventInstance, field: "id")}</g:link></td>
                         
-                        </tr> 
+                            <td>${fieldValue(bean: typeEventInstance, field: "name")}</td>
+                        
+                        </tr>
                     </g:each>
                     </tbody>
                 </table>

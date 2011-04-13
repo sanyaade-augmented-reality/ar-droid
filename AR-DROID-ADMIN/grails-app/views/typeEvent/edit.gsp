@@ -1,11 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+
+
 <%@ page import="ar.droid.admin.TypeEvent" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'typeActivity.label', default: 'TypeEvent')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <g:set var="entityName" value="${message(code: 'typeEvent.label', default: 'TypeEvent')}" />
+        <title><g:message code="default.edit.label" args="[entityName]" /></title>
     </head>
     <body>
         <div class="nav">
@@ -18,21 +19,21 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${typeActivityInstance}">
+            <g:hasErrors bean="${typeEventInstance}">
             <div class="errors">
-                <g:renderErrors bean="${typeActivityInstance}" as="list" />
+                <g:renderErrors bean="${typeEventInstance}" as="list" />
             </div>
             </g:hasErrors>
             <g:form method="post" >
-                <g:hiddenField name="id" value="${typeActivityInstance?.id}" />
-                <g:hiddenField name="version" value="${typeActivityInstance?.version}" />
+                <g:hiddenField name="id" value="${typeEventInstance?.id}" />
+                <g:hiddenField name="version" value="${typeEventInstance?.version}" />
                 <div class="dialog">
                     <table>
                         <tbody>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="name"><g:message code="typeEvent.name.label" default="Name" /></label>
+                                  <label for="name"><g:message code="typeEvent.name.label" default="Name" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: typeEventInstance, field: 'name', 'errors')}">
                                     <g:textField name="name" value="${typeEventInstance?.name}" />

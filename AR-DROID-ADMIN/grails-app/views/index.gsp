@@ -107,21 +107,21 @@
                     <li class="controller"><g:link controller="question">Preguntas</g:link></li>
                 </ul>
             </div>
-            	<div id="fb-root">	</div>
+            	<div id="fb-root"></div>
             	<fbg:resources locale="${Locale.getDefault()}" />
 				<script src="http://connect.facebook.net/en_US/all.js"></script>
 				<script>
+						FB.init({appId:'122540491154119', cookie: true, xfbml: true, status: true});
+					
 						function facebookLogin() {
 							FB.getLoginStatus(function(response) {
 							if (response.session) {
 								// logged in and connected user, someone you know
 								//window.location ="${createLink(controller:'auth', action:'facebookLogin')}";
-								//${'fb-root'}.innerHtml = "${createLink(controller:'auth', action:'facebookLogin')}";
 							}
 						});
 						}
 							
-						FB.init({appId: 'dee43c69e966353759baac72862b8164', cookie: true, xfbml: true, status: true});
 				</script>
 				<fb:login-button perms="email,publish_stream" onlogin="facebookLogin();" size="large">
 					<g:message  code="auth.login.facebook"/>

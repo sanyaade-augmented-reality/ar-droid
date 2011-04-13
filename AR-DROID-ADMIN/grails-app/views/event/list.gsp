@@ -26,7 +26,7 @@
             <div class="message">${flash.message}</div>
             </g:if>
             <div class="list">
-                <table>
+                <table id="tableDir">
                     <thead>
                         <tr>
                         
@@ -44,9 +44,7 @@
                     <g:each in="${eventInstanceList}" status="i" var="eventInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${eventInstance.id}">${fieldValue(bean: eventInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: eventInstance, field: "title")}</td>
+                            <td><g:link action="show" id="${eventInstance.id}">${fieldValue(bean: eventInstance, field: "title")}</g:link></td>
                         
                             <td>${fieldValue(bean: eventInstance, field: "entity")}</td>
                         

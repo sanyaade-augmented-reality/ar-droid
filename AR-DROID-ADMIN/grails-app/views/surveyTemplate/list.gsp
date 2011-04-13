@@ -24,7 +24,7 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'surveyTemplate.id.label', default: 'Id')}" />
                         
-                            <g:sortableColumn property="description" title="${message(code: 'surveyTemplate.description.label', default: 'Description')}" />
+                            <g:sortableColumn property="questions" title="${message(code: 'surveyTemplate.questions.label', default: 'Questions')}" />
                         
                         </tr>
                     </thead>
@@ -32,9 +32,9 @@
                     <g:each in="${surveyTemplateInstanceList}" status="i" var="surveyTemplateInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${surveyTemplateInstance.id}">${fieldValue(bean: surveyTemplateInstance, field: "id")}</g:link></td>
+                            <td><g:link action="show" id="${surveyTemplateInstance.id}">${fieldValue(bean: surveyTemplateInstance, field: "description")}</g:link></td>
                         
-                            <td>${fieldValue(bean: surveyTemplateInstance, field: "description")}</td>
+                            <td>${surveyTemplateInstance?.questions}</td>
                         
                         </tr>
                     </g:each>
