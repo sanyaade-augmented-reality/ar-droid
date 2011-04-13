@@ -10,6 +10,8 @@ class Question {
 	String question
 	SurveyTemplate surveyTemplate;
 	
+	def messageSource
+	
 	static transients = ['type']
 	
 	static belongsTo = [surveyTemplate: SurveyTemplate]
@@ -38,10 +40,11 @@ class Question {
 	public void addOption(Choice choice){
 	}
 
-	public java.util.Set getxxx(){
+	public java.util.Set getOptionsQuestion(){
 		return []
 	}
 	
+
 	
 	
 	

@@ -6,10 +6,8 @@ class NumericValueQuestion extends Question{
 	Integer limitTo
 	Integer limitFrom
 	
-	def messageSource
-	
 	static mapping = {
-		tablePerHierarchy false
+		tablePerHierarchy true
 	}
 	
 	static constraints = {
@@ -19,8 +17,7 @@ class NumericValueQuestion extends Question{
 	
 	
 	public String getType(){
-		def xValue =messageSource.getMessage("default.NumericValueQuestion.type",null,"Numeric Value",LocaleContextHolder.getLocale())
-		return xValue;
+		return messageSource.getMessage("default.NumericValueQuestion.type",null,"Numeric Value",LocaleContextHolder.getLocale())
 	}
 	
 	public Integer limitTo(){

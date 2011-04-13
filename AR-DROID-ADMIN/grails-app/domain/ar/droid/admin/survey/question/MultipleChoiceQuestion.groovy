@@ -8,10 +8,9 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 class MultipleChoiceQuestion extends Question{
 	Integer maxOptions
-	def messageSource
 	
 	static mapping = {
-		tablePerHierarchy false
+		tablePerHierarchy true
 	}
 	
 	static hasMany = [options:Choice]
@@ -21,8 +20,7 @@ class MultipleChoiceQuestion extends Question{
     }
 	
 	public String getType(){
-		def xValue =messageSource.getMessage("default.MultipleChoiceQuestion.type",null,"Multiple Choice",LocaleContextHolder.getLocale())
-		return xValue;
+		return messageSource.getMessage("default.MultipleChoiceQuestion.type",null,"Multiple Choice",LocaleContextHolder.getLocale())
 	}
 	
 	public Integer maxOptions(){
@@ -35,7 +33,7 @@ class MultipleChoiceQuestion extends Question{
 		options.add(choice)
 	}
 	
-	public java.util.Set getxxx(){
+	public java.util.Set getOptionsQuestion(){
 		return options
 	}
 		
