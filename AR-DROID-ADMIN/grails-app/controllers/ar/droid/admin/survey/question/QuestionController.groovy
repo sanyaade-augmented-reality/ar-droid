@@ -6,7 +6,7 @@ import ar.droid.admin.survey.question.Question;
 class QuestionController {
 	
 	def questionService
-
+	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -20,17 +20,13 @@ class QuestionController {
 
     def create = {
 		def questionInstance = new Question()
-        questionInstance.properties = params		
-        return [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions()]
+		questionInstance.properties = params	
+		return [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions()]
     }
 
     def save = {
 		def questionInstance = questionService.saveQuestion(params)		
 		if (questionInstance.hasErrors()) {
-			/*request.limitTo = questionInstance.limitTo()
-			request.limitFrom = questionInstance.limitFrom()
-			request.maxOptions = questionInstance.maxOptions()*/
-			//render(view: "create", model: [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions(),typeQuestion:params.typeQuestion,options:questionInstance.getxxx()])
 			render(view: "create", model: getParameters(questionInstance,false))
 	    }
         else {
@@ -46,11 +42,6 @@ class QuestionController {
             redirect(action: "list")
         }
         else {
-			/*request.limitTo = questionInstance.limitTo()
-			request.limitFrom = questionInstance.limitFrom()
-			request.maxOptions = questionInstance.maxOptions()
-			def val = questionService.getTypeQuestions().find{it.value.type == questionInstance.type}?.key
-            [questionInstance: questionInstance,typeQuestion:val,options:questionInstance.getxxx()]*/
 			return getParameters(questionInstance,true)
         }
     }
@@ -62,11 +53,6 @@ class QuestionController {
             redirect(action: "list")
         }
         else {
-			/*request.limitTo = questionInstance.limitTo()
-			request.limitFrom = questionInstance.limitFrom()
-			request.maxOptions = questionInstance.maxOptions()
-			def val = questionService.getTypeQuestions().find{it.value.type == questionInstance.type}?.key
-			return [questionInstance: questionInstance,typeQuestion:val,typeQuestions:questionService.getTypeQuestions(),options:questionInstance.getxxx()]*/
 			return getParameters(questionInstance,true)
         }
     }
@@ -120,6 +106,6 @@ class QuestionController {
 		if (pEval){
 			val = questionService.getTypeQuestions().find{it.value.type == questionInstance.type}?.key
 		}
-		return [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions(),typeQuestion:val,options:questionInstance.getxxx()]
+		return [questionInstance: questionInstance,typeQuestions:questionService.getTypeQuestions(),typeQuestion:val,options:questionInstance.getOptionsQuestion()]
 	}
 }
