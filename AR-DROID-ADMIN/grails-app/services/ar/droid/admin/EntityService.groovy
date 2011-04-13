@@ -1,4 +1,4 @@
-package ar.droid.admin
+package ar.droid.admin;
 
 import ar.droid.admin.reader.ReaderNews
 import ar.droid.admin.reader.ReaderActivity
@@ -59,5 +59,9 @@ class EntityService {
 			entityInstance.save(flush: true)
 		}
 		return entityInstance
+	}
+	
+	def synchronizeEvents(entityInstance,params){
+		entityInstance.readerActivity.synchronizeEvents(entityInstance,params);
 	}
 }
