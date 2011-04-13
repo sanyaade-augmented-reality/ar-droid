@@ -56,8 +56,8 @@ class EventController {
             redirect(action: "list")
         }
         else {
-			request.eventCalendar_select = entityInstance.eventCalendar.class
-            return [eventInstance: eventInstance, activities: entityInstance.activities]
+			request.eventCalendar_select = eventInstance.eventCalendar.class
+            return [eventInstance: eventInstance, activities: eventInstance.activities]
         }
     }
 
@@ -91,4 +91,16 @@ class EventController {
             redirect(action: "list")
         }
     }
+	
+	def showImage ={
+		def eventInstance = Event.get(params.id)
+		response.contentType = "image/jpeg"
+		response.contentLength = eventInstance?.photo.length
+		response.outputStream.write(eventInstance?.photo)
+	}
+	
+	def newactivity ={
+		def eventInstance = Event.get(params.id)
+		redirect(controller: "activity", action: "create", event: params.id)
+	}
 }
