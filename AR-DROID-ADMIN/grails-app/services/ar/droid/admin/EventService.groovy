@@ -1,8 +1,5 @@
 package ar.droid.admin
 
-import java.text.SimpleDateFormat
-
-import ar.droid.admin.DateUtils;
 import ar.droid.admin.calendar.EventCalendar
 
 class EventService {	
@@ -12,11 +9,12 @@ class EventService {
 		def eventInstance = new Event()
 		eventInstance.properties = params
 		eventInstance.eventCalendar = EventCalendar.fromString(params.eventCalendar_select)
-				
-		// crear composiciones y agregar fechas
-		eventInstance.eventCalendar.properties = params.eventCalendar
-		eventInstance.eventCalendar.startDate = DateUtils.getDate(params.eventCalendar.startDate_day, params.eventCalendar.startDate_month, params.eventCalendar.startDate_year, params.eventCalendar.startDate_hour, params.eventCalendar.startDate_minute)
-		eventInstance.eventCalendar.endDate = DateUtils.getDate(params.eventCalendar.endDate_day, params.eventCalendar.endDate_month, params.eventCalendar.endDate_year, params.eventCalendar.endDate_hour, params.eventCalendar.endDate_minute)
+		
+		// crear composiciones
+		eventInstance.eventCalendar.properties = params.event.eventCalendar
+		
+		println eventInstance.eventCalendar.startDate.class
+		
 		eventInstance.geoPoint = new GeoPoint()
 		
 		// validar posición
@@ -44,16 +42,21 @@ class EventService {
 				}
 			}
 			
+			// armar geopoint
+			eventInstance.geoPoint.latitude = new BigDecimal(params.latitude)
+			eventInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+			
+			// crear composiciones
+			eventInstance.eventCalendar.properties = params.event.eventCalendar
+			
 			// verificar si cambiar o mantener imagen
 			def photo = eventInstance.photo;
 			eventInstance.properties = params
-			eventInstance.readerActivity = ReaderActivity.fromString(params.readerActivity_select)
-			entityInstance.readerNews = ReaderNews.fromString(params.readerNews_select)
 			if(params.get("photo").size == 0){
-				entityInstance.photo = photo;
+				eventInstance.photo = photo;
 			}
 			eventInstance.save(flush: true)
 		}
-		return entityInstance
+		return eventInstance
 	}
 }
