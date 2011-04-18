@@ -35,7 +35,7 @@ class readerActivityService {
 			
 				TypeEvent typeEvent = TypeEvent.get(1)//ninguno
 				SurveyTemplate surveyTemplate = SurveyTemplate.get(1)
-				Event event = new Event(title:it.name,eid:it.eid,description:it.description,typeEvent:typeEvent,geoPoint:geoPoint,entity:entityInstance)
+				Event event = new Event(title:it.name,eid:it.eid,description:it.description,typeEvent:typeEvent,geoPoint:geoPoint,entity:entityInstance,surveyTemplate:surveyTemplate)
 				Daily daily = new Daily(startDate:d1,endDate:d2)
 				daily.event = event
 				event.eventCalendar = daily
