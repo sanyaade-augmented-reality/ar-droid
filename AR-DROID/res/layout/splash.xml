@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/splash"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-	<TextView 
-    	android:layout_width="fill_parent" 
-    	android:layout_height="wrap_content" 
-    	android:text="@string/app_name" />
-</LinearLayout>
+<TableLayout android:id="@+id/widget60"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical">
+	<TextView android:id="@+id/widget57" android:layout_width="207px" android:minHeight="46px"
+		android:layout_height="46px" android:padding="10px" android:text="AR-DROID"
+		android:textSize="40sp" android:textStyle="bold" android:layout_gravity="center_horizontal">
+	</TextView>
+	<ProgressBar android:id="@+id/widget61"
+		android:layout_width="wrap_content" android:layout_height="196px" android:minHeight="196px"
+		android:padding="50px" android:indeterminate="true" android:layout_gravity="center_horizontal"> 
+	</ProgressBar>
+	<TextView android:id="@+id/widget62" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+		android:text="AR-DROID es una aplicación de Realidad Aumentada para el ámbito universitario de la Universidad Naciaonal de La Plata">
+	</TextView>
+</TableLayout>

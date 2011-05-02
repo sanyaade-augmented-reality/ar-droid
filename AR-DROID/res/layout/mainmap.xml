@@ -13,10 +13,10 @@
 		android:layout_alignBottom="@id/mapview"
 		android:layout_centerHorizontal="true" />
 
-	<TextView android:layout_alignParentBottom="true"
+	<TextView android:layout_alignParentTop="true"
 		android:text="Esperando ubicación..." android:id="@+id/address"
 		android:layout_height="wrap_content" android:layout_width="fill_parent"
-		android:gravity="bottom|right" android:textSize="15sp"
-		android:paddingBottom="10sp" android:paddingRight="10sp"
+		android:gravity="right" android:textSize="15sp"
+		android:paddingTop="10sp" android:paddingRight="10sp"
 		android:textColor="#FF0000" />
 </RelativeLayout>
