@@ -16,9 +16,6 @@ public class SplashScreen extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-        
-        // pantalla completa
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 
         // crear hilo para mostrar el splash screen
         Thread splashTread = new Thread() {
