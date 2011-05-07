@@ -1,8 +1,8 @@
 import ar.droid.admin.reader.*
 import ar.droid.admin.calendar.*
-import ar.droid.admin.*;
-import ar.droid.admin.survey.*;
-import ar.droid.admin.survey.question.*;;
+import ar.droid.admin.*
+import ar.droid.admin.survey.*
+import ar.droid.admin.survey.question.*
 
 class BootStrap {
 	
@@ -10,10 +10,10 @@ class BootStrap {
 		servletContext.lsReaderNews = [new ReaderNewsNone(), new ReaderNewsRSS(), new ReaderNewsWeb(), new ReaderNewsFacebook()]
 		servletContext.lsReaderActivities = [new ReaderActivityNone(), new ReaderActivityFacebook(), new ReaderActivityApi()]
 		servletContext.lsEventCalendars = [new Unique(), new Daily(), new Weekly(), new Monthly()]
-		servletContext.mpDayOfTheWeek = ["0": "Sunday", "1": "Monday", "2": "Tuesday", "3": "Wednesday", "4": "Thursday", "5": "Friday", "6": "Saturday"]
+		servletContext.mpDayOfTheWeek = ["0": "Domingo", "1": "Lunes", "2": "Martes", "3": "Míercoles", "4": "Jueves", "5": "Viernes", "6": "Sabado"]
 		
-		//tendria que crear si no existe el tipo de evento 1-ninguno
-		// template te gusta si/no
+		// tendria que crear si no existe el tipo de evento 1-ninguno
+		// template te gusta? si/no
 		
 		def typeEvent = TypeEvent.get(1)
 		if (typeEvent == null){
@@ -24,7 +24,7 @@ class BootStrap {
 		def template = SurveyTemplate.get(1)
 		if (template == null){
 			template = new SurveyTemplate(description:"Estándar AR-DROID")
-			def question = new MultipleChoiceQuestion(question:"Te gusta",surveyTemplate:template,maxOptions:1)
+			def question = new MultipleChoiceQuestion(question:"Te gusta?",surveyTemplate:template,maxOptions:1)
 			def ch1 = new Choice(description:"Si",multipleChoiceQuestion:question)
 			def ch2 = new Choice(description:"No",multipleChoiceQuestion:question)
 			template.questions = []
