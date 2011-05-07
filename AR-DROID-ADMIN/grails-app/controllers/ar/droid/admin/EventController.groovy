@@ -33,7 +33,7 @@ class EventController {
 			render(view: "create", model: [eventInstance: eventInstance])
 		}
 		else {
-			flash.message = "${message(code: 'default.created.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'event.label', default: 'Evento'), eventInstance.id])}"
 			redirect(action: "show", id: eventInstance.id)
 		}
     }
@@ -41,7 +41,7 @@ class EventController {
     def show = {
         def eventInstance = Event.get(params.id)
         if (!eventInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Evento'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -52,7 +52,7 @@ class EventController {
     def edit = {
         def eventInstance = Event.get(params.id)
         if (!eventInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Evento'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -64,11 +64,11 @@ class EventController {
     def update = {		
 		def eventInstance = eventService.updateEvent(params)
 		if(eventInstance.hasErrors()){
-			 eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Event')] as Object[], "Another user has updated this Event while you were editing")
+			 eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Evento')] as Object[], "Otro usuario modificò el objeto")
              render(view: "edit", model: [eventInstance: eventInstance])
 		}
 		else{
-			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
+			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'event.label', default: 'Evento'), eventInstance.id])}"
             redirect(action: "show", id: eventInstance.id)
 		}
     }
@@ -78,16 +78,16 @@ class EventController {
         if (eventInstance) {
             try {
                 eventInstance.delete(flush: true)
-                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
+                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'event.label', default: 'Evento'), params.id])}"
                 redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
+                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'event.label', default: 'Evento'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
         }
         else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Evento'), params.id])}"
             redirect(action: "list")
         }
     }

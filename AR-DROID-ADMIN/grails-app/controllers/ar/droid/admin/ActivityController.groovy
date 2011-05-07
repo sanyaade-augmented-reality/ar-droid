@@ -22,7 +22,7 @@ class ActivityController {
     def save = {
         def activityInstance = new Activity(params)
         if (activityInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'activity.label', default: 'Activity'), activityInstance.id])}"
+            flash.message = "${message(code: 'default.created.message', args: [message(code: 'activity.label', default: 'Actividad'), activityInstance.id])}"
             redirect(action: "show", id: activityInstance.id)
         }
         else {
@@ -33,7 +33,7 @@ class ActivityController {
     def show = {
         def activityInstance = Activity.get(params.id)
         if (!activityInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Actividad'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -44,7 +44,7 @@ class ActivityController {
     def edit = {
         def activityInstance = Activity.get(params.id)
         if (!activityInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Actividad'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -59,14 +59,14 @@ class ActivityController {
                 def version = params.version.toLong()
                 if (activityInstance.version > version) {
                     
-                    activityInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'activity.label', default: 'Activity')] as Object[], "Another user has updated this Activity while you were editing")
+                    activityInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'activity.label', default: 'Actividad')] as Object[], "Otro usuario modificó el objeto")
                     render(view: "edit", model: [activityInstance: activityInstance])
                     return
                 }
             }
             activityInstance.properties = params
             if (!activityInstance.hasErrors() && activityInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'activity.label', default: 'Activity'), activityInstance.id])}"
+                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'activity.label', default: 'Actividad'), activityInstance.id])}"
                 redirect(action: "show", id: activityInstance.id)
             }
             else {
@@ -74,7 +74,7 @@ class ActivityController {
             }
         }
         else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Actividad'), params.id])}"
             redirect(action: "list")
         }
     }
@@ -84,16 +84,16 @@ class ActivityController {
         if (activityInstance) {
             try {
                 activityInstance.delete(flush: true)
-                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])}"
+                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'activity.label', default: 'Actividad'), params.id])}"
                 redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])}"
+                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'activity.label', default: 'Actividad'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
         }
         else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Actividad'), params.id])}"
             redirect(action: "list")
         }
     }

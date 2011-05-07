@@ -34,7 +34,7 @@ class EntityController {
 			render(view: "create", model: [entityInstance: entityInstance])
 		}
 		else{
-			flash.message = "${message(code: 'default.created.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'entity.label', default: 'Entidad'), entityInstance.id])}"
 			redirect(action: "show", id: entityInstance.id)
 		}
     }
@@ -42,7 +42,7 @@ class EntityController {
     def show = {
         def entityInstance = Entity.get(params.id)
         if (!entityInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entity.label', default: 'Entity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entity.label', default: 'Entidad'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -60,7 +60,7 @@ class EntityController {
     def edit = {		
         def entityInstance = Entity.get(params.id)
         if (!entityInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entity.label', default: 'Entity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entity.label', default: 'Entidad'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -78,7 +78,7 @@ class EntityController {
 			render(view: "edit", model: [entityInstance: entityInstance])
 		}
 		else{
-			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'entity.label', default: 'Entity'), entityInstance.id])}"
+			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'entity.label', default: 'Entidad'), entityInstance.id])}"
 			redirect(action: "show", id: entityInstance.id)
 		}
     }
@@ -88,16 +88,16 @@ class EntityController {
         if (entityInstance) {
             try {
                 entityInstance.delete(flush: true)
-                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'entity.label', default: 'Entity'), params.id])}"
+                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'entity.label', default: 'Entidad'), params.id])}"
                 redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'entity.label', default: 'Entity'), params.id])}"
+                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'entity.label', default: 'Entidad'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
         }
         else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entity.label', default: 'Entity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'entity.label', default: 'Entidad'), params.id])}"
             redirect(action: "list")
         }
     }

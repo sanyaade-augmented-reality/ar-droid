@@ -22,7 +22,7 @@ class TypeEntityController {
     def save = {
         def typeEntityInstance = new TypeEntity(params)
         if (typeEntityInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), typeEntityInstance.id])}"
+            flash.message = "${message(code: 'default.created.message', args: [message(code: 'typeEntity.label', default: 'Tipo de entidad'), typeEntityInstance.id])}"
             redirect(action: "show", id: typeEntityInstance.id)
         }
         else {
@@ -33,7 +33,7 @@ class TypeEntityController {
     def show = {
         def typeEntityInstance = TypeEntity.get(params.id)
         if (!typeEntityInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEntity.label', default: 'Tipo de entidad'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -44,7 +44,7 @@ class TypeEntityController {
     def edit = {
         def typeEntityInstance = TypeEntity.get(params.id)
         if (!typeEntityInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEntity.label', default: 'Tipo de entidad'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -59,7 +59,7 @@ class TypeEntityController {
                 def version = params.version.toLong()
                 if (typeEntityInstance.version > version) {
                     
-                    typeEntityInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'typeEntity.label', default: 'TypeEntity')] as Object[], "Another user has updated this TypeEntity while you were editing")
+                    typeEntityInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'typeEntity.label', default: 'Tipo de entidad')] as Object[], "Otro usuario ha actualizado el objeto")
                     render(view: "edit", model: [typeEntityInstance: typeEntityInstance])
                     return
                 }
@@ -71,7 +71,7 @@ class TypeEntityController {
 				typeEntityInstance.icon = icon;
 			}
             if (!typeEntityInstance.hasErrors() && typeEntityInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), typeEntityInstance.id])}"
+                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'typeEntity.label', default: 'Tipo de entidad'), typeEntityInstance.id])}"
                 redirect(action: "show", id: typeEntityInstance.id)
             }
             else {
@@ -79,7 +79,7 @@ class TypeEntityController {
             }
         }
         else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEntity.label', default: 'Tipo de entidad'), params.id])}"
             redirect(action: "list")
         }
     }
@@ -89,16 +89,16 @@ class TypeEntityController {
         if (typeEntityInstance) {
             try {
                 typeEntityInstance.delete(flush: true)
-                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), params.id])}"
+                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'typeEntity.label', default: 'Tipo de entidad'), params.id])}"
                 redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), params.id])}"
+                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'typeEntity.label', default: 'Tipo de entidad'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
         }
         else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEntity.label', default: 'TypeEntity'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEntity.label', default: 'Tipo de entidad'), params.id])}"
             redirect(action: "list")
         }
     }

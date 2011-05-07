@@ -22,7 +22,7 @@ class TypeEventController {
     def save = {
         def typeEventInstance = new TypeEvent(params)
         if (typeEventInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'typeEvent.label', default: 'typeEvent'), typeEventInstance.id])}"
+            flash.message = "${message(code: 'default.created.message', args: [message(code: 'typeEvent.label', default: 'Tipo de evento'), typeEventInstance.id])}"
             redirect(action: "show", id: typeEventInstance.id)
         }
         else {
@@ -33,7 +33,7 @@ class TypeEventController {
     def show = {
         def typeEventInstance = TypeEvent.get(params.id)
         if (!typeEventInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEvent.label', default: 'typeEvent'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEvent.label', default: 'Tipo de evento'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -44,7 +44,7 @@ class TypeEventController {
     def edit = {
         def typeEventInstance = TypeEvent.get(params.id)
         if (!typeEventInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEvent.label', default: 'typeEvent'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEvent.label', default: 'Tipo de evento'), params.id])}"
             redirect(action: "list")
         }
         else {
@@ -59,19 +59,15 @@ class TypeEventController {
                 def version = params.version.toLong()
                 if (typeEventInstance.version > version) {
                     
-                    typeEventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'typeEvent.label', default: 'typeEvent')] as Object[], "Another user has updated this typeEvent while you were editing")
+                    typeEventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'typeEvent.label', default: 'Tipo de evento')] as Object[], "Otro usuario ha actualizado el objeto")
                     render(view: "edit", model: [typeEventInstance: typeEventInstance])
                     return
                 }
             }
 			
-			def icon = typeEventInstance.icon;
 			typeEventInstance.properties = params;
-			if (params.get("icon").size == 0){
-				typeEventInstance.icon = icon;
-			}
             if (!typeEventInstance.hasErrors() && typeEventInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'typeEvent.label', default: 'typeEvent'), typeEventInstance.id])}"
+                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'typeEvent.label', default: 'Tipo de evento'), typeEventInstance.id])}"
                 redirect(action: "show", id: typeEventInstance.id)
             }
             else {
@@ -79,7 +75,7 @@ class TypeEventController {
             }
         }
         else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEvent.label', default: 'typeEvent'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEvent.label', default: 'Tipo de evento'), params.id])}"
             redirect(action: "list")
         }
     }
@@ -89,16 +85,16 @@ class TypeEventController {
         if (typeEventInstance) {
             try {
                 typeEventInstance.delete(flush: true)
-                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'typeEvent.label', default: 'typeEvent'), params.id])}"
+                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'typeEvent.label', default: 'Tipo de evento'), params.id])}"
                 redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'typeEvent.label', default: 'typeEvent'), params.id])}"
+                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'typeEvent.label', default: 'Tipo de evento'), params.id])}"
                 redirect(action: "show", id: params.id)
             }
         }
         else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEvent.label', default: 'typeEvent'), params.id])}"
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'typeEvent.label', default: 'Tipo de evento'), params.id])}"
             redirect(action: "list")
         }
     }
