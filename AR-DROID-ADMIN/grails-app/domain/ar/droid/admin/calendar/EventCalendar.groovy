@@ -4,7 +4,6 @@ import java.sql.Time;
 
 import ar.droid.admin.Event;
 
-
 class EventCalendar {
 	Date startDate
 	Date endDate
