@@ -19,7 +19,7 @@ class EventService {
 		
 		// validar posición
 		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-			eventInstance.errors.rejectValue('geoPoint', 'You must select a GeoPoint')
+			eventInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicación')
 		}
 		else {
 			// armar geopoint

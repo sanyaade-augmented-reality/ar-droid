@@ -20,7 +20,7 @@ class EntityService {
 		
 		// validar posición
 		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-			entityInstance.errors.rejectValue('geoPoint', 'You must select a GeoPoint')
+			entityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicación')
 		}
 		else {
 			// armar geopoint
