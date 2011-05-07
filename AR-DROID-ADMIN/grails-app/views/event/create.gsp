@@ -1,10 +1,10 @@
-<%@ page import="ar.droid.admin.Event" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.Event" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'event.label', default: 'Event')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title>Eventos</title>
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
@@ -38,11 +38,11 @@
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Inicio</a></span>
+            <span class="menuButton"><g:link class="list" action="list">Nuevo Evento</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h1>Nuevo Evento</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -58,14 +58,14 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="title"><g:message code="event.title.label" default="Title" /></label>
+                                    <label for="title">Tìtulo</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'title', 'errors')}">
                                     <g:textField name="title" value="${eventInstance?.title}" />
                                 </td>
                                 
                                 <td valign="top" class="name">
-                                    <label for="e"><g:message code="event.label" default="Entity" /></label>
+                                    <label for="e">Entidad</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'entity', 'errors')}">
                                     <g:select name="entity.id" from="${ar.droid.admin.Entity.list()}" optionKey="id" value="${eventInstance?.entity?.id}"  />
@@ -74,7 +74,7 @@
                                                     
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="description"><g:message code="event.description.label" default="Description" /></label>
+                                    <label for="description">Descripción</label>
                                 </td>
                                 <td colspan="3" valign="top" class="value ${hasErrors(bean: eventInstance, field: 'description', 'errors')}">
                                     <g:textArea name="description" value="${eventInstance?.description}" />
@@ -83,7 +83,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="geoPoint"><g:message code="event.geoPoint.label" default="Geo Point" /></label>
+                                    <label for="geoPoint">Ubicación</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'geoPoint', 'errors')}">
                                 	<div id="map_canvas" style="width: 100%; height: 250px;"></div>
@@ -92,7 +92,7 @@
                                 </td>
                                 
                                 <td valign="top" class="name">
-                                    <label for="photo"><g:message code="entity.photo.label" default="Photo" /></label>
+                                    <label for="photo">Foto</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'photo', 'errors')}">
                                     <input type="file" id="photo" name="photo" />
@@ -101,14 +101,14 @@
                         
                         	<tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="surveyTemplate"><g:message code="event.typeEvent.label" default="Event Type" /></label>
+                                    <label for="surveyTemplate">Tipo de Evento</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'surveyTemplate', 'errors')}">
                                     <g:select name="typeEvent.id" from="${ar.droid.admin.TypeEvent.list()}" optionKey="id" value="${eventInstance?.typeEvent?.id}" />
                                 </td>
                                 
                                 <td valign="top" class="name">
-                                    <label for="surveyTemplate"><g:message code="event.surveyTemplate.label" default="Survey Template" /></label>
+                                    <label for="surveyTemplate">Plantilla de encuesta</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'surveyTemplate', 'errors')}">
                                     <g:select name="surveyTemplate.id" from="${ar.droid.admin.survey.SurveyTemplate.list()}" optionKey="id" value="${eventInstance?.surveyTemplate?.id}" />
@@ -117,15 +117,15 @@
                             
                             <tr class="prop">                                
                                 <td valign="top" class="name">
-                                    <label for="surveyTemplate"><g:message code="event.eventCalendar.label" default="Event Calendar" /></label>
+                                    <label for="surveyTemplate">Periodicidad</label>
                                 </td>
                                 <td valign="top" class="date value ${hasErrors(bean: eventInstance, field: 'eventCalendar', 'errors')}">
                                     <g:select name="eventCalendar_select" from="${application.lsEventCalendars}" optionKey="class" value="${request.eventCalendar_select}" onchange="viewParams(this);" class="w100" />
                                     <div><div class="dates"><g:message code="event.eventCalendar.startDate" default="Init" /></div><g:datePicker name="event.eventCalendar.startDate" value="${new Date()}" years="${2011..2020}" /></div>
                                     <div><div class="dates"><g:message code="event.eventCalendar.endDate" default="End" /></div><g:datePicker name="event.eventCalendar.endDate" value="${new Date()}" years="${2011..2020}" /></div>
                                     
-                                    <div style="display: none" id="dayOfTheWeek" ><g:message code="event.eventCalendar.dayOfTheWeek" default="Day of the Week" /><g:select name="eventCalendar.dayOfWeek" optionKey="key" optionValue="value" from="${application.mpDayOfTheWeek}" /></div>
-                                    <div style="display: none" id="dayOfTheMonth"><g:message code="event.eventCalendar.dayOfTheMonth" default="Day of the Month" /><g:select name="eventCalendar.dayOfMonth" from="${1..31}" /></div>
+                                    <div style="display: none" id="dayOfTheWeek" >Día de la semana<g:select name="eventCalendar.dayOfWeek" optionKey="key" optionValue="value" from="${application.mpDayOfTheWeek}" /></div>
+                                    <div style="display: none" id="dayOfTheMonth">Día del mes<g:select name="eventCalendar.dayOfMonth" from="${1..31}" /></div>
                                 </td>
                             </tr>
  
@@ -134,7 +134,7 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                    <span class="button"><g:submitButton name="create" class="save" value="Crear" /></span>
                 </div>
             </g:form>
         </div>

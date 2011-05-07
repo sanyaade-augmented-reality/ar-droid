@@ -1,20 +1,18 @@
-
-
-<%@ page import="ar.droid.admin.Activity" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.Activity" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'activity.label', default: 'Activity')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title>Actividades</title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Inicio</a></span>
+            <span class="menuButton"><g:link class="list" action="list">Volver al listado</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h1>Nueva Actividad</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -27,47 +25,35 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
-                        
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="description"><g:message code="activity.description.label" default="Description" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: activityInstance, field: 'description', 'errors')}">
-                                    <g:textField name="description" value="${activityInstance?.description}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="event"><g:message code="activity.event.label" default="Event" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: activityInstance, field: 'event', 'errors')}">
-		                                    <g:select name="event.id" from="${ar.droid.admin.Event.list()}" optionKey="id" value="${activityInstance?.event?.id}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="name"><g:message code="activity.name.label" default="Name" /></label>
+                                    <label for="name">Nombre</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: activityInstance, field: 'name', 'errors')}">
                                     <g:textField name="name" value="${activityInstance?.name}" />
                                 </td>
+                            
+                                <td valign="top" class="name">
+                                    <label for="event">Evento</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: activityInstance, field: 'event', 'errors')}">
+		                            <g:select name="event.id" from="${ar.droid.admin.Event.list()}" optionKey="id" value="${activityInstance?.event?.id}"  />
+                                </td>
+                            </tr>
+                                                    
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="description">Descripción</label>
+                                </td>
+                                <td colspan="3" valign="top" class="value ${hasErrors(bean: activityInstance, field: 'description', 'errors')}">
+                                    <g:textArea name="description" value="${activityInstance?.description}" class="w100" />
+                                </td>
+                                
                             </tr>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="photo"><g:message code="activity.photo.label" default="Photo" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: activityInstance, field: 'photo', 'errors')}">
-                                    <input type="file" id="photo" name="photo" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="typeActivity"><g:message code="activity.typeActivity.label" default="Type Activity" /></label>
+                                    <label for="typeActivity">Tipo de Actividad</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: activityInstance, field: 'typeActivity', 'errors')}">
                                     <g:select name="typeActivity.id" from="${ar.droid.admin.TypeActivity.list()}" optionKey="id" value="${activityInstance?.typeActivity?.id}"  />

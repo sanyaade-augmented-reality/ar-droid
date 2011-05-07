@@ -1,19 +1,18 @@
-
-<%@ page import="ar.droid.admin.TypeActivity" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.TypeActivity" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'typeActivity.label', default: 'TypeActivity')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>Tipos de actividades</title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Inicio</a></span>
+            <span class="menuButton"><g:link class="create" action="create">Nuevo Tipo de actividad</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+             <h1>Listar Tipos de actividades</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -21,8 +20,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <g:sortableColumn property="description" title="${message(code: 'typeActivity.description.label', default: 'Description')}" />
-                            <g:sortableColumn property="color" title="${message(code: 'typeActivity.color.label', default: 'Color')}" />
+                            <g:sortableColumn property="description" title="Descripci&oacute;n" />
+                            <g:sortableColumn property="color" title="Color" />
                         
                         </tr>
                     </thead>

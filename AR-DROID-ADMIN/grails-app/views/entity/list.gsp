@@ -1,11 +1,10 @@
-
-<%@ page import="ar.droid.admin.Entity" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.Entity" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'entity.label', default: 'Entity')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>Entidades</title>
         <g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
 		<g:javascript library="prototype" />
 		<g:javascript src="maps.js" />
@@ -17,11 +16,11 @@
 	 </head>
     <body >
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Inicio</a></span>
+            <span class="menuButton"><g:link class="create" action="create">Nueva Entidad</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1>Listar Entidades</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -29,10 +28,10 @@
                 <table id="tableDir">
                     <thead>
                         <tr>
-                        	<g:sortableColumn property="name" title="${message(code: 'entity.name.label', default: 'Name')}" />
-                            <g:sortableColumn property="typeEntity" title="${message(code: 'entity.typeEntity.label', default: 'Entity Type')}" />
+                        	<g:sortableColumn property="name" title="${message(code: 'entity.name.label', default: 'Nombre')}" />
+                            <g:sortableColumn property="typeEntity" title="${message(code: 'entity.typeEntity.label', default: 'Tipo de Entidad')}" />
                             <g:sortableColumn property="url" title="${message(code: 'entity.url.label', default: 'Url')}" />
-                            <th><g:message code="entity.geoPoint.label" default="Geo Point" /></th>
+                            <th>Ubicación</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,8 +42,6 @@
                             <td>${fieldValue(bean: entityInstance, field: "typeEntity")}</td>
                             <td>${fieldValue(bean: entityInstance, field: "url")}</td>
                         	<td >${fieldValue(bean: entityInstance, field: "geoPoint")}</td>
-                        
-                        
                         </tr>
                     </g:each>
                     </tbody>

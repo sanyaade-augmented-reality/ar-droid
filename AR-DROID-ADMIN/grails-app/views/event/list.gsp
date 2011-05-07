@@ -1,5 +1,4 @@
-
-<%@ page import="ar.droid.admin.Event" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.Event" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,15 +12,15 @@
 				});		
 		</g:javascript>
         <g:set var="entityName" value="${message(code: 'event.label', default: 'Event')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>Eventos</title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Inicio</a></span>
+            <span class="menuButton"><g:link class="create" action="create">Nuevo Evento</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1>Listar Eventos</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -30,13 +29,13 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="title" title="${message(code: 'event.title.label', default: 'Title')}" />
+                            <g:sortableColumn property="title" title="${message(code: 'event.title.label', default: 'T&iacute;tulo')}" />
                         
-                            <th><g:message code="event.entity.label" default="Entity" /></th>
+                            <th><g:message code="event.entity.label" default="Entidad" /></th>
                         
-                            <th><g:message code="event.geoPoint.label" default="Geo Point" /></th>
+                            <th><g:message code="event.geoPoint.label" default="Ubicaci&oacute;n" /></th>
                         
-                            <th><g:message code="event.surveyTemplate.label" default="Survey Template" /></th>
+                            <th><g:message code="event.surveyTemplate.label" default="Plantilla de Encuesta" /></th>
                         
                         </tr>
                     </thead>

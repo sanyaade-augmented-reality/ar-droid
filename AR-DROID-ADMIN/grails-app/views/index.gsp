@@ -56,7 +56,7 @@
             <div class="homePagePanel">
                 <div class="panelTop"></div>
                 <div class="panelBody">
-                    <h1>Application Status</h1>
+                    <h1>Sobre la Aplicación</h1>
                     <ul>
                         <li>App version: <g:meta name="app.version"></g:meta></li>
                         <li>Grails version: <g:meta name="app.grails.version"></g:meta></li>
@@ -67,7 +67,7 @@
                         <li>Services: ${grailsApplication.serviceClasses.size()}</li>
                         <li>Tag Libraries: ${grailsApplication.tagLibClasses.size()}</li>
                     </ul>
-                    <h1>Installed Plugins</h1>
+                    <h1>Plugins Instalados</h1>
                     <ul>
                         <g:set var="pluginManager"
                                value="${applicationContext.getBean('pluginManager')}"></g:set>
@@ -83,10 +83,9 @@
         </div>
         <div id="pageBody">
             <h1>Administración AD-DROID</h1>
-            <p>Congratulations, you have successfully started your first Grails application! At the moment
-            this is the default page, feel free to modify it to either redirect to a controller or display whatever
-            content you may choose. Below is a list of controllers that are currently deployed in this application,
-            click on each to execute its default action:</p>
+            <p>Bienvenido a la aplicación de administración del sistema <b>AR-DROID</b>. Desde aquí podrá administrar todo
+            	referente a eventos y actividades de las entidades definidas.</p>
+            <p>Por favor, seleccione una de las opciones definidas mas abajo para empezar.</p>
 
             <div id="controllerList" class="dialog">
                 <h2>Administrar:</h2>
@@ -99,13 +98,16 @@
                     <li class="controller"><g:link controller="typeEntity">Tipos de entidades</g:link></li>
                     <li class="controller"><g:link controller="typeEvent">Tipos de eventos</g:link></li>
                     <li class="controller"><g:link controller="typeActivity">Tipos de actividades</g:link></li>
-                    <li class="controller">&nbsp;</li>
+                </ul>
+                <br />
+                <ul>                
                     <li class="controller"><g:link controller="entity">Entidades</g:link></li>
                     <li class="controller"><g:link controller="event">Eventos</g:link></li>
                     <li class="controller"><g:link controller="activity">Actividades</g:link></li>
                     <li class="controller"><g:link controller="surveyTemplate">Plantillas</g:link></li>
                     <li class="controller"><g:link controller="question">Preguntas</g:link></li>
                 </ul>
+                <br />
             </div>
             	<div id="fb-root"></div>
             	<fbg:resources locale="${Locale.getDefault()}" />
@@ -126,8 +128,6 @@
 				<fb:login-button perms="email,publish_stream" onlogin="facebookLogin();" size="large">
 					<g:message  code="auth.login.facebook"/>
 				</fb:login-button>
-			
-            
         </div>
     </body>
 </html>
