@@ -122,6 +122,12 @@ function tableToDirection(pTable,index){
 	 	}	
 	}
 	});         
-	
 }
 	
+function displayMap(map, value){
+	map = $(map);
+	if(value)
+		map.style.visibility = '';
+	else
+		map.style.visibility = 'hidden';
+}

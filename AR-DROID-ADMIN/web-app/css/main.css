@@ -45,6 +45,9 @@ input, select, textarea {
     padding: 2px 4px;
     width: 100%;
 }
+input.check{
+    width: auto;
+}
 select {
    padding: 2px 2px 2px 0;
     width: 100%;
