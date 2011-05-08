@@ -6,8 +6,7 @@ class Activity {
 	String description
 	GeoPoint geoPoint	
 	TypeActivity typeActivity
-	
-	
+		
 	static belongsTo = [event: Event]
 	
 	static mapping = { 
