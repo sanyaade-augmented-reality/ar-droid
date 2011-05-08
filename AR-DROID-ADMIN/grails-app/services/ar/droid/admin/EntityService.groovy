@@ -38,7 +38,7 @@ class EntityService {
 			if (params.version) {
 				def version = params.version.toLong()
 				if (entityInstance.version > version) {
-					entityInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'entity.label', default: 'Entity')] as Object[], "Another user has updated this Entity while you were editing")
+					entityInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'entity.label', default: 'Entity')] as Object[], "Otro usuario modifico el objeto")
 					return entityInstance
 				}
 			}
