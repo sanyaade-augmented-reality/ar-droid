@@ -5,6 +5,34 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'activity.label', default: 'Activity')}" />
         <title>Actividades</title>
+        
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+		<g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
+		<g:javascript src="maps.js" />
+		<g:javascript src="viewparams.js" />
+		<g:javascript library="prototype" />
+		<g:javascript>
+			Event.observe(window, 'load', initialize, true);
+			
+			function initialize() {
+				initializeMap('map_canvas', $('latitude').value, $('longitude').value, 12);
+				
+				google.maps.event.addListener(mapInstance, 'click', function(event){
+  					placeMarker(event.latLng, event.latLng.lat() + '@' + event.latLng.lng(), true);
+  					var clickedLocation = new google.maps.LatLng(event.latLng);
+  					
+  					$('latitude').value = event.latLng.lat();
+  					$('longitude').value = event.latLng.lng();
+  				});
+  				
+  				if($('latitude').value != '' && $('longitude').value != ''){
+  					var latlng = new google.maps.LatLng($('latitude').value, $('longitude').value);
+  					placeMarker(latlng, $('latitude').value + '@' + $('longitude').value, true);
+  				}  				
+  			}
+  			
+		</g:javascript>
     </head>
     <body>
         <div class="nav">
@@ -55,6 +83,18 @@
                                     <g:textArea name="description" value="${activityInstance?.description}" class="w100" />
                                 </td>
                                 
+                            </tr>
+                            
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="geoPoint">Ubicación</label>
+                                </td>
+                                <td colspan="3" valign="top" class="value ${hasErrors(bean: activityInstance, field: 'geoPoint', 'errors')}">
+                                    <div><g:checkBox class="check" checked="true" name="positionSameAsEvent" value="1" onclick="displayMap('map_canvas', !this.checked);" /> Utilizar la misma ubicación del evento</div>
+                                    <div id="map_canvas" style="width: 100%; height: 250px; visibility: hidden;"></div>
+                                    <g:hiddenField  name="latitude" value="${activityInstance?.geoPoint.latitude}" />
+                                    <g:hiddenField  name="longitude" value="${activityInstance?.geoPoint.longitude}" />
+                                </td>
                             </tr>
                         
                             <tr class="prop">

@@ -5,6 +5,22 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'activity.label', default: 'Activity')}" />
         <title>Actividades</title>
+        
+        <g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
+		<g:javascript src="maps.js" />
+		<g:javascript library="prototype" />
+		<g:javascript>
+			Event.observe(window, 'load', initialize, true);
+			
+			function initialize() {
+				initializeMap('map_canvas', $('latitude').value, $('longitude').value, 12);
+  				if($('latitude').value != '' && $('longitude').value != ''){
+  					var latlng = new google.maps.LatLng($('latitude').value, $('longitude').value);
+  					placeMarker(latlng, $('latitude').value + '@' + $('longitude').value, true);
+  				}
+  			}
+  			
+		</g:javascript>
     </head>
     <body>
         <div class="nav">
@@ -43,6 +59,15 @@
                         </tr>
                     
                         <tr class="prop">
+                        	<td valign="top" class="name">
+                                <label for="geoPoint">Ubicación</label>
+                            </td>
+                            <td valign="top" class="value ${hasErrors(bean: activityInstance, field: 'geoPoint', 'errors')}">
+                                <div id="map_canvas" style="width: 500px; height: 250px;"></div>
+                                <g:hiddenField  name="latitude" value="${activityInstance?.geoPoint.latitude}" />
+                                <g:hiddenField  name="longitude" value="${activityInstance?.geoPoint.longitude}" />
+                            </td>
+                            
                             <td valign="top" class="name">Tipo de Actividad</td>
                             
                             <td valign="top" class="value"><g:link controller="typeActivity" action="show" id="${activityInstance?.typeActivity?.id}">${activityInstance?.typeActivity?.encodeAsHTML()}</g:link></td>
