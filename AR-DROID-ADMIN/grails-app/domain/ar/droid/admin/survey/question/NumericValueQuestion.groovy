@@ -7,14 +7,13 @@ class NumericValueQuestion extends Question{
 	Integer limitFrom
 	
 	static mapping = {
-		tablePerHierarchy true
+		tablePerHierarchy false
 	}
 	
 	static constraints = {
 		limitTo(nullable:false)
 		limitFrom(nullable:false)
     }
-	
 	
 	public String getType(){
 		return messageSource.getMessage("default.NumericValueQuestion.type",null,"Numeric Value",LocaleContextHolder.getLocale())

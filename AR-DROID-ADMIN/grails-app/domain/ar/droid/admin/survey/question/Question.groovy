@@ -1,12 +1,12 @@
 package ar.droid.admin.survey.question
 
-import org.hamcrest.core.IsNull;
-import org.hibernate.mapping.Set;
+import org.hamcrest.core.IsNull
+import org.hibernate.mapping.Set
 
-import ar.droid.admin.survey.SurveyTemplate;
+import ar.droid.admin.survey.SurveyTemplate
 
 class Question {
-
+	
 	String question
 	SurveyTemplate surveyTemplate;
 	
@@ -15,6 +15,10 @@ class Question {
 	static transients = ['type']
 	
 	static belongsTo = [surveyTemplate: SurveyTemplate]
+	
+	static mapping = {
+		tablePerHierarchy false
+	}
 	
 	static constraints = {
 		question(blank: false)

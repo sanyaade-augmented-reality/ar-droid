@@ -10,7 +10,7 @@ class MultipleChoiceQuestion extends Question{
 	Integer maxOptions
 	
 	static mapping = {
-		tablePerHierarchy true
+		tablePerHierarchy false
 	}
 	
 	static hasMany = [options:Choice]
