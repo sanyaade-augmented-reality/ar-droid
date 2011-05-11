@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="grails.plugins.nimble.core.AdminsService" %>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
     <head>
         <title>Administración de AR-DROID</title>
@@ -106,6 +107,14 @@
                     <li class="controller"><g:link controller="activity">Actividades</g:link></li>
                     <li class="controller"><g:link controller="surveyTemplate">Plantillas</g:link></li>
                     <li class="controller"><g:link controller="question">Preguntas</g:link></li>
+                </ul>
+                <br />
+                <ul>
+                <n:hasRole name="${AdminsService.ADMIN_ROLE}">
+       			      <li class="controller"><g:link controller="admins" action="index" class="icon icon_user_go">Administer Application</g:link></li>
+       				</n:hasRole>
+       				<li class="controller"><g:link controller="auth" action="logout" class="icon icon_cross">Logout</g:link></li>
+                   
                 </ul>
                 <br />
             </div>
