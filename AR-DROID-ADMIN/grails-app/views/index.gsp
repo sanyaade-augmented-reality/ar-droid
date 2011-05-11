@@ -135,7 +135,7 @@
 							
 				</script>
 				<fb:login-button perms="email,publish_stream" onlogin="facebookLogin();" size="large">
-					<g:message  code="auth.login.facebook"/>
+					<g:message  code="Login"/>
 				</fb:login-button>
         </div>
     </body>
