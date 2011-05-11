@@ -7,7 +7,7 @@ class ReaderNews {
 	def static lsReaderNews = [new ReaderNewsNone(), new ReaderNewsRSS(), new ReaderNewsWeb(), new ReaderNewsFacebook()]
 	
 	String parameter
-	Entity entity
+	//Entity entity
 	
 	static belongsTo = [entity: Entity]
 	
