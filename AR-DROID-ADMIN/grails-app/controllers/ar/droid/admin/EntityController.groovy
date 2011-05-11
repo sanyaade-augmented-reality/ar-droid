@@ -1,7 +1,7 @@
 package ar.droid.admin
 
 import java.util.ArrayList
-import grails.converters.JSON
+import grails.converters.deep.*;
 import ar.droid.admin.reader.*;
 
 class EntityController {
@@ -112,6 +112,11 @@ class EntityController {
 		params.facebookdata = session?.facebook
 		entityService.synchronizeEvents(entityInstance,params);
 		redirect(action: "show", id: params.id)
+	}
+	
+	def entities = {
+		render Entity.list() as JSON
+		
 	}
 	
 
