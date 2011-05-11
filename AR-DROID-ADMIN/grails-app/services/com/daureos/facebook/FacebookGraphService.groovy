@@ -1,11 +1,9 @@
 package com.daureos.facebook
 
 
-import org.apache.commons.codec.digest.DigestUtils
 import org.codehaus.groovy.grails.web.json.JSONArray;
 
 import grails.converters.JSON
-import grails.converters.XML;
 
 import org.springframework.web.context.request.RequestContextHolder
 
