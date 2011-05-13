@@ -12,7 +12,7 @@ public class EntityView extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// setear layout
-        setContentView(R.layout.actentdemo);
+        setContentView(R.layout.view_entity);
        
         TextView title = (TextView) this.findViewById(R.id.title);
         title.setText("Entidad");
