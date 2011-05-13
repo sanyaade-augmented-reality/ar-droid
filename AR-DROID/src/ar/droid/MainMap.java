@@ -182,7 +182,7 @@ public class MainMap extends MapActivity {
 	                return true;
 	    		}
 		    	// abrir realidad aumentada
-		    	try{
+		    	try{ 		
 		    		Intent myIntent = new Intent(MainMap.this, MainAR.class);
 		    		startActivity(myIntent);
 		    	}
@@ -240,7 +240,7 @@ public class MainMap extends MapActivity {
 			iconTypeEntity.setBounds(0, 0, iconTypeEntity.getIntrinsicWidth(), iconTypeEntity.getIntrinsicHeight());
 		
 			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
-			MapEntityItemizedOverlay mapEntityOverlay = new MapEntityItemizedOverlay(iconTypeEntity,mapView);
+			MapEntityItemizedOverlay mapEntityOverlay = new MapEntityItemizedOverlay(iconTypeEntity,mapView,this);
 			while (itEnt.hasNext()) {
 				Entity entity = (Entity) itEnt.next();			
 				EntityOverlayItem overlayitemEntity = new EntityOverlayItem(entity.getGeoPoint(),entity.getName(),entity.getDescription(),entity);
