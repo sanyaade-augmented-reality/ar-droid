@@ -1,12 +1,10 @@
-
-
-<%@ page import="ar.droid.admin.survey.SurveyTemplate" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.survey.SurveyTemplate" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'surveyTemplate.label', default: 'SurveyTemplate')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title>Plantillas de encuestas</title>
     </head>
     <body>
         <div class="nav">
@@ -14,7 +12,7 @@
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h1>Crear Plantilla</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -30,7 +28,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="description"><g:message code="surveyTemplate.description.label" default="Description" /></label>
+                                    <label for="description">Descripción</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: surveyTemplateInstance, field: 'description', 'errors')}">
                                     <g:textField name="description" value="${surveyTemplateInstance?.description}" />
@@ -41,7 +39,7 @@
                     </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                    <span class="button"><g:submitButton name="create" class="save" value="Crear" /></span>
                 </div>
             </g:form>
         </div>

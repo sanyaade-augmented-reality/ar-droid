@@ -1,11 +1,10 @@
-
-<%@ page import="ar.droid.admin.survey.SurveyTemplate" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.survey.SurveyTemplate" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'surveyTemplate.label', default: 'SurveyTemplate')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>Plantillas de encuestas</title>
     </head>
     <body>
         <div class="nav">
@@ -13,7 +12,7 @@
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new2.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1>Plantillas de encuestas</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -22,9 +21,9 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'surveyTemplate.id.label', default: 'Id')}" />
+                            <g:sortableColumn property="description" title="Nombre" />
                         
-                            <g:sortableColumn property="questions" title="${message(code: 'surveyTemplate.questions.label', default: 'Questions')}" />
+                            <g:sortableColumn property="questions" title="Preguntas" />
                         
                         </tr>
                     </thead>

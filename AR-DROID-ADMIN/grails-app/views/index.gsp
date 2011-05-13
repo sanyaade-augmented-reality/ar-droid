@@ -4,6 +4,7 @@
     <head>
         <title>Administración de AR-DROID</title>
         <meta name="layout" content="main" />
+		<script src="http://connect.facebook.net/en_US/all.js"></script>
         <style type="text/css" media="screen">
 
         #nav {
@@ -87,56 +88,48 @@
             <p>Bienvenido a la aplicación de administración del sistema <b>AR-DROID</b>. Desde aquí podrá administrar todo
             	referente a eventos y actividades de las entidades definidas.</p>
             <p>Por favor, seleccione una de las opciones definidas mas abajo para empezar.</p>
-
-            <div id="controllerList" class="dialog">
+			<br />
+            
+            <g:link class="index_link" controller="typeEntity">Tipos de entidades</g:link>
+            <g:link class="index_link" controller="typeEvent">Tipos de eventos</g:link>
+            <g:link class="index_link" controller="typeActivity">Tipos de actividades</g:link>
+            <br />
+            <g:link class="index_link" controller="entity">Entidades</g:link>
+            <g:link class="index_link" controller="event">Eventos</g:link>
+            <g:link class="index_link" controller="activity">Actividades</g:link>
+            <br />
+            <g:link class="index_link" controller="surveyTemplate">Plantillas</g:link>
+            <g:link class="index_link" controller="question">Preguntas</g:link><br /><br />
+            <n:hasRole name="${AdminsService.ADMIN_ROLE}">
+       			<g:link class="index_link" controller="admins" action="index" class="icon icon_user_go">Administer Application</g:link></li>
+			</n:hasRole>
+            <g:link class="index_link icon icon_cross" controller="auth" action="logout">Logout</g:link>
+                        	
+            <fbg:resources locale="${Locale.getDefault()}" />
+			<script>
+					FB.init({appId:'122540491154119', cookie: true, xfbml: true, status: true});				
+					function facebookLogin() {
+						FB.getLoginStatus(function(response) {
+						if (response.session) {
+							// logged in and connected user, someone you know
+							//window.location = "${createLink(controller:'auth', action:'facebookLogin')}";
+						}
+					});
+					}
+						
+			</script>
+			<fb:login-button perms="email,publish_stream" onlogin="facebookLogin();" size="large">
+				<g:message code="Autorizar aplicaciones Facebook"/>
+			</fb:login-button>
+			
+			<div id="controllerList" class="dialog">	
                 <h2>Administrar:</h2>
                 <ul>
                     <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
                         <li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
                     </g:each>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li class="controller"><g:link controller="typeEntity">Tipos de entidades</g:link></li>
-                    <li class="controller"><g:link controller="typeEvent">Tipos de eventos</g:link></li>
-                    <li class="controller"><g:link controller="typeActivity">Tipos de actividades</g:link></li>
                 </ul>
-                <br />
-                <ul>                
-                    <li class="controller"><g:link controller="entity">Entidades</g:link></li>
-                    <li class="controller"><g:link controller="event">Eventos</g:link></li>
-                    <li class="controller"><g:link controller="activity">Actividades</g:link></li>
-                    <li class="controller"><g:link controller="surveyTemplate">Plantillas</g:link></li>
-                    <li class="controller"><g:link controller="question">Preguntas</g:link></li>
-                </ul>
-                <br />
-                <ul>
-                <n:hasRole name="${AdminsService.ADMIN_ROLE}">
-       			      <li class="controller"><g:link controller="admins" action="index" class="icon icon_user_go">Administer Application</g:link></li>
-       				</n:hasRole>
-       				<li class="controller"><g:link controller="auth" action="logout" class="icon icon_cross">Logout</g:link></li>
-                   
-                </ul>
-                <br />
             </div>
-            	<div id="fb-root"></div>
-            	<fbg:resources locale="${Locale.getDefault()}" />
-				<script src="http://connect.facebook.net/en_US/all.js"></script>
-				<script>
-						FB.init({appId:'122540491154119', cookie: true, xfbml: true, status: true});
-					
-						function facebookLogin() {
-							FB.getLoginStatus(function(response) {
-							if (response.session) {
-								// logged in and connected user, someone you know
-								//window.location ="${createLink(controller:'auth', action:'facebookLogin')}";
-							}
-						});
-						}
-							
-				</script>
-				<fb:login-button perms="email,publish_stream" onlogin="facebookLogin();" size="large">
-					<g:message  code="Login"/>
-				</fb:login-button>
         </div>
     </body>
 </html>

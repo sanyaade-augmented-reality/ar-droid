@@ -1,6 +1,4 @@
-
-
-<%@ page import="ar.droid.admin.survey.question.Question" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.survey.question.Question" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -14,16 +12,16 @@
 				});		
 		</g:javascript>
         <g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
-        <title><g:message code="default.edit.label" args="[entityName]" /></title>
+        <title>Preguntas</title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new2.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Inicio</a></span>
+            <span class="menuButton"><g:link class="list" action="list">Volver al listado</g:link></span>
+            <span class="menuButton"><g:link class="create" action="create">Nueva Pregunta</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
+            <h1>Editar Pregunta</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -41,13 +39,13 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="surveyTemplate"><g:message code="question.surveyTemplate.label" default="Survey Template" /></label>
+                                    <label for="surveyTemplate">Plantilla</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: questionInstance, field: 'surveyTemplate', 'errors')}">
                                     <g:select name="surveyTemplate.id" from="${ar.droid.admin.survey.SurveyTemplate.list()}" optionKey="id" value="${questionInstance?.surveyTemplate?.id}"  />
                                 </td>
                                  <td valign="top" class="name">
-                                    <label for="typeQuestion"><g:message code="question.typeQuestion.label" default="Type Question" /></label>
+                                    <label for="typeQuestion">Tipo de pregunta</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: questionInstance, field: 'question', 'errors')}">
                                     <g:select name="typeQuestion" from="${typeQuestions}" optionKey="key"  optionValue="value" value="${typeQuestion}"  onChange="showDataForQuestion(this);"/>
@@ -56,7 +54,7 @@
                          	
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="question"><g:message code="question.question.label" default="Question" /></label>
+                                    <label for="question">Pregunta</label>
                                 </td>
                                 <td colspan="3" valign="top" class="value ${hasErrors(bean: questionInstance, field: 'question', 'errors')}">
                                     <g:textField name="question" value="${questionInstance?.question}" />
@@ -65,13 +63,13 @@
                             
                             <tr class="prop" id="trNumericType">
                                 <td valign="top" class="name">
-                                    <label for="limitTo"><g:message code="question.NumericValueQuestion.LimitTo.label" default="limit To" /></label>
+                                    <label for="limitTo">Limite hasta</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: questionInstance, field: 'limitTo', 'errors')}">
                                     <g:textField name="limitTo" value="${limitTo}" />
                                 </td>
                                 <td valign="top" class="name">
-                                    <label for="limitFrom"><g:message code="question.NumericValueQuestion.LimitFrom.label" default="limit From" /></label>
+                                    <label for="limitFrom">Limite desde</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: questionInstance, field: 'limitFrom', 'errors')}">
                                     <g:textField name="limitFrom" value="${limitFrom}" />
@@ -80,18 +78,18 @@
                           
                            <tr class="prop" id="trMultipleChoiceType">
                                 <td valign="top" class="name">
-                                    <label for="limitTo"><g:message code="question.MultipleChoiceQuestion.maxOptions.label" default="max Options" /></label>
+                                    <label for="limitTo">Cantidad de opciones</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: questionInstance, field: 'maxOptions', 'errors')}">
                                     <g:textField name="maxOptions" value="${maxOptions}" />
                                 </td>
-                                <td><input type="button" name="createChoice" id="createChoice" value="${message(code: 'default.button.create.Choice.label', default: 'Create Choice')}" onclick="createOption(this)"></td>
+                                <td><input type="button" name="createChoice" id="createChoice" value="Crear opción" onclick="createOption(this)"></td>
                                 <td>&nbsp;</td>                               
                           </tr>
                            <g:each in="${options}" var="q">
                                   <tr>
-                                  	<td><label for='choice'>${message(code: 'choice.description.label', default: 'Choice')}</label></td>
-                                  	<td>${q?.description}&nbsp;&nbsp;<g:link controller="choice" action="delete" id="${q.id}" params="['choicedelete': q?.id,question:questionInstance?.id]">${message(code: 'default.button.delete.label', default: 'Delete')}</g:link>
+                                  	<td><label for='choice'>Opción</label></td>
+                                  	<td>${q?.description}&nbsp;&nbsp;<g:link controller="choice" action="delete" id="${q.id}" params="['choicedelete': q?.id,question:questionInstance?.id]">Eliminar</g:link>
                                   	</td>
                                   	<td></td>
                                   	<td>&nbsp;</td>
@@ -103,8 +101,8 @@
                 </div>
 
                 <div class="buttons">
-                    <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    <span class="button"><g:actionSubmit class="save" action="update" value="Guardar" /></span>
+                    <span class="button"><g:actionSubmit class="delete" action="delete" value="Eliminar" onclick="return confirm('Seguro de eliminar?');" /></span>
                 </div>
             </g:form>
         </div>

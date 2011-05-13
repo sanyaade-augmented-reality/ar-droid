@@ -1,19 +1,18 @@
-
-<%@ page import="ar.droid.admin.survey.question.Question" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.survey.question.Question" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'question.label', default: 'Question')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>Preguntas</title>
     </head>
     <body>
         <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Inicio</a></span>
+            <span class="menuButton"><g:link class="create" action="create">Nueva Pregunta</g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1>Preguntas</h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -22,13 +21,11 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="id" title="${message(code: 'question.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="question" title="${message(code: 'question.question.label', default: 'Question')}" />
+                            <g:sortableColumn property="question" title="Pregunta" />
                             
-                            <g:sortableColumn property="type" title="${message(code: 'question.typeQuestion.label', default: 'Type Question')}" />
+                            <g:sortableColumn property="type" title="Tipo de pregunta" />
                         
-                            <th><g:message code="question.surveyTemplate.label" default="Survey Template" /></th>
+                            <th>Plantilla</th>
                         
                         </tr>
                     </thead>
@@ -36,9 +33,7 @@
                     <g:each in="${questionInstanceList}" status="i" var="questionInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                         
-                            <td><g:link action="show" id="${questionInstance.id}">${fieldValue(bean: questionInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: questionInstance, field: "question")}</td>
+                            <td><g:link action="show" id="${questionInstance.id}">${fieldValue(bean: questionInstance, field: "question")}</g:link></td>
                             
                             <td>${questionInstance?.type}</td>
                         
