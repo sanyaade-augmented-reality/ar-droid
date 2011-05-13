@@ -2,8 +2,11 @@ package ar.droid.view;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.google.android.maps.MapView;
@@ -13,11 +16,13 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
 	private ArrayList<EntityOverlayItem> mOverlays = new ArrayList<EntityOverlayItem>();
 	private Context mContext;
 	private MapView mapView;
+	private Activity activity;
 	
-	public MapEntityItemizedOverlay(Drawable defaultMarker,MapView mapView) {
+	public MapEntityItemizedOverlay(Drawable defaultMarker,MapView mapView,Activity activity) {
 		super(boundCenterBottom(defaultMarker),mapView);
 		mContext = mapView.getContext();
 		this.mapView = mapView;
+		this.activity = activity;
 	}
 
 	@Override
@@ -43,7 +48,19 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
 		//aca hay que disparar la vista de la actividad con los datos de la entidad
 		//tengo en el item la entidad seleccionada	
 		//ahora cuando se selecciona en la ventanita muestra la url de la entidad
-		return true;
+		// no se puede psar en el intent tipo Objets asi que por ahora
+		//paso estos datso, pero se tiene que poder acceder de la vista entidad a la entidad selccionada
+		//para recuperar toda la info.
+		
+		 Intent i = new Intent(activity.getApplicationContext(), EntityView.class);
+		 
+         i.putExtra("name", item.getEntity().getName());
+        
+         i.putExtra("url", item.getEntity().getUrl());
+         i.putExtra("desc", item.getEntity().getDescription());
+         activity.startActivity(i);
+	 	 
+         return true;
 	}
 
 
