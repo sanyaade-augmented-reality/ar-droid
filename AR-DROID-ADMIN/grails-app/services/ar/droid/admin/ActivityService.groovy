@@ -9,8 +9,8 @@ class ActivityService {
 		def canSave = false
 		
 		// ubicación de la actividad
-		if(params._positionSameAsEvent){
-			def entity = Entity.get(param.entity)	
+		if(params.positionSameAsEvent){
+			def event = Event.get(params.event.id)
 			activityInstance.geoPoint = entity.geoPoint
 			canSave = true
 		}
@@ -45,8 +45,8 @@ class ActivityService {
 			def canSave = false
 			
 			// ubicación de la actividad
-			if(params._positionSameAsEvent){
-				def entity = Entity.get(param.entity)
+			if(params.positionSameAsEvent){
+				def event = Event.get(params.event.id)
 				activityInstance.geoPoint = entity.geoPoint
 				canSave = true
 			}

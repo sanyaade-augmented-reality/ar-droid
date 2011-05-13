@@ -12,22 +12,30 @@ class EventService {
 		
 		// crear composiciones
 		eventInstance.eventCalendar.properties = params.event.eventCalendar
-		
-		println eventInstance.eventCalendar.startDate.class
-		
 		eventInstance.geoPoint = new GeoPoint()
+		def canSave = false
 		
-		// validar posición
-		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-			eventInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicación')
+		// ubicación de la actividad
+		if(params.positionSameAsEntity == "1"){
+			def entity = Entity.get(params.entity.id)
+			eventInstance.geoPoint = entity.geoPoint
+			canSave = true
 		}
-		else {
-			// armar geopoint
-			eventInstance.geoPoint.latitude = new BigDecimal(params.latitude)
-			eventInstance.geoPoint.longitude = new BigDecimal(params.longitude)
-			
+		else{
+			// validar posición
+			if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
+				eventInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicación')
+			}
+			else {
+				// armar geopoint
+				eventInstance.geoPoint.latitude = new BigDecimal(params.latitude)
+				eventInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+				canSave = true
+			}
+		}
+		if(canSave)
 			eventInstance.save(flush: true)
-		}
+			
 		return eventInstance;
 	}
 	
@@ -42,9 +50,22 @@ class EventService {
 				}
 			}
 			
-			// armar geopoint
-			eventInstance.geoPoint.latitude = new BigDecimal(params.latitude)
-			eventInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+			def canSave = false
+			
+			println params.positionSameAsEntity
+			println params._positionSameAsEntity
+			
+			// ubicación de la actividad
+			if(params.positionSameAsEntity == "1"){
+				def entity = Entity.get(params.entity.id)
+				eventInstance.geoPoint = entity.geoPoint
+				canSave = true
+			}
+			else{
+				// armar geopoint
+				eventInstance.geoPoint.latitude = new BigDecimal(params.latitude)
+				eventInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+			}
 			
 			// crear composiciones
 			eventInstance.eventCalendar.properties = params.event.eventCalendar
