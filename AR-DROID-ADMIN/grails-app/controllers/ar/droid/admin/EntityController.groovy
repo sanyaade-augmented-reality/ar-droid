@@ -1,8 +1,10 @@
 package ar.droid.admin
 
+import grails.converters.JSON;
+
 import java.util.ArrayList
-import grails.converters.deep.*
-import ar.droid.admin.reader.*
+
+import ar.droid.admin.reader.*;
 
 class EntityController {
 	def entityService
