@@ -85,6 +85,7 @@
                                     <label for="geoPoint">Ubicación</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'geoPoint', 'errors')}">
+                                	<div><g:checkBox class="check" checked="false" name="positionSameAsEntity" value="1" onclick="displayMap('map_canvas', !this.checked);" /> Utilizar la misma ubicación de la entidad</div>
                                 	<div id="map_canvas" style="width: 100%; height: 250px;"></div>
                                     <g:hiddenField name="latitude" value="${eventInstance?.geoPoint.latitude}" />
                                     <g:hiddenField name="longitude" value="${eventInstance?.geoPoint.longitude}" />

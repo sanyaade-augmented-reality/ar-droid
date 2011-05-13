@@ -39,7 +39,7 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}">Inicio</a></span>
-            <span class="menuButton"><g:link class="list" action="list">Nuevo Evento</g:link></span>
+            <span class="menuButton"><g:link class="list" action="list">Volver al lista</g:link></span>
         </div>
         <div class="body">
             <h1>Nuevo Evento</h1>
@@ -86,6 +86,7 @@
                                     <label for="geoPoint">Ubicación</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'geoPoint', 'errors')}">
+                                	<div><g:checkBox class="check" checked="false" name="positionSameAsEntity" value="1" onclick="displayMap('map_canvas', !this.checked);" /> Utilizar la misma ubicación de la entidad</div>
                                 	<div id="map_canvas" style="width: 100%; height: 250px;"></div>
                                     <g:hiddenField name="latitude" value="${eventInstance?.geoPoint.latitude}" />
                                     <g:hiddenField name="longitude" value="${eventInstance?.geoPoint.longitude}" />
