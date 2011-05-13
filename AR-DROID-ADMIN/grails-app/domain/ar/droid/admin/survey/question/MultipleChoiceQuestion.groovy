@@ -20,7 +20,7 @@ class MultipleChoiceQuestion extends Question{
     }
 	
 	public String getType(){
-		return messageSource.getMessage("default.MultipleChoiceQuestion.type",null,"Multiple Choice",LocaleContextHolder.getLocale())
+		return "Multiple Choise"
 	}
 	
 	public Integer maxOptions(){
