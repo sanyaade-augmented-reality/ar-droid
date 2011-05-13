@@ -1,10 +1,17 @@
 package ar.droid;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,10 +25,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ar.droid.location.LocationListenerGPS;
 import ar.droid.location.MyLocationOverlayFirstRun;
+import ar.droid.model.Entity;
+import ar.droid.model.ResourceHelperFactory;
+import ar.droid.model.TypeEntity;
+import ar.droid.resources.ImageHelperFactory;
+import ar.droid.view.EntityOverlayItem;
+import ar.droid.view.MapEntityItemizedOverlay;
 
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.OverlayItem;
 
 public class MainMap extends MapActivity {
 	static String TAG = MainMap.class.getName();
@@ -52,13 +66,14 @@ public class MainMap extends MapActivity {
         
         // crear mapa
         mapView = (MapView) findViewById(R.id.mapview);
-        resources = this.getResources();
+        resources = getResources();
         mapView.displayZoomControls(true);
+        mapView.setBuiltInZoomControls(true);
     	mapView.getController().setZoom(17);
     	
     	// inicializar mapa
     	this.initMap();
-
+    	
     	// si el GPS no esta habilitado informar
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
         	Log.d(TAG, "GPS deshabilitado");
@@ -68,9 +83,16 @@ public class MainMap extends MapActivity {
     	// salir si ya esta creada la instancia
     	if(savedInstanceState != null)
         	return;
-        
-        // crear lisener para el GPS
+    	
+    	//carga entidades al iniciar el mapa
+    	showEntities();       
+       
+    	// crear lisener para el GPS
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, new LocationListenerGPS(getApplicationContext(), this));
+        
+       /// List<Entity> xLs = ResourceHelperFactory.createResourceHelper().getEntities();
+        
+      
     }
     
 	private void initMap(){
@@ -162,7 +184,7 @@ public class MainMap extends MapActivity {
 		    	// abrir realidad aumentada
 		    	try{
 		    		Intent myIntent = new Intent(MainMap.this, MainAR.class);
-		    		MainMap.this.startActivity(myIntent);
+		    		startActivity(myIntent);
 		    	}
 		    	catch (Exception e) {
 		    		this.showMsgCameraError();
@@ -188,6 +210,47 @@ public class MainMap extends MapActivity {
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
+	}
+	
+	private void showEntities(){
+		//Se recupera las entidades a mostrar en el mapa
+		List<Entity> xLs = ResourceHelperFactory.createResourceHelper().getEntities();
+		
+		//se agrupan entidades por tipo de entidad
+		Iterator<Entity> itEnt = xLs.iterator();
+		Map<TypeEntity, List<Entity>> types = new HashMap<TypeEntity, List<Entity>>();		
+		while (itEnt.hasNext()) {
+			Entity entity = (Entity) itEnt.next();
+			List<Entity> listEntities = new ArrayList<Entity>();
+			if (types.get(entity.getTypeEntity())!=null){
+				listEntities = types.get(entity.getTypeEntity());
+			}
+			listEntities.add(entity);
+			types.put(entity.getTypeEntity(), listEntities);
+		}
+	
+		//se crean los overlays con la info de las entidades
+		Iterator<TypeEntity> itTypesEnt = types.keySet().iterator();
+		while (itTypesEnt.hasNext()) {
+			TypeEntity typeEntity = itTypesEnt.next();
+			itEnt = types.get(typeEntity).iterator();
+			
+			//se recupera el icono a mostrar para el tipo de entidad
+			Drawable iconTypeEntity =ImageHelperFactory.createImageHelper().getImage(typeEntity.getIconUrl());
+			iconTypeEntity.setBounds(0, 0, iconTypeEntity.getIntrinsicWidth(), iconTypeEntity.getIntrinsicHeight());
+		
+			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
+			MapEntityItemizedOverlay mapEntityOverlay = new MapEntityItemizedOverlay(iconTypeEntity,mapView);
+			while (itEnt.hasNext()) {
+				Entity entity = (Entity) itEnt.next();			
+				EntityOverlayItem overlayitemEntity = new EntityOverlayItem(entity.getGeoPoint(),entity.getName(),entity.getDescription(),entity);
+				mapEntityOverlay.addOverlay(overlayitemEntity);
+				
+			}
+			//se incorpora los overlay al mapa
+			mapView.getOverlays().add(mapEntityOverlay);
+		}
+		mapView.postInvalidate(); 
 	}
 	
 	private void showMsgCameraError() {
