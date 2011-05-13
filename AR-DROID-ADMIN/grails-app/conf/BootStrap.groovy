@@ -1,8 +1,12 @@
+import org.codehaus.groovy.grails.commons.spring.GrailsApplicationContext;
+
 import ar.droid.admin.reader.*
 import ar.droid.admin.calendar.*
 import ar.droid.admin.*
 import ar.droid.admin.survey.*
 import ar.droid.admin.survey.question.*
+//import grails.converters.JSON;
+//import .*;
 
 class BootStrap {
 	
@@ -36,7 +40,29 @@ class BootStrap {
 			log.error(template.errors)
 		}
 		
+		
+		grails.converters.JSON.registerObjectMarshaller(Entity) {
+			def returnArray = [:]
+			returnArray['name'] = it.name
+			returnArray['description'] = it.description
+			returnArray['url'] = it.url
+			returnArray['photoUrl'] = "/entity/showImage/"+it.id
+			returnArray['typeEntity'] = it.typeEntity
+		    returnArray['geoPoint'] = it.geoPoint
+			returnArray['readerNews'] = it.readerNews
+			returnArray['readerActivity'] = it.readerActivity
+			return returnArray
+		}
+		
+		grails.converters.JSON.registerObjectMarshaller(TypeEntity) {
+			def returnArray = [:]
+			returnArray['id'] = it.id
+			returnArray['description'] = it.description
+			returnArray['iconUrl'] = "typeEntity/showIcon/"+it.id
+			return returnArray
+		}
 	}
+	
 	
 	def destroy = {
 	}
