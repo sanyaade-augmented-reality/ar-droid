@@ -7,7 +7,21 @@ public class Entity {
 	String description;
 	String url;
 	GeoPoint geoPoint;
+	String photoUrl;
+	TypeEntity typeEntity;
 	
+	public TypeEntity getTypeEntity() {
+		return typeEntity;
+	}
+	public void setTypeEntity(TypeEntity typeEntity) {
+		this.typeEntity = typeEntity;
+	}
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
+	}
 	public GeoPoint getGeoPoint() {
 		return geoPoint;
 	}
