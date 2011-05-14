@@ -1,14 +1,14 @@
 package ar.droid.admin
 
 class TypeEvent {
-	String name
+	String description
 	 
     static constraints = {
-		name(blank:false)
+		description(blank:false)
     }
 	
 	@Override
 	public String toString() {
-		return name
+		return description
 	}
 }
