@@ -21,14 +21,14 @@
                     <thead>
                         <tr>
                         
-                            <g:sortableColumn property="name" title="${message(code: 'typeEvent.name.label', default: 'Nombre')}" />
+                            <g:sortableColumn property="name" title="Descripci&oacute;n" />
                         
                         </tr>
                     </thead>
                     <tbody>
                     <g:each in="${typeEventInstanceList}" status="i" var="typeEventInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                            <td><g:link action="show" id="${typeEventInstance.id}">${fieldValue(bean: typeEventInstance, field: "name")}</g:link></td>
+                            <td><g:link action="show" id="${typeEventInstance.id}">${fieldValue(bean: typeEventInstance, field: "description")}</g:link></td>
                         
                         </tr>
                     </g:each>

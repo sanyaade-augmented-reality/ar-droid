@@ -29,9 +29,9 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name">Nombre</td>
+                            <td valign="top" class="name">Descripción</td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: typeEventInstance, field: "name")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: typeEventInstance, field: "description")}</td>
                             
                         </tr>
                     

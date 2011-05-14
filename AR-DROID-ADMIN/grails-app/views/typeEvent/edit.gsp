@@ -31,10 +31,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                  <label for="name">Nombre</label>
+                                  <label for="name">Descripción</label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: typeEventInstance, field: 'name', 'errors')}">
-                                    <g:textField name="name" value="${typeEventInstance?.name}" />
+                                <td valign="top" class="value ${hasErrors(bean: typeEventInstance, field: 'description', 'errors')}">
+                                    <g:textField name="description" value="${typeEventInstance?.description}" />
                                 </td>
                             </tr>
                         
