@@ -14,6 +14,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import ar.droid.config.ARDROIDProperties;
 
 
 public abstract class ImageHelper implements IImageHelper {
@@ -21,7 +22,8 @@ public abstract class ImageHelper implements IImageHelper {
 	protected Drawable loadImage(String url){
 		HttpClient httpclient = new DefaultHttpClient();
 		StringBuilder urlString = new StringBuilder();
-		urlString.append("http://192.168.0.100:8080/AR-DROID-ADMIN/");
+		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		urlString.append(urlServer);
 		urlString.append(url);
 		Log.i("URLIMAGEN", urlString.toString());
         try {

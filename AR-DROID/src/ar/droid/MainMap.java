@@ -23,6 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+import ar.droid.config.ARDROIDProperties;
 import ar.droid.location.LocationListenerGPS;
 import ar.droid.location.MyLocationOverlayFirstRun;
 import ar.droid.model.Entity;
@@ -35,7 +36,6 @@ import ar.droid.view.MapEntityItemizedOverlay;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.OverlayItem;
 
 public class MainMap extends MapActivity {
 	static String TAG = MainMap.class.getName();
@@ -64,6 +64,8 @@ public class MainMap extends MapActivity {
         // setear layout
         setContentView(R.layout.mainmap);
         
+        ARDROIDProperties.createProperties(getApplicationContext());
+        
         // crear mapa
         mapView = (MapView) findViewById(R.id.mapview);
         resources = getResources();
@@ -90,6 +92,7 @@ public class MainMap extends MapActivity {
     	// crear lisener para el GPS
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, new LocationListenerGPS(getApplicationContext(), this));
         
+     
        /// List<Entity> xLs = ResourceHelperFactory.createResourceHelper().getEntities();
         
       

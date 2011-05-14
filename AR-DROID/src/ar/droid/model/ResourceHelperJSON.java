@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.droid.config.ARDROIDProperties;
 import ar.droid.model.deserializer.GeoPointDeserializer;
 
 import com.google.android.maps.GeoPoint;
@@ -16,7 +17,8 @@ import com.google.gson.reflect.TypeToken;
 public class ResourceHelperJSON extends ResourceHelper {
 
 	public List<Entity> getEntities(){
-		Reader inputStream = loadManySerialized("http://190.190.247.92:8080/AR-DROID-ADMIN/entity/entities");
+		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		Reader inputStream = loadManySerialized(urlServer + ARDROIDProperties.GET_ENTITIES);
 		Type listType = new TypeToken<ArrayList<Entity>>() {}.getType();
 		//Lo("MY INFO", inputStream.toString());
 		GsonBuilder gsonBuilder = new GsonBuilder();
