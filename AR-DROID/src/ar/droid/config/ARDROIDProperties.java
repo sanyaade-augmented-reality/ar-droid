@@ -16,7 +16,6 @@ public class ARDROIDProperties {
 	private ARDROIDProperties(Context context) {
 		this.context = context;
 	}
-	public static String GET_ENTITIES = "/entity/entities";
 	
 	private static Properties properties = null;
 
