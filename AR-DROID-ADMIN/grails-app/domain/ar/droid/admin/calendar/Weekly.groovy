@@ -1,6 +1,6 @@
 package ar.droid.admin.calendar
 
-class Weekly extends EventCalendar {
+class Weekly extends RepeatCalendar {
 	Integer dayOfWeek;
 	
 
