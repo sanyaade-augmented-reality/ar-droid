@@ -115,11 +115,4 @@ class EntityController {
 		entityService.synchronizeEvents(entityInstance,params);
 		redirect(action: "show", id: params.id)
 	}
-	
-	def entities = {
-		render Entity.list() as JSON
-		
-	}
-	
-
 }
