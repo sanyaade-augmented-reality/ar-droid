@@ -12,6 +12,7 @@ import ar.droid.ar.view.Marker;
 import ar.droid.config.ARDROIDProperties;
 import ar.droid.config.Request;
 import ar.droid.model.Entity;
+import ar.droid.model.Resource;
 import ar.droid.model.ResourceHelperFactory;
 
 public class ARDroidSource extends DataSource {
@@ -22,10 +23,10 @@ public class ARDroidSource extends DataSource {
 	}
 
 	@Override
-	public List<Marker> parse(JSONObject root) {
+	public List<Marker> parse(String url) {
 		List<Marker> lsResult = new ArrayList<Marker>();
 		//Se recupera las entidades a mostrar en pantalla
-		List<Entity> lsEntity = ResourceHelperFactory.createResourceHelper().getEntities();
+		List<Entity> lsEntity = Resource.getInstance().getEntities();
 		for (Iterator<Entity> iterator = lsEntity.iterator(); iterator.hasNext();) {
 			Entity entity = iterator.next();
 			lsResult.add(this.convertToMarker(entity));
@@ -36,6 +37,12 @@ public class ARDroidSource extends DataSource {
 	private Marker convertToMarker(Entity entity) {
 		Marker marker = new Marker(entity.getName(), entity.getGeoPoint().getLatitudeE6(), entity.getGeoPoint().getLongitudeE6(), entity.getGeoPoint().getAltitude(), Color.BLACK);
 		return marker;
+	}
+
+	@Override
+	public List<Marker> parse(JSONObject root) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
