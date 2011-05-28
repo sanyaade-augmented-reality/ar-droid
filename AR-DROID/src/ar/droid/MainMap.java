@@ -28,7 +28,7 @@ import ar.droid.config.ARDROIDProperties;
 import ar.droid.location.LocationListenerGPS;
 import ar.droid.location.MyLocationOverlayFirstRun;
 import ar.droid.model.Entity;
-import ar.droid.model.ResourceHelperFactory;
+import ar.droid.model.Resource;
 import ar.droid.model.TypeEntity;
 import ar.droid.resources.ImageHelperFactory;
 import ar.droid.view.EntityOverlayItem;
@@ -77,6 +77,9 @@ public class MainMap extends MapActivity {
     	// inicializar mapa
     	this.initMap();
     	
+    	//carga entidades al iniciar el mapa
+    	showEntities();       
+       
     	// si el GPS no esta habilitado informar
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
         	Log.d(TAG, "GPS deshabilitado");
@@ -87,9 +90,7 @@ public class MainMap extends MapActivity {
     	if(savedInstanceState != null)
         	return;
     	
-    	//carga entidades al iniciar el mapa
-    	showEntities();       
-       
+    	
     	// crear lisener para el GPS
     	int minTime = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mintime");
         int minDistance = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mindistance");
@@ -217,7 +218,7 @@ public class MainMap extends MapActivity {
 	
 	private void showEntities(){
 		//Se recupera las entidades a mostrar en el mapa
-		List<Entity> xLs = ResourceHelperFactory.createResourceHelper().getEntities();
+		List<Entity> xLs =Resource.getInstance().getEntities();
 		
 		//se agrupan entidades por tipo de entidad
 		Iterator<Entity> itEnt = xLs.iterator();
