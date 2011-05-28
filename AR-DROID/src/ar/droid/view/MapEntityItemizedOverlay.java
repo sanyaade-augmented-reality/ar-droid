@@ -44,7 +44,7 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
 
 	@Override
 	protected boolean onBalloonTap(int index, EntityOverlayItem item) {
-		Toast.makeText(mContext,item.getEntity().getUrl(),Toast.LENGTH_LONG).show();
+		//Toast.makeText(mContext,item.getEntity().getUrl(),Toast.LENGTH_LONG).show();
 		//aca hay que disparar la vista de la actividad con los datos de la entidad
 		//tengo en el item la entidad seleccionada	
 		//ahora cuando se selecciona en la ventanita muestra la url de la entidad
@@ -52,12 +52,10 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
 		//paso estos datso, pero se tiene que poder acceder de la vista entidad a la entidad selccionada
 		//para recuperar toda la info.
 		
-		 Intent i = new Intent(activity.getApplicationContext(), EntityView.class);
-		 
-         i.putExtra("name", item.getEntity().getName());
-        
-         i.putExtra("url", item.getEntity().getUrl());
-         i.putExtra("desc", item.getEntity().getDescription());
+		//ver si lo pongo parcelable o lo dejo cmo esta ahora¿¿
+		
+		 Intent i = new Intent(activity.getApplicationContext(), EntityTabWidget.class);
+		 i.putExtra("idEntity", item.getEntity().getId());        
          activity.startActivity(i);
 	 	 
          return true;
