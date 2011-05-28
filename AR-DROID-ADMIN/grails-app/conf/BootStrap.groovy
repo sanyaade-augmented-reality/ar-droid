@@ -58,7 +58,7 @@ class BootStrap {
 			def returnArray = [:]
 			returnArray['id'] = it.id
 			returnArray['description'] = it.description
-			returnArray['iconUrl'] = "typeEntity/showIcon/"+it.id
+			returnArray['iconUrl'] = "/typeEntity/showIcon/"+it.id
 			return returnArray
 		}
 	}
