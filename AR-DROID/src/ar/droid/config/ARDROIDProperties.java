@@ -41,6 +41,13 @@ public class ARDROIDProperties {
 		return getPreperties().getProperty(name);
 	}
 	
+	public int getIntProperty(String name){
+		return new Integer(getPreperties().getProperty(name)).intValue();
+	}
+	
+	public boolean getBoolProperty(String name){
+		return Boolean.getBoolean(getPreperties().getProperty(name));
+	}
 	
 	public static ARDROIDProperties createProperties(Context context){
 		if (arDROIDProperties == null){
