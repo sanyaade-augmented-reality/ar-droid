@@ -42,6 +42,7 @@ class Entity {
 class GeoPoint {
 	Double latitude;
 	Double longitude;
+	Double altitude;
 	
 	@Override
 	public String toString() {
