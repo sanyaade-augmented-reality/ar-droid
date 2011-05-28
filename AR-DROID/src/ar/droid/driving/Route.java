@@ -2,6 +2,7 @@ package ar.droid.driving;
 
 import java.util.ArrayList;
 import java.util.List;
+import ar.droid.location.GeoPoint;
 
 public class Route {
 	

@@ -17,10 +17,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
 
-import com.google.android.maps.GeoPoint;
+import ar.droid.location.GeoPoint;
 import com.google.gson.Gson;
 
-public class DrivingDirectionsGoogleJSON extends DrivingDirections{
+public class DrivingDirectionsGoogleJSON extends DrivingDirections {
 	
 	
 	protected RoutePath startDrivingTo (GeoPoint startPoint, GeoPoint endPoint, Mode mode)	{

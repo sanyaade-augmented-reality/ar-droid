@@ -1,6 +1,6 @@
 package ar.droid.driving;
 
-import com.google.android.maps.GeoPoint;
+import ar.droid.location.GeoPoint;
 
 public abstract class DrivingDirections implements IDrivingDirections{
 	

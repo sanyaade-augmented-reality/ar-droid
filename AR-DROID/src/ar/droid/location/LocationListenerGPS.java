@@ -30,7 +30,6 @@ public class LocationListenerGPS implements LocationListener {
 	public void onLocationChanged(Location location) {
     	Log.d(TAG, "Posición recibida de GPS");
     	lastKnowLocation = location;
-    	
     	this.showAddress();
 	}
 
@@ -74,6 +73,7 @@ public class LocationListenerGPS implements LocationListener {
 			}
 		}
 		catch (Exception e) {
+			Log.d(TAG, "Error obteniendo ubicación", e);
 			addressName = "Ubicación desconocida";
 		}
 		// armar texto
