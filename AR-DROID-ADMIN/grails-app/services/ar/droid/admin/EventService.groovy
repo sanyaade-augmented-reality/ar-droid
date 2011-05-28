@@ -30,6 +30,7 @@ class EventService {
 				// armar geopoint
 				eventInstance.geoPoint.latitude = new BigDecimal(params.latitude)
 				eventInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+				eventInstance.geoPoint.altitude = new BigDecimal(params.altitude)
 				canSave = true
 			}
 		}
@@ -65,6 +66,7 @@ class EventService {
 				// armar geopoint
 				eventInstance.geoPoint.latitude = new BigDecimal(params.latitude)
 				eventInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+				eventInstance.geoPoint.altitude = new BigDecimal(params.altitude)
 			}
 			
 			// crear composiciones

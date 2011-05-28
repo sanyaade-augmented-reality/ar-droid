@@ -23,6 +23,7 @@ class ActivityService {
 				// armar geopoint
 				activityInstance.geoPoint.latitude = new BigDecimal(params.latitude)
 				activityInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+				activityInstance.geoPoint.altitude = new BigDecimal(params.altitude)
 				canSave = true
 			}
 		}	
@@ -59,6 +60,7 @@ class ActivityService {
 					// armar geopoint
 					activityInstance.geoPoint.latitude = new BigDecimal(params.latitude)
 					activityInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+					activityInstance.geoPoint.altitude = new BigDecimal(params.altitude)
 					canSave = true
 				}
 			}

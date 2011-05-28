@@ -26,6 +26,7 @@ class EntityService {
 			// armar geopoint
 			entityInstance.geoPoint.latitude = new BigDecimal(params.latitude)
 			entityInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+			entityInstance.geoPoint.altitude = new BigDecimal(params.altitude)
 			
 			entityInstance.save(flush: true)
 		}
@@ -48,6 +49,11 @@ class EntityService {
 			if(params.get("photo").size == 0){
 				entityInstance.photo = photo;
 			}
+			
+			// modificar geopoint
+			entityInstance.geoPoint.latitude = new BigDecimal(params.latitude)
+			entityInstance.geoPoint.longitude = new BigDecimal(params.longitude)
+			entityInstance.geoPoint.altitude = new BigDecimal(params.altitude)
 			
 			entityInstance.readerActivity = ReaderActivity.fromString(params.readerActivity_select)
 			entityInstance.readerNews = ReaderNews.fromString(params.readerNews_select)
