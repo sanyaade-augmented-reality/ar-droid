@@ -9,7 +9,7 @@ import ar.droid.config.ARDROIDProperties;
 import ar.droid.config.Request;
 import ar.droid.model.deserializer.GeoPointDeserializer;
 
-import com.google.android.maps.GeoPoint;
+import ar.droid.location.GeoPoint;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

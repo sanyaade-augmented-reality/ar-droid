@@ -1,6 +1,6 @@
 package ar.droid.model;
 
-import com.google.android.maps.GeoPoint;
+import ar.droid.location.GeoPoint;
 
 public class Entity {
 	String name;

@@ -26,7 +26,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import ar.droid.R;
 
-import com.google.android.maps.GeoPoint;
+import ar.droid.location.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
@@ -118,7 +118,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends I
 		
 		balloonView.setData(currentFocussedItem);
 		
-		GeoPoint point = currentFocussedItem.getPoint();
+		GeoPoint point = new GeoPoint(currentFocussedItem.getPoint());
 		MapView.LayoutParams params = new MapView.LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, point,
 				MapView.LayoutParams.BOTTOM_CENTER);
