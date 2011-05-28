@@ -9,6 +9,7 @@
 		<g:javascript library="prototype" />
 		<g:javascript>
 			Event.observe(window, 'load', initialize, true);
+			var elevator = new google.maps.ElevationService();
 			
 			function initialize() {
 				initializeMap('map_canvas', $('latitude').value, $('longitude').value, 12);
@@ -17,6 +18,22 @@
   					placeMarker(event.latLng, event.latLng.lat() + '@' + event.latLng.lng(), true);
   					var clickedLocation = new google.maps.LatLng(event.latLng);
   					
+  					var locations = [];
+  					locations.push(event.latLng);
+					var positionalRequest = {
+    					'locations': locations
+  					}
+  
+  					// traer altitud
+  					elevator.getElevationForLocations(positionalRequest, function(results, status){
+						if (status == google.maps.ElevationStatus.OK){
+							if (results[0])
+								$('altitude').value = results[0].elevation.toFixed(2);
+							else
+								$('altitude').value = '0';
+						}
+					});
+					
   					$('latitude').value = event.latLng.lat();
   					$('longitude').value = event.latLng.lng();
   				});
@@ -89,6 +106,7 @@
                                 	<div id="map_canvas" style="width: 100%; height: 250px;"></div>
                                     <g:hiddenField name="latitude" value="${eventInstance?.geoPoint.latitude}" />
                                     <g:hiddenField name="longitude" value="${eventInstance?.geoPoint.longitude}" />
+                                    <g:hiddenField  name="altitude" value="${eventInstance?.geoPoint.altitude}" />
                                 </td>
                                 
                                
