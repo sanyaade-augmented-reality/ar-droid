@@ -1,92 +1,165 @@
 package ar.droid;
 
-import android.app.Activity;
-import android.content.Context;
-import android.hardware.Camera;
-import android.hardware.SensorManager;
-import android.location.LocationManager;
+import java.util.List;
+import java.util.Locale;
+import java.util.logging.Logger;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.RelativeLayout;
-import ar.droid.location.LocationListenerGPS;
-import ar.droid.ra.SensorAccelerometerEventListener;
-import ar.droid.ra.SurfaceHolderListener;
-import ar.droid.ra.view.Radar;
+import ar.droid.ar.activity.AugmentedView;
+import ar.droid.ar.activity.SensorsActivity;
+import ar.droid.ar.camara.CameraSurface;
+import ar.droid.ar.common.ARData;
+import ar.droid.ar.common.DataSource;
+import ar.droid.ar.view.Marker;
+import ar.droid.common.ARDroidSource;
+import ar.droid.config.ARDROIDProperties;
 
-
-public class MainAR extends Activity {
+public class MainAR extends SensorsActivity {
 	static String TAG = MainAR.class.getName();
-	public static SensorManager sensorMan;
-	private LocationManager locationManager;
+	private static final Logger logger = Logger.getLogger(MainAR.class.getSimpleName());
+	private static final String locale = Locale.getDefault().getLanguage();
 	
-	private SurfaceView preview;
-	private SurfaceHolder previewHolder;
-	private Camera camera;
+	private static DataSource source = null;
 	
-	public void onCreate(Bundle savedInstanceState) {
+	private static CameraSurface camScreen = null;    
+    private static AugmentedView augmentedView = null;
+
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        // crear location manager
-        if(locationManager == null)
-        	locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        
-        // pantalla completa
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
-        // setear layout
-        setContentView(R.layout.mainar);
-        
-        // inicializar camara
-        this.initCamera();
+        logger.info("onCreate()");
 
-        // agregar radar
-        this.addRadar();
-        
-        // salir si ya esta creada la instancia
-    	if(savedInstanceState != null)
-        	return;
-        
-        // crear lisener para el GPS
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, new LocationListenerGPS(getApplicationContext(), this));
-	}
+        camScreen = new CameraSurface(this);
+        setContentView(camScreen);
 
-	/**
-	 * agrega el radar a la superficie de la camara
-	 */
-	private void addRadar(){	 
-	  	RelativeLayout infoLayer = new RelativeLayout(getApplicationContext());
-	  	infoLayer.setPadding(10, 10, 0, 0);
-	  	addContentView(infoLayer, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
-	  	infoLayer.addView(new Radar(getApplicationContext()), new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-	}
-	
-	/**
-	 * crea e inicializa la captura de video.
-	 * ademas inicia el sensor de movimiento del dispositivo
-	 */
-	private void initCamera() {
-		preview = (SurfaceView) findViewById(R.id.cameraPreview);
-        previewHolder = preview.getHolder();
-        previewHolder.addCallback(new SurfaceHolderListener(camera, previewHolder));
-        previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        augmentedView = new AugmentedView(this);
+        LayoutParams augLayout = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        addContentView(augmentedView, augLayout);
         
-        // iniciar sensor
-        sensorMan = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-		sensorMan.registerListener(new SensorAccelerometerEventListener(), sensorMan.getDefaultSensor(SensorManager.SENSOR_ORIENTATION), SensorManager.SENSOR_DELAY_FASTEST);
-		sensorMan.registerListener(new SensorAccelerometerEventListener(), sensorMan.getDefaultSensor(SensorManager.SENSOR_ACCELEROMETER), SensorManager.SENSOR_DELAY_FASTEST);
-	}
-	
+        updateDataOnZoom();
+             
+        // crear el source
+        if (source == null) {
+        	source = new ARDroidSource();
+        }
+    }
+    
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+    	logger.info("onDestroy()");
+    }
+    
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	logger.info("onStart()");
+    	
+    	Location last = ARData.getCurrentLocation();
+        if (last!=null) updateData(last.getLatitude(),last.getLongitude(),last.getAltitude());
+    }
+    
+    @Override
+    public void onStop() {
+    	super.onStop();
+    	logger.info("onStop()");
+    }
+    
+    @Override
+    public void onSensorChanged(SensorEvent evt) {
+        super.onSensorChanged(evt);
 
-	@Override
+        if (    evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER || 
+                evt.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD
+        ) {
+            augmentedView.postInvalidate();
+        }
+    }
+    
+    private static float calcZoomLevel(){
+        int zoomLevel = ARDROIDProperties.getInstance().getIntProperty("ar.droid.ar.zoomlevel");
+        float myout = 5;
+    
+        if (zoomLevel <= 26) {
+            myout = zoomLevel / 25f;
+        } else if (25 < zoomLevel && zoomLevel < 50) {
+            myout = (1 + (zoomLevel - 25)) * 0.38f;
+        } else if (25== zoomLevel) {
+            myout = 1;
+        } else if (50== zoomLevel) {
+            myout = 10;
+        } else if (50 < zoomLevel && zoomLevel < 75) {
+            myout = (10 + (zoomLevel - 50)) * 0.83f;
+        } else {
+            myout = (30 + (zoomLevel - 75) * 2f);
+        }
+
+        return myout;
+    }
+
+    protected void updateDataOnZoom() {
+        float zoomLevel = calcZoomLevel();
+        ARData.setRadius(zoomLevel);
+        ARData.setZoomLevel(String.valueOf(zoomLevel));
+        
+        int defZoomLevel = ARDROIDProperties.getInstance().getIntProperty("ar.droid.ar.zoomlevel");
+        ARData.setZoomProgress(defZoomLevel);
+    };
+    
+    @Override
+    public void onLocationChanged(Location location) {
+        super.onLocationChanged(location);
+        updateData(location.getLatitude(),location.getLongitude(),location.getAltitude());
+    }
+    
+    private static Thread thread = null;
+    private void updateData(final double lat, final double lon, final double alt) {
+    	if (thread!=null && thread.isAlive()) {
+    		logger.info("Not updating since in the process");
+    		return;
+    	}
+    	
+    	thread = new Thread(
+    		new Runnable(){
+				@Override
+				public void run() {
+					logger.info("empieza");
+					download(source, lat, lon, alt);
+					logger.info("termina");
+				}
+			}
+    	);
+    	thread.start();
+    }
+    
+    private static boolean download(DataSource source, double lat, double lon, double alt) {
+		if (source == null) return false;
+		
+		String url = source.createRequestURL(lat, lon, alt, ARData.getRadius(), locale);    	
+    	logger.info(url);
+    	if (url==null) return false;
+    	
+    	List<Marker> markers = source.parse(url);
+    	if (markers==null) return false;
+    	
+    	logger.info(source.getClass().getSimpleName()+" size="+markers.size());
+    	
+    	ARData.addMarkers(markers);
+    	return true;
+    }
+    
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.menu_ar, menu);

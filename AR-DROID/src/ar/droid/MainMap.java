@@ -23,6 +23,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+import ar.droid.ar.common.ARData;
 import ar.droid.config.ARDROIDProperties;
 import ar.droid.location.LocationListenerGPS;
 import ar.droid.location.MyLocationOverlayFirstRun;
@@ -90,12 +91,10 @@ public class MainMap extends MapActivity {
     	showEntities();       
        
     	// crear lisener para el GPS
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 5, new LocationListenerGPS(getApplicationContext(), this));
-        
-     
-       /// List<Entity> xLs = ResourceHelperFactory.createResourceHelper().getEntities();
-        
-      
+    	int minTime = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mintime");
+        int minDistance = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mindistance");
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, new LocationListenerGPS(getApplicationContext(), this));
+ 
     }
     
 	private void initMap(){
@@ -186,12 +185,13 @@ public class MainMap extends MapActivity {
 	    		}
 		    	// abrir realidad aumentada
 		    	try{ 		
+		    		ARData.setCurrentLocation(myLocationOverlay.getLastFix());
 		    		Intent myIntent = new Intent(MainMap.this, MainAR.class);
 		    		startActivity(myIntent);
 		    	}
 		    	catch (Exception e) {
 		    		this.showMsgCameraError();
-		    		Log.d(TAG, "Error inicializando Camara");
+		    		Log.d(TAG, "Error inicializando Camara", e);
 				}
 		        return true;
 		    case R.id.menu_find:
