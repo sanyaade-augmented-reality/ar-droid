@@ -263,7 +263,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 		ARData.setCurrentLocation(location);
 
 		// mostrar ubicación
-		//this.showAddress();
+		this.showAddress();
 	}
 
 	@Override

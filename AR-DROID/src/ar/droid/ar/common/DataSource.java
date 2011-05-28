@@ -1,105 +1,35 @@
 package ar.droid.ar.common;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import android.graphics.Color;
 import ar.droid.ar.view.Marker;
+import ar.droid.model.Entity;
+import ar.droid.model.Resource;
 
-public abstract class DataSource {
+public class DataSource {
 	private static Logger logger = Logger.getLogger(DataSource.class.getSimpleName());
 
 	protected static final int MAX = 5;
-	
-	public abstract String createRequestURL(	double lat, 
-												double lon, 
-												double alt, 
-												float radius, 
-												String locale);
 
-	public abstract List<Marker> parse(JSONObject root);
-	
-    protected static InputStream getHttpGETInputStream(String urlStr) {
-    	InputStream is = null;
-    	URLConnection conn = null;
-
-    	try {
-        	if (urlStr.startsWith("file://")) return new FileInputStream(urlStr.replace("file://", ""));
-
-    		URL url = new URL(urlStr);
-    		conn =  url.openConnection();
-    		conn.setReadTimeout(2000);
-    		conn.setConnectTimeout(2000);
-
-    		is = conn.getInputStream();
-
-    		return is;
-    	} catch (Exception ex) {
-    		try {
-    			is.close();
-    		} catch (Exception e) {
-    			// Ignore
-    		}
-    		try {
-    			if(conn instanceof HttpURLConnection) ((HttpURLConnection)conn).disconnect();
-    		} catch (Exception e) {
-    			// Ignore
-    		}
-    		logger.info("Exception: "+ex.getMessage());
-    	}
-    	
-    	return null;
-    }
-    
-    protected String getHttpInputString(InputStream is) {
-    	BufferedReader reader = new BufferedReader(new InputStreamReader(is), 8 * 1024);
-    	StringBuilder sb = new StringBuilder();
-
-    	try {
-    		String line;
-    		while ((line = reader.readLine()) != null) {
-    			sb.append(line + "\n");
-    		}
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	} finally {
-    		try {
-    			is.close();
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	return sb.toString();
-    }
-    
-	
-	public List<Marker> parse(String url) {
-		InputStream stream = null;
-    	stream = getHttpGETInputStream(url);
-    	if (stream==null) return null;
-    	
-    	String string = null;
-    	string = getHttpInputString(stream);
-    	if (string==null) return null;
-    	
-    	JSONObject json = null;
-    	try {
-    		json = new JSONObject(string);
-    	} catch (JSONException e) {
-    		logger.info("Exception: "+e.getMessage());
-    	}
-    	if (json==null) return null;
-    	
-    	return parse(json);
+	public List<Marker> getEntities() {
+		List<Marker> lsResult = new ArrayList<Marker>();
+		// Se recupera las entidades a mostrar en pantalla
+		List<Entity> lsEntity = Resource.getInstance().getEntities();
+		for (Iterator<Entity> iterator = lsEntity.iterator(); iterator.hasNext();) {
+			Entity entity = iterator.next();
+			lsResult.add(this.convertToMarker(entity));
+		}
+		return lsResult;
 	}
+
+	private Marker convertToMarker(Entity entity) {
+		Marker marker = new Marker(entity.getName(), entity.getGeoPoint().getLatitudeE6(), entity
+				.getGeoPoint().getLongitudeE6(), entity.getGeoPoint().getAltitude(), Color.BLACK);
+		return marker;
+	}
+
 }

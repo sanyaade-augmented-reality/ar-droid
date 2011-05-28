@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import ar.droid.ar.activity.AugmentedView;
 import ar.droid.ar.activity.SensorsActivity;
@@ -21,7 +19,6 @@ import ar.droid.ar.camara.CameraSurface;
 import ar.droid.ar.common.ARData;
 import ar.droid.ar.common.DataSource;
 import ar.droid.ar.view.Marker;
-import ar.droid.common.ARDroidSource;
 import ar.droid.config.ARDROIDProperties;
 
 public class MainAR extends SensorsActivity {
@@ -51,7 +48,7 @@ public class MainAR extends SensorsActivity {
              
         // crear el source
         if (source == null) {
-        	source = new ARDroidSource();
+        	source = new DataSource();
         }
     }
     
@@ -146,11 +143,8 @@ public class MainAR extends SensorsActivity {
     private static boolean download(DataSource source, double lat, double lon, double alt) {
 		if (source == null) return false;
 		
-		String url = source.createRequestURL(lat, lon, alt, ARData.getRadius(), locale);    	
-    	logger.info(url);
-    	if (url==null) return false;
-    	
-    	List<Marker> markers = source.parse(url);
+		    	
+    	List<Marker> markers = source.getEntities();
     	if (markers==null) return false;
     	
     	logger.info(source.getClass().getSimpleName()+" size="+markers.size());
