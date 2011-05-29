@@ -72,6 +72,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 		locationText.setPadding(0, 10, 10, 0);
 		locationText.setTextSize(15);
 		locationText.setGravity(Gravity.RIGHT);
+		
 		LayoutParams augLayout = new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT);
 		addContentView(locationText, augLayout);
@@ -307,6 +308,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 		// armar texto
 		if(locationText != null){
 			locationText.setText(addressName);
+			locationText.bringToFront();
 			locationText.invalidate();
 		}
 	}
