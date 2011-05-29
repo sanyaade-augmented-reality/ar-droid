@@ -176,12 +176,14 @@ public class MainAR extends SensorsActivity {
 		    default:
 		        return super.onOptionsItemSelected(item);
 		    case R.id.menu_close:
-		    	
-		    	// terminar la aplicacion
-		    	Log.d(TAG, "Salir");
-		    	int pid = android.os.Process.myPid(); 
-		    	android.os.Process.killProcess(pid); 
+		    	this.exit();
 		        return true;
 	    }
+	}
+	
+	private void exit(){
+		Log.d(TAG, "Salir");
+    	int pid = android.os.Process.myPid(); 
+    	android.os.Process.killProcess(pid);
 	}
 }
