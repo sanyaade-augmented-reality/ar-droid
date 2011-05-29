@@ -15,7 +15,7 @@ public class PaintableBoxedText extends PaintableObject {
 	private float pad = 0;
 
 	private String txt = null;
-    private float fontSize = 12;
+    private float fontSize = 10;
 	private int borderColor = Color.rgb(255, 255, 255);
 	private int backgroundColor = Color.argb(160, 0, 0, 0);
 	private int textColor = Color.rgb(255, 255, 255);
