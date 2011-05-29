@@ -18,7 +18,7 @@ import ar.droid.resources.ImageHelperHTTP;
 public class DataSource {
 	private static Logger logger = Logger.getLogger(DataSource.class.getSimpleName());
 
-	protected static final int MAX = 5;
+	protected static final int MAX = 10;
 
 	public List<Marker> getEntities() {
 		List<Marker> lsResult = new ArrayList<Marker>();

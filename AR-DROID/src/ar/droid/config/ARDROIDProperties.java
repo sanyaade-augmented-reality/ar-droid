@@ -19,7 +19,7 @@ public class ARDROIDProperties {
 	
 	private static Properties properties = null;
 
-	public  Properties getPreperties() {
+	public  Properties getProperties() {
 		if(properties == null){
 			Resources resources = context.getResources();
 			AssetManager assetManager = resources.getAssets();
@@ -38,15 +38,15 @@ public class ARDROIDProperties {
 	}
 
 	public String getProperty(String name){
-		return getPreperties().getProperty(name);
+		return getProperties().getProperty(name);
 	}
 	
 	public int getIntProperty(String name){
-		return new Integer(getPreperties().getProperty(name)).intValue();
+		return new Integer(getProperties().getProperty(name)).intValue();
 	}
 	
 	public boolean getBoolProperty(String name){
-		return Boolean.getBoolean(getPreperties().getProperty(name));
+		return Boolean.getBoolean(getProperties().getProperty(name));
 	}
 	
 	public static ARDROIDProperties createProperties(Context context){
