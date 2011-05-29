@@ -5,10 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import ar.droid.ar.view.IconMarker;
 import ar.droid.ar.view.Marker;
 import ar.droid.model.Entity;
 import ar.droid.model.Resource;
+import ar.droid.resources.ImageHelperHTTP;
 
 public class DataSource {
 	private static Logger logger = Logger.getLogger(DataSource.class.getSimpleName());
@@ -27,8 +32,12 @@ public class DataSource {
 	}
 
 	private Marker convertToMarker(Entity entity) {
-		Marker marker = new Marker(entity.getName(), entity.getGeoPoint().getLatitudeE6(), entity
-				.getGeoPoint().getLongitudeE6(), entity.getGeoPoint().getAltitude(), Color.BLACK);
+		Drawable draw = new ImageHelperHTTP().getImage(entity.getTypeEntity().getIconUrl());
+		Bitmap bitmap = ((BitmapDrawable) draw).getBitmap();
+
+		IconMarker marker = new IconMarker(entity.getName(), entity.getGeoPoint().getLatitudeE6(),
+				entity.getGeoPoint().getLongitudeE6(), entity.getGeoPoint().getAltitude(),
+				Color.BLACK, bitmap);
 		return marker;
 	}
 
