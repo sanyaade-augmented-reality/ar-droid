@@ -40,9 +40,10 @@ class BootStrap {
 			log.error(template.errors)
 		}
 		
-		
+				
 		grails.converters.JSON.registerObjectMarshaller(Entity) {
 			def returnArray = [:]
+			returnArray['id'] = it.id
 			returnArray['name'] = it.name
 			returnArray['description'] = it.description
 			returnArray['url'] = it.url
@@ -50,7 +51,7 @@ class BootStrap {
 			returnArray['typeEntity'] = it.typeEntity
 		    returnArray['geoPoint'] = it.geoPoint
 			returnArray['readerNews'] = it.readerNews
-			returnArray['readerActivity'] = it.readerActivity
+			//returnArray['readerActivity'] = it.readerActivity
 			return returnArray
 		}
 		
