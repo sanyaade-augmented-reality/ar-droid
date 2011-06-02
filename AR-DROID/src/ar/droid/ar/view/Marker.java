@@ -13,13 +13,15 @@ import ar.droid.ar.common.PhysicalLocation;
 import ar.droid.ar.view.object.PaintableBoxedText;
 import ar.droid.ar.view.object.PaintableGps;
 import ar.droid.ar.view.object.PaintablePosition;
+import ar.droid.model.Entity;
 
 public class Marker implements Comparable<Marker> {
     private static final int MAX_OBJECTS = 100;
     
-    //Unique identifier of Marker
-    protected String name = null;
-	//Marker's physical location
+    // entidad a la que representa el marker
+    Entity entity;
+	
+    //Marker's physical location
     protected PhysicalLocation physicalLocation = null;
 	// distance from user to PhysicalLocation in meters
     protected double distance = 0.0;
@@ -33,15 +35,15 @@ public class Marker implements Comparable<Marker> {
     protected MixVector upVector = new MixVector(0, 1, 0);
     
     protected int color = Color.WHITE;
+    protected PaintablePosition txtContainter;
 	
-	public Marker(String name, double latitude, double longitude, double altitude, int color) {
-		this.name = name;
-		this.physicalLocation = new PhysicalLocation(latitude,longitude,altitude);
-		this.color = color;
+	public Marker(Entity entity) {
+		this.entity = entity;
+		this.physicalLocation = new PhysicalLocation(entity.getGeoPoint().getLatitudeE6()/1E6, entity.getGeoPoint().getLongitudeE6()/1E6,entity.getGeoPoint().getAltitude());
 	}
 	
-	public String getName(){
-		return name;
+	public Entity getEntity(){
+		return entity;
 	}
 
 	public double getLatitude() {
@@ -83,7 +85,7 @@ public class Marker implements Comparable<Marker> {
 
     @Override
     public boolean equals (Object marker) {
-        return this.name.equals(((Marker)marker).getName());
+        return this.getEntity().getId().equals(((Marker)marker).getEntity().getId());
     }
 
     private void update(Canvas canvas, float addX, float addY) {
@@ -160,10 +162,10 @@ public class Marker implements Comparable<Marker> {
 	    String textStr="";
 	    DecimalFormat df = new DecimalFormat("@#");
 	    if (distance<1000.0) {
-	        textStr = name + " ("+ df.format(distance) + "m)";          
+	        textStr = getEntity().getName() + " ("+ df.format(distance) + "m)";          
 	    } else {
 	        double d=distance/1000.0;
-	        textStr = name + " (" + df.format(d) + "km)";
+	        textStr = getEntity().getName() + " (" + df.format(d) + "km)";
 	    }
 
 	    float maxHeight = Math.round(canvas.getHeight() / 10f) + 1;
@@ -172,7 +174,35 @@ public class Marker implements Comparable<Marker> {
 	    float y = signVector.y + maxHeight;
 	    float currentAngle = MixUtils.getAngle(circleVector.x, circleVector.y, signVector.x, signVector.y);
 	    float angle = currentAngle + 90;
-	    PaintablePosition txtContainter = new PaintablePosition(textBlock, x, y, angle, 1);
+	    txtContainter = new PaintablePosition(textBlock, x, y, angle, 1);
 	    txtContainter.paint(canvas);
+	}
+
+	public boolean clickedMe(float x, float y) {
+		float currentAngle = MixUtils.getAngle(circleVector.x, circleVector.y,
+				signVector.x, signVector.y);
+		//if the marker is not active (i.e. not shown in AR view) we don't have to check it for clicks
+		if (!isVisible)
+			return false;
+		
+		//TODO adapt the following to the variable radius!
+		ScreenLine sl = new ScreenLine();
+		sl.x = x - signVector.x;
+		sl.y = y - signVector.y;
+		sl.rotate(Math.toRadians(-(currentAngle + 90)));
+		sl.x += txtContainter.getX();
+		sl.y += txtContainter.getY();
+
+		float objX = txtContainter.getX() - txtContainter.getWidth() / 2;
+		float objY = txtContainter.getY() - txtContainter.getHeight() / 2;
+		float objW = txtContainter.getWidth();
+		float objH = txtContainter.getHeight();
+
+		if (sl.x > objX && sl.x < objX + objW && sl.y > objY
+				&& sl.y < objY + objH) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

@@ -4,12 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import ar.droid.ar.view.object.PaintableIcon;
 import ar.droid.ar.view.object.PaintablePosition;
+import ar.droid.model.Entity;
 
 public class IconMarker extends Marker {
     private Bitmap bitmap = null;
 
-    public IconMarker(String name, double latitude, double longitude, double altitude, int color, Bitmap bitmap) {
-        super(name, latitude, longitude, altitude, color);
+    public IconMarker(Entity entity, Bitmap bitmap) {
+    	super(entity);
         this.bitmap = bitmap;
     }
     
