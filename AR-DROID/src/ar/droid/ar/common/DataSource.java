@@ -35,9 +35,7 @@ public class DataSource {
 		Drawable draw = new ImageHelperHTTP().getImage(entity.getTypeEntity().getIconUrl());
 		Bitmap bitmap = ((BitmapDrawable) draw).getBitmap();
 
-		IconMarker marker = new IconMarker(entity.getName(), entity.getGeoPoint().getLatitudeE6(),
-				entity.getGeoPoint().getLongitudeE6(), entity.getGeoPoint().getAltitude(),
-				Color.BLACK, bitmap);
+		IconMarker marker = new IconMarker(entity, bitmap);
 		return marker;
 	}
 

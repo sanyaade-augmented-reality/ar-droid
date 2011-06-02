@@ -63,7 +63,7 @@ public abstract class ARData {
         for(Marker ma : markers) {
             if (!markerList.containsKey(ma)) {
             	ma.calcRelativePosition(ARData.getCurrentLocation());
-            	markerList.put(ma.getName(),ma);
+            	markerList.put(ma.getEntity().getName(),ma);
             }
         }
         logger.info("Marker count: "+markerList.size());
