@@ -66,7 +66,7 @@ public abstract class ARData {
             	markerList.put(ma.getEntity().getName(),ma);
             }
         }
-        logger.info("Marker count: "+markerList.size());
+        logger.info("Marker encontrados: "+markerList.size());
     }
         
     public static void onLocationChanged(Location location) {

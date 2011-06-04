@@ -143,10 +143,9 @@ public class Marker implements Comparable<Marker> {
 	}
 
 	public void draw(Canvas canvas) {
-	    update(canvas,0,0);
-	    
-	    if (!isVisible) return;
-	    
+	    update(canvas,0,0);	    
+	    if (!isVisible)
+	    	return;	    
 	    drawIcon(canvas);
 	    drawText(canvas);
 	}
