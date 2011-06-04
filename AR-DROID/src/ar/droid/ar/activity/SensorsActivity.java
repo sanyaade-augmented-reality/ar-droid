@@ -1,33 +1,28 @@
 package ar.droid.ar.activity;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
+import ar.droid.MainAR;
 import ar.droid.ar.common.ARData;
 import ar.droid.ar.common.Matrix;
 import ar.droid.config.ARDROIDProperties;
+import ar.droid.location.LocationListenerGPSAR;
 
-public class SensorsActivity extends Activity implements SensorEventListener, LocationListener {
+public abstract class SensorsActivity extends Activity implements SensorEventListener {
 	private static final Logger logger = Logger.getLogger(SensorsActivity.class.getSimpleName());
 
 	private static float RTmp[] = new float[9];
@@ -51,11 +46,12 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 	private static Sensor sensorGrav = null;
 	private static Sensor sensorMag = null;
 	private static LocationManager locationMgr = null;
+	private LocationListenerGPSAR locationListener;
 
 	private static int updateSensorCounter = 0;
 	private static int updateSensorMax = 10;
 
-	private TextView locationText;
+	protected TextView locationText;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,17 +61,6 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-		// agragar texto de posición
-		locationText = new TextView(this);
-		locationText.setTextColor(Color.RED);
-		locationText.setPadding(0, 10, 10, 0);
-		locationText.setTextSize(15);
-		locationText.setGravity(Gravity.RIGHT);
-		
-		LayoutParams augLayout = new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.WRAP_CONTENT);
-		addContentView(locationText, augLayout);
 	}
 
 	@Override
@@ -119,10 +104,14 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 			int minTime = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mintime");
 			int minDistance = ARDROIDProperties.getInstance().getIntProperty(
 					"ar.droid.gps.mindistance");
-			locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance,
-					this);
 
-			this.showAddress();
+			if (locationListener == null) {
+				Location location = locationMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				locationListener = new LocationListenerGPSAR((MainAR) this, locationText, location);
+			}
+			locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, locationListener);
+
+			locationListener.showAddress();
 
 			try {
 				Location hardFix = new Location("ATL");
@@ -135,13 +124,13 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 					Location network = locationMgr
 							.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 					if (gps != null)
-						onLocationChanged(gps);
+						locationListener.onLocationChanged(gps);
 					else if (network != null)
-						onLocationChanged(network);
+						locationListener.onLocationChanged(network);
 					else
-						onLocationChanged(hardFix);
+						locationListener.onLocationChanged(hardFix);
 				} catch (Exception ex2) {
-					onLocationChanged(hardFix);
+					locationListener.onLocationChanged(hardFix);
 				}
 
 				GeomagneticField gmf = new GeomagneticField((float) ARData.getCurrentLocation()
@@ -164,7 +153,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 					sensorMgr = null;
 				}
 				if (locationMgr != null) {
-					locationMgr.removeUpdates(this);
+					locationMgr.removeUpdates(locationListener);
 					locationMgr = null;
 				}
 			} catch (Exception ex2) {
@@ -191,7 +180,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 			sensorMgr = null;
 
 			try {
-				locationMgr.removeUpdates(this);
+				locationMgr.removeUpdates(locationListener);
 			} catch (Exception ex) {
 				logger.info("ERROR en Localización : " + ex);
 			}
@@ -248,68 +237,10 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 	}
 
 	@Override
-	public void onProviderDisabled(String provider) {
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		ARData.setCurrentLocation(location);
-
-		// mostrar ubicación
-		this.showAddress();
-	}
-
-	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD
 				&& accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
 			logger.info("Brújula DE datos poco fiable!");
-		}
-	}
-
-	protected void showAddress() {
-		Location currentLocation = ARData.getCurrentLocation();
-		String addressName = "";
-
-		if (currentLocation == null)
-			addressName = "Ubicación desconocida";
-		else {
-			// obtener ubicación
-
-			try {
-				Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-				List<Address> lsAddress = geocoder.getFromLocation(currentLocation.getLatitude(),
-						currentLocation.getLongitude(), 1);
-				if (lsAddress.size() > 0) {
-					Address address = lsAddress.get(0);
-					if (address.getAddressLine(0) != null)
-						addressName = address.getAddressLine(0);
-					else if (address.getThoroughfare() != null)
-						addressName = address.getThoroughfare();
-					else if (address.getFeatureName() != null)
-						addressName = address.getFeatureName();
-					else if (address.getLocality() != null)
-						addressName = address.getLocality();
-					else
-						addressName = "Ubicación desconocida";
-				}
-			} catch (Exception e) {
-				addressName = "Ubicación desconocida";
-			}
-		}
-		// armar texto
-		if(locationText != null){
-			locationText.setText(addressName);
-			locationText.bringToFront();
-			locationText.invalidate();
 		}
 	}
 }
