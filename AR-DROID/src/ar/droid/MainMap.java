@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -65,8 +66,6 @@ public class MainMap extends MapActivity {
         // setear layout
         setContentView(R.layout.mainmap);
         
-        ARDROIDProperties.createProperties(getApplicationContext());
-        
         // crear mapa
         mapView = (MapView) findViewById(R.id.mapview);
         resources = getResources();
@@ -86,15 +85,20 @@ public class MainMap extends MapActivity {
         	this.showMsgGPSDisabled();
         }
         
-    	// salir si ya esta creada la instancia
-    	if(savedInstanceState != null)
-        	return;
-    	
-    	
-    	// crear lisener para el GPS
+        Location location;
+     	// crear lisener para el GPS
     	int minTime = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mintime");
         int minDistance = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mindistance");
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, new LocationListenerGPS(getApplicationContext(), this));
+        
+    	// salir si ya esta creada la instancia
+    	if(savedInstanceState != null){
+    		location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, new LocationListenerGPS(getApplicationContext(), this, location));
+        	return;
+    	}
+        
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, new LocationListenerGPS(getApplicationContext(), this, location));
  
     }
     

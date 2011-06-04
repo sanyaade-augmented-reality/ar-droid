@@ -1,15 +1,16 @@
 package ar.droid;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 import ar.droid.ar.activity.AugmentedView;
 import ar.droid.ar.activity.SensorsActivity;
 import ar.droid.ar.camara.CameraSurface;
@@ -30,7 +32,6 @@ import ar.droid.view.EntityTabWidget;
 public class MainAR extends SensorsActivity implements OnTouchListener {
 	static String TAG = MainAR.class.getName();
 	private static final Logger logger = Logger.getLogger(MainAR.class.getSimpleName());
-	private static final String locale = Locale.getDefault().getLanguage();
 
 	private static DataSource source = null;
 
@@ -41,18 +42,29 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		logger.info("onCreate()");
 
 		camScreen = new CameraSurface(this);
 		setContentView(camScreen);
-
-		augmentedView = new AugmentedView(this);
-		LayoutParams augLayout = new LayoutParams(LayoutParams.WRAP_CONTENT,
+		
+		// crear layout
+		LayoutParams augLayout = new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT);
+		
+		augmentedView = new AugmentedView(this);
 		addContentView(augmentedView, augLayout);
+		
+		// agragar texto de posición
+		locationText = new TextView(this);
+		locationText.setTextColor(Color.RED);
+		locationText.setPadding(0, 10, 10, 0);
+		locationText.setTextSize(15);
+		locationText.setGravity(Gravity.RIGHT);
+		locationText.bringToFront();
+		addContentView(locationText, augLayout);
 
+		// Setear el alcance de realidad
 		updateDataOnZoom();
-
+		
 		// crear el source
 		if (source == null) {
 			source = new DataSource();
@@ -68,17 +80,10 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 	@Override
 	public void onStart() {
 		super.onStart();
-		logger.info("onStart()");
 
-		Location last = ARData.getCurrentLocation();
-		if (last != null)
-			updateData(last.getLatitude(), last.getLongitude(), last.getAltitude());
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		logger.info("onStop()");
+		Location lastLocation = ARData.getCurrentLocation();
+		if (lastLocation != null)
+			updateData(lastLocation.getLatitude(), lastLocation.getLongitude(), lastLocation.getAltitude());
 	}
 
 	@Override
@@ -121,26 +126,19 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 		ARData.setZoomProgress(defZoomLevel);
 	};
 
-	@Override
-	public void onLocationChanged(Location location) {
-		super.onLocationChanged(location);
-		updateData(location.getLatitude(), location.getLongitude(), location.getAltitude());
-	}
-
 	private static Thread thread = null;
 
-	private void updateData(final double lat, final double lon, final double alt) {
+	public void updateData(final double lat, final double lon, final double alt) {
 		if (thread != null && thread.isAlive()) {
-			logger.info("Not updating since in the process");
+			logger.info("Hay una instancia de actuaización en curso");
 			return;
 		}
 
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				logger.info("empieza");
 				download(source, lat, lon, alt);
-				logger.info("termina");
+				logger.info("Termina actualización");
 			}
 		});
 		thread.start();

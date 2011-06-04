@@ -16,14 +16,16 @@ import ar.droid.R;
 
 public class LocationListenerGPS implements LocationListener {
 	static int VIEW_ADDRESS = 100000000;
-	static String TAG = "LocationListenerGPS";
+	static String TAG = LocationListenerGPS.class.getName();
 	protected Location lastKnowLocation;
 	protected Context context;
 	private Activity activity;
 
-	public LocationListenerGPS(Context context, Activity activity){
+	public LocationListenerGPS(Context context, Activity activity, Location lastKnowLocation){
 		this.context = context;
 		this.activity = activity;
+		this.lastKnowLocation = lastKnowLocation;
+		this.showAddress();
 	}
 	
 	@Override
