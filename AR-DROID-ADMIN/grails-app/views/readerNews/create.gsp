@@ -1,6 +1,5 @@
 
-
-<%@ page import="ar.droid.admin.ReaderNews" %>
+<%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.reader.ReaderNews" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
