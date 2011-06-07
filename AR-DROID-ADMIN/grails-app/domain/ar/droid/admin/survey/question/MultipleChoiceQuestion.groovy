@@ -20,7 +20,7 @@ class MultipleChoiceQuestion extends Question{
     }
 	
 	public String getType(){
-		return "Multiple Choise"
+		return "Múltiple opción"
 	}
 	
 	public Integer maxOptions(){

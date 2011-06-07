@@ -16,7 +16,7 @@ class NumericValueQuestion extends Question{
     }
 	
 	public String getType(){
-		return messageSource.getMessage("default.NumericValueQuestion.type",null,"Numeric Value",LocaleContextHolder.getLocale())
+		return "Valor numérico"
 	}
 	
 	public Integer limitTo(){

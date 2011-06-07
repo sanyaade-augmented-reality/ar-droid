@@ -12,7 +12,7 @@ class TextValueQuestion extends Question {
     }
 
 	public String getType(){
-		return messageSource.getMessage("default.TextValueQuestion.type",null,"Text",LocaleContextHolder.getLocale()) 
+		return "Texto"
 	}
 	
 }
