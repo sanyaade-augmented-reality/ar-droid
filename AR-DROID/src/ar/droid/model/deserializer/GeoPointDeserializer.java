@@ -20,7 +20,9 @@ public class GeoPointDeserializer implements JsonDeserializer<GeoPoint> {
 
 		double lat = json.getAsJsonObject().get("latitude").getAsDouble();
 		double lng = json.getAsJsonObject().get("longitude").getAsDouble();
-		double alt = json.getAsJsonObject().get("altitude").getAsDouble();
+		double alt =0;
+		if (!json.getAsJsonObject().get("altitude").isJsonNull())
+			alt = json.getAsJsonObject().get("altitude").getAsDouble();
 		GeoPoint p = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6), alt);
 		return p; 
 	}
