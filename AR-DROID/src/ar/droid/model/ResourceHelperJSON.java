@@ -24,13 +24,27 @@ public class ResourceHelperJSON extends ResourceHelper {
 		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
 		Reader inputStream = loadManySerialized(urlServer + Request.GET_ENTITIES);
 		Type listType = new TypeToken<ArrayList<Entity>>() {}.getType();
-		//Lo("MY INFO", inputStream.toString());
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(GeoPoint.class,new GeoPointDeserializer());
 		gsonBuilder.registerTypeAdapter(ReaderNews.class,new ReaderNewsDeserializer());
 		Gson gson =	gsonBuilder.create();	
 		
 		List<Entity> xLsResult  = gson.fromJson(inputStream,listType);
+		return xLsResult;
+	}
+	
+	@Override
+	public List<Event> getEvents(Entity entity) {
+		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		Reader inputStream = loadManySerialized(urlServer + Request.GET_EVENTS + "/"+entity.getId());
+		Type listType = new TypeToken<ArrayList<Event>>() {}.getType();
+		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(GeoPoint.class,new GeoPointDeserializer());
+		Gson gson =	gsonBuilder.create();	
+		
+		List<Event> xLsResult  = gson.fromJson(inputStream,listType);
+	
 		return xLsResult;
 	}
 }

@@ -6,5 +6,5 @@ import java.util.List;
 public interface IResourceHelper {
 	public List<Entity> getEntities();
 	
-	//public List<Event> getEvents(Entity entity);
+	public List<Event> getEvents(Entity entity);
 }

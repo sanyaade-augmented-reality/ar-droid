@@ -4,7 +4,7 @@ public class TypeEntity {
 	
 	private Long id;
 	private String description;
-	private String iconUrl;
+	//private String iconUrl;
 	public Long getId() {
 		return id;
 	}
@@ -17,12 +17,12 @@ public class TypeEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getIconUrl() {
+	/*public String getIconUrl() {
 		return iconUrl;
 	}
 	public void setIconUrl(String iconUrl) {
 		this.iconUrl = iconUrl;
-	}
+	}*/
 
 	
 	@Override

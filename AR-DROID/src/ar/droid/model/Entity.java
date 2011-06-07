@@ -1,5 +1,7 @@
 package ar.droid.model;
 
+import java.util.List;
+
 import ar.droid.admin.reader.ReaderNews;
 
 import ar.droid.location.GeoPoint;
@@ -10,11 +12,23 @@ public class Entity {
 	private String description;
 	private String url;
 	private GeoPoint geoPoint;
-	private String photoUrl;
+	//private String photoUrl;
 	private TypeEntity typeEntity;
 	
 	private ReaderNews readerNews;
 	
+	public List<Event> events =null;
+	
+	public Entity() {
+		
+	}
+	public Entity(Long id) {
+		setId(id);
+	}
+	
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
 	public ReaderNews getReaderNews() {
 		return readerNews;
 	}
@@ -34,12 +48,12 @@ public class Entity {
 	public void setTypeEntity(TypeEntity typeEntity) {
 		this.typeEntity = typeEntity;
 	}
-	public String getPhotoUrl() {
+	/*public String getPhotoUrl() {
 		return photoUrl;
 	}
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
-	}
+	}*/
 	public GeoPoint getGeoPoint() {
 		return geoPoint;
 	}
@@ -88,5 +102,18 @@ public class Entity {
 		return true;
 	}
 	
+	
+	public  List<Event> getEvents(){
+		return events;
+	}
+	
+   public Event getEvent(Long idEvent){
+	   Event event= new Event(idEvent);
+	   int index = getEvents().indexOf(event);
+	   if (index!= -1){
+		   return getEvents().get(index);
+	   }
+	   else return null;
+   }
 	
 }
