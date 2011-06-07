@@ -6,15 +6,20 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import ar.droid.R;
 import ar.droid.admin.reader.Message;
+import ar.droid.admin.reader.view.MessageNewsAdapter;
 import ar.droid.model.Entity;
 import ar.droid.model.Resource;
 
-public class NewsView extends ListActivity {
+public class ListNewsView extends ListActivity implements OnItemClickListener {
 	
 	private ProgressDialog progressDialog = null; 
 	private Entity entity;
@@ -24,22 +29,25 @@ public class NewsView extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//se sea la vista de la actividad
 		setContentView(R.layout.view_news);
 
-      
         //recupero la entidad
-        entity = new Entity();
-        entity.setId(getIntent().getExtras().getLong("idEntity"));
-        entity = Resource.getInstance().getEntity(entity);
+        entity = Resource.getInstance().getEntity(getIntent().getExtras().getLong("idEntity"));
         
         //List<Message> messages = entity.getReaderNews().getMessages();
         
         messages = new ArrayList<Message>();
         
-        adapter= new ArrayAdapter<Message>(this,R.layout.list_item_news ,messages);
+        //se crea el modelo para la actividad list
+        adapter= new MessageNewsAdapter(getApplicationContext(),R.layout.list_item_news,messages);
         
+        
+        
+        //se setea el adaptador
         setListAdapter(adapter);
         
+        //se cargan las noticias en un thread
         Runnable viewOrders = new Runnable(){
             public void run() {
                 getMessages();
@@ -48,13 +56,17 @@ public class NewsView extends ListActivity {
         Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
         thread.start();
         
+        //se lanza el dialogo de espera hasta que se cargen las noticas
         progressDialog = ProgressDialog.show(this,"Por favor espere..","Cargando Noticias....");
+        
+        getListView().setOnItemClickListener(this);
   	}
 	
 	
 	private void getMessages(){
 		 //recupero las noticias a mostrar
          messages = entity.getReaderNews().getMessages();   
+         //se actualiza el adaptador con las noticias recuperadas
          runOnUiThread(returnRes);  
 	}
 	
@@ -72,9 +84,17 @@ public class NewsView extends ListActivity {
             //notifica los cambios para actualizar la vista
             adapter.notifyDataSetChanged();
             
-            //cierra el diaglo de espera
+            //cierra el dialogo de espera
             progressDialog.dismiss();
         }
     };
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		Message message = messages.get(position);
+		Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse(message.getLink())); 
+		startActivity(i);
+		
+	}
 
 }
