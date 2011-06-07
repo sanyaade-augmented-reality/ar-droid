@@ -17,22 +17,26 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
 
-import ar.droid.location.GeoPoint;
+import com.google.android.maps.GeoPoint;
 import com.google.gson.Gson;
 
 public class DrivingDirectionsGoogleJSON extends DrivingDirections {
 	
 	
-	protected RoutePath startDrivingTo (GeoPoint startPoint, GeoPoint endPoint, Mode mode)	{
-		Log.i("startDrivingTo ","startDrivingTo");
+	protected void startDrivingTo (GeoPoint startPoint, GeoPoint endPoint, Mode mode,IDirectionsListener directionsListener)	{
+		//se conecta al servidor de google para obtener la ruta
 		Reader inputStream = doConnectToService(startPoint, endPoint, mode);
 		//parsean el objeto json con libreria Gson
 		Gson gson = new Gson();
 		RoutePath routePath = gson.fromJson(inputStream, RoutePath.class);
-		Log.i("route",""+routePath.getRoutes().size());
 		//aca convertir los objetos polyline
-		doConvertPolyline(routePath);
-		return routePath;
+		doConvertPolyline(routePath);		
+		if (routePath.getRoute() != null){
+			directionsAvailable(directionsListener, routePath.getRoute());
+		}
+		else{
+			directionsNotAvailable(directionsListener);
+		}
 		
 	}
 	
@@ -94,7 +98,7 @@ public class DrivingDirectionsGoogleJSON extends DrivingDirections {
 		urlString.append( Double.toString((double)endPoint.getLongitudeE6()/1.0E6 ));
 		urlString.append("&language=es");//ver para interna
 		urlString.append("&sensor=true");
-		urlString.append("&mode="+mode);
+		urlString.append("&mode="+mode.toString().toLowerCase());
 		//urlString.append("&ie=UTF8&0&om=0");
 		HttpClient httpclient = new DefaultHttpClient();
         try {

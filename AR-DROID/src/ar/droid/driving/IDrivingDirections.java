@@ -1,9 +1,11 @@
 package ar.droid.driving;
 
-import ar.droid.location.GeoPoint;
+import com.google.android.maps.GeoPoint;
+
+
 
 public interface IDrivingDirections {
 	
-	public RoutePath driveTo (GeoPoint startPoint, GeoPoint endPoint, Mode mode);
+	public void driveTo (GeoPoint startPoint, GeoPoint endPoint, Mode mode,IDirectionsListener directionsListener);
 	
 }

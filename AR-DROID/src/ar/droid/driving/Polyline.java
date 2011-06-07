@@ -3,7 +3,7 @@ package ar.droid.driving;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.droid.location.GeoPoint;
+import com.google.android.maps.GeoPoint;
 import com.google.gson.annotations.Expose;
 
 public class Polyline {

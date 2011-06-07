@@ -1,7 +1,5 @@
 package ar.droid.driving.view;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,12 +9,11 @@ import android.graphics.drawable.Drawable;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 import com.google.android.maps.Projection;
 
 public class RouteOverlay extends Overlay {
 
-	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
+	//private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private Context mContext;
 	private GeoPoint gp1;
 	private GeoPoint gp2;
@@ -40,8 +37,8 @@ public class RouteOverlay extends Overlay {
 		 paint.setColor(color);  
 		 Point point2 = new Point();  
 		 projection.toPixels(gp2, point2);  
-		 paint.setStrokeWidth(5);  
-		 paint.setAlpha(120);  
+		 paint.setStrokeWidth(3);  
+		 //paint.setAlpha(120);  
 		 canvas.drawLine(point.x, point.y, point2.x, point2.y, paint); 
 		return super.draw(canvas, mapView, shadow, when);
 	}
