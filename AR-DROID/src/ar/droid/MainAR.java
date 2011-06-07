@@ -208,6 +208,7 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 		Intent i = new Intent(this.getApplicationContext(), EntityTabWidget.class);
 		i.putExtra("idEntity", entity.getId());
 		this.startActivity(i);
+		finish();
 		return true;
 	}
 
