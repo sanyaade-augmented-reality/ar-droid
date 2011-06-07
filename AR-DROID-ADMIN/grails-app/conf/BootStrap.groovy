@@ -47,7 +47,7 @@ class BootStrap {
 			returnArray['name'] = it.name
 			returnArray['description'] = it.description
 			returnArray['url'] = it.url
-			returnArray['photoUrl'] = "/entity/showImage/"+it.id
+			//returnArray['photoUrl'] = "/request/showImage/"+it.id
 			returnArray['typeEntity'] = it.typeEntity
 		    returnArray['geoPoint'] = it.geoPoint
 			returnArray['readerNews'] = it.readerNews
@@ -55,11 +55,21 @@ class BootStrap {
 			return returnArray
 		}
 		
+		grails.converters.JSON.registerObjectMarshaller(Event) {
+			def returnArray = [:]
+			returnArray['id'] = it.id
+			returnArray['title'] = it.title
+			returnArray['description'] = it.description
+			returnArray['typeEvent'] = it.typeEvent
+			returnArray['geoPoint'] = it.geoPoint
+			return returnArray
+		}
+		
 		grails.converters.JSON.registerObjectMarshaller(TypeEntity) {
 			def returnArray = [:]
 			returnArray['id'] = it.id
 			returnArray['description'] = it.description
-			returnArray['iconUrl'] = "/typeEntity/showIcon/"+it.id
+			//returnArray['iconUrl'] = "/typeEntity/showIcon/"+it.id
 			return returnArray
 		}
 	}
