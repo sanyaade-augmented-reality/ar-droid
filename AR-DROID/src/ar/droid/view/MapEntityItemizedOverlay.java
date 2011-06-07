@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.maps.MapView;
 
@@ -54,10 +52,10 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
 		
 		//ver si lo pongo parcelable o lo dejo cmo esta ahora¿¿
 		
+		 hideBalloon();
 		 Intent i = new Intent(activity.getApplicationContext(), EntityTabWidget.class);
 		 i.putExtra("idEntity", item.getEntity().getId());        
-         activity.startActivity(i);
-	 	 
+         activity.startActivityForResult(i,0);	 	 
          return true;
 	}
 

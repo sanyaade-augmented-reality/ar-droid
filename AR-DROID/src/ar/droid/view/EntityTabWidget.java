@@ -1,5 +1,6 @@
 package ar.droid.view;
 
+import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +12,8 @@ import ar.droid.R;
 public class EntityTabWidget extends TabActivity {
 	
 	private static String TAB_INFO ="INFO_TAB";
-	private static String TAB_NEWS ="INFO_TAB";
-	private static String TAB_EVENTS ="INFO_TAB";
+	private static String TAB_NEWS ="NEW_TAB";
+	private static String TAB_EVENTS ="EVENT_TAB";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +40,13 @@ public class EntityTabWidget extends TabActivity {
 		
 		//se crean de la misma manera los demas tabs
 		
-		intent =  new Intent().setClass(this, NewsView.class);
+		intent =  new Intent().setClass(this, ListNewsView.class);
 		intent.putExtra("idEntity",getIntent().getExtras().getLong("idEntity"));  
 		//se crea e incializa el TabSpec y se in se incorpora al tabhost 
 		spec = tabHost.newTabSpec(TAB_NEWS).setIndicator(getResources().getString(R.string.ic_tab_entity_news), getResources().getDrawable(R.drawable.ic_tab_entity_news)).setContent(intent);
 		tabHost.addTab(spec);
 		
-		intent =  new Intent().setClass(this, EventsView.class);
+		intent =  new Intent().setClass(this, ListEventsView.class);
 		intent.putExtra("idEntity",getIntent().getExtras().getLong("idEntity"));  
 		//se crea e incializa el TabSpec y se in se incorpora al tabhost 
 		spec = tabHost.newTabSpec(TAB_EVENTS).setIndicator(getResources().getString(R.string.ic_tab_entity_events), getResources().getDrawable(R.drawable.ic_tab_entity_events)).setContent(intent);
@@ -56,6 +57,13 @@ public class EntityTabWidget extends TabActivity {
 		
 		
 		
+	}
+	
+	@Override
+	public void finishFromChild(Activity child) {
+		Intent intent = child.getIntent();
+	    setResult(RESULT_OK,intent);
+	    super.finishFromChild(child);
 	}
 
 }
