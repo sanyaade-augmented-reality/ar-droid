@@ -13,6 +13,7 @@ import ar.droid.ar.view.IconMarker;
 import ar.droid.ar.view.Marker;
 import ar.droid.model.Entity;
 import ar.droid.model.Resource;
+import ar.droid.resources.ImageHelperFactory;
 import ar.droid.resources.ImageHelperHTTP;
 
 public class DataSource {
@@ -32,7 +33,7 @@ public class DataSource {
 	}
 
 	private Marker convertToMarker(Entity entity) {
-		Drawable draw = new ImageHelperHTTP().getImage(entity.getTypeEntity().getIconUrl());
+		Drawable draw = ImageHelperFactory.createImageHelper().getIconTypeEntity(entity.getTypeEntity());
 		Bitmap bitmap = ((BitmapDrawable) draw).getBitmap();
 
 		IconMarker marker = new IconMarker(entity, bitmap);
