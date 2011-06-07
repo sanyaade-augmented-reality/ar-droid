@@ -9,6 +9,7 @@ import android.util.Log;
 public class Message implements Comparable<Message>{
 
 	static SimpleDateFormat FORMATTER =  new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz",Locale.ENGLISH);
+	static SimpleDateFormat FORMATTER_2 =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",Locale.ENGLISH);
 	
 	private String title;
 	private String link;
@@ -42,20 +43,26 @@ public class Message implements Comparable<Message>{
 
 
 	public String getDate() {
-		//return updated;
-		return FORMATTER.format(date);
+		SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es_ES"));
+		return formateador.format(date);
 	}
 
 
 	public void setDate(String date) {
-		//this.updated = updated;
-		 while (!date.endsWith("00")){
-	           date += "0";
+		 String tempDate = date;
+		 while (!tempDate.endsWith("00")){
+			 tempDate += "0";
 	     }
+		 
 	     try {
-	          this.date = FORMATTER.parse(date.trim());
+	          this.date = FORMATTER.parse(tempDate.trim());
 	     } catch (java.text.ParseException e) {
-	    	 Log.e("error","",e);
+	    	 try{
+	    		 this.date = FORMATTER_2.parse(date.trim());
+	    	 }
+	    	 catch (java.text.ParseException e2) {
+		    	 Log.e("error","",e2);
+	    	 }
 	     }
 	}
 

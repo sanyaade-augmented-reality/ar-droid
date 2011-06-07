@@ -17,9 +17,11 @@ public class RssHandler extends DefaultHandler {
 	 static final  String LINK = "link";
 	 static final  String TITLE = "title";
 	 static final  String ITEM = "item";
+	
 	 
 	private List<Message> messages;
     private Message currentMessage ;
+    private String currentLink = null;
     private StringBuilder builder;
     
     public List<Message> getMessages(){
@@ -32,21 +34,29 @@ public class RssHandler extends DefaultHandler {
         	builder.append(ch, start, length);
     }
 
+   
     @Override
     public void endElement(String uri, String localName, String name)throws SAXException {
         super.endElement(uri, localName, name);
         if (this.currentMessage != null){
             if (localName.equalsIgnoreCase(getTagTitle())){
-                currentMessage.setTitle(builder.toString());
-            } else if (localName.equalsIgnoreCase(getTagLink())){
-                currentMessage.setLink(builder.toString());
+                currentMessage.setTitle(builder.toString().trim());
+            }else if (localName.equalsIgnoreCase(getTagLink())){
+            	String link = builder.toString().trim();
+            	if (!"".equals(link)){
+            		currentMessage.setLink(link);
+            	}
+            	else{
+            		currentMessage.setLink(currentLink);
+            	}
             } else if (localName.equalsIgnoreCase(getTagDescription())){
-                currentMessage.setDescription(builder.toString());
+                currentMessage.setDescription(builder.toString().trim());
             } else if (localName.equalsIgnoreCase(getTagPubDate())){
                 currentMessage.setDate(builder.toString());
             } else if (localName.equalsIgnoreCase(getTagItem())){
                 messages.add(currentMessage);
             }
+        
             builder.setLength(0);    
         }
     }
@@ -58,12 +68,25 @@ public class RssHandler extends DefaultHandler {
        
     }
     
+    
+    
     @Override
     public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, name, attributes);
         if (localName.equalsIgnoreCase(getTagItem())){
             this.currentMessage = new Message();
             builder = new StringBuilder();
+        }
+        else if (localName.equals(getTagLink())){
+        	  int indexRel = attributes.getIndex("rel");
+              if (indexRel != -1){
+              	String href = attributes.getValue(indexRel);
+              	if ("alternate".equalsIgnoreCase(href)){
+              		int index = attributes.getIndex("href");
+              		if (index!= -1)
+              			currentLink =attributes.getValue(index);
+              	}
+              }
         }
     }
 
