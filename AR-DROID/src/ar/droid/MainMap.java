@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -26,6 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import ar.droid.ar.common.ARData;
 import ar.droid.config.ARDROIDProperties;
+import ar.droid.driving.DrivingDirectionsFactory;
+import ar.droid.driving.IDirectionsListener;
+import ar.droid.driving.Leg;
+import ar.droid.driving.Route;
+import ar.droid.driving.Step;
+import ar.droid.driving.view.RouteOverlay;
 import ar.droid.location.LocationListenerGPS;
 import ar.droid.location.MyLocationOverlayFirstRun;
 import ar.droid.model.Entity;
@@ -35,11 +42,12 @@ import ar.droid.resources.ImageHelperFactory;
 import ar.droid.view.EntityOverlayItem;
 import ar.droid.view.MapEntityItemizedOverlay;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
-public class MainMap extends MapActivity {
+public class MainMap extends MapActivity implements IDirectionsListener{
 	static String TAG = MainMap.class.getName();
 	
 	// splash screen
@@ -65,6 +73,8 @@ public class MainMap extends MapActivity {
         
         // setear layout
         setContentView(R.layout.mainmap);
+        
+        ARDROIDProperties.createProperties(getApplicationContext());
         
         // crear mapa
         mapView = (MapView) findViewById(R.id.mapview);
@@ -149,7 +159,7 @@ public class MainMap extends MapActivity {
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		return false;
+		return true;
 	}
 	
 	@Override
@@ -162,6 +172,8 @@ public class MainMap extends MapActivity {
 	protected void onResume() {
 		super.onResume();
 	    myLocationOverlay.enableMyLocation();
+	    //si viene de la pantalla de ver entidad limpiar mapa y armar la ruta
+	    
 	}
 	
 	@Override
@@ -220,6 +232,9 @@ public class MainMap extends MapActivity {
 	    }
 	}
 	
+
+	
+	
 	private void showEntities(){
 		//Se recupera las entidades a mostrar en el mapa
 		List<Entity> xLs =Resource.getInstance().getEntities();
@@ -244,7 +259,7 @@ public class MainMap extends MapActivity {
 			itEnt = types.get(typeEntity).iterator();
 			
 			//se recupera el icono a mostrar para el tipo de entidad
-			Drawable iconTypeEntity =ImageHelperFactory.createImageHelper().getImage(typeEntity.getIconUrl());
+			Drawable iconTypeEntity =ImageHelperFactory.createImageHelper().getIconTypeEntity(typeEntity);
 			iconTypeEntity.setBounds(0, 0, iconTypeEntity.getIntrinsicWidth(), iconTypeEntity.getIntrinsicHeight());
 		
 			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
@@ -259,6 +274,10 @@ public class MainMap extends MapActivity {
 			mapView.getOverlays().add(mapEntityOverlay);
 		}
 		mapView.postInvalidate(); 
+	}
+	
+	private void showEvents(){
+		
 	}
 	
 	private void showMsgCameraError() {
@@ -276,11 +295,47 @@ public class MainMap extends MapActivity {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		
 		// esconder splash screen
 	    if (event.getAction() == MotionEvent.ACTION_DOWN) {
 	    	_splashActive = false;
 	    }
 	    return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		super.onActivityResult(requestCode, resultCode, intent);
+		//limpiar mapa los overlays?? o no???
+		if (resultCode == RESULT_OK) {
+			 //recupero la entidad
+		    Entity entity = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity"));
+		    DrivingDirectionsFactory.createDrivingDirections().driveTo(myLocationOverlay.getMyLocation(), (GeoPoint)entity.getGeoPoint(), ar.droid.driving.Mode.WALKING,this);
+	  }
+
+	}
+
+	@Override
+	public void directionAvailable(Route route) {
+			Iterator<Leg> xIterator = route.getLegs().iterator();
+			while (xIterator.hasNext()) {
+				Leg leg = xIterator.next();
+				Iterator<Step> xItSteps = leg.getSteps().iterator();
+				while (xItSteps.hasNext()) {
+					Step step = xItSteps.next();
+					for (int i = 1; i < step.getPolyline().getPolylines().size(); i++) {
+						RouteOverlay routeOverlay = new RouteOverlay(null, mapView.getContext(), step.getPolyline().getPolylines().get(i-1),step.getPolyline().getPolylines().get(i), Color.rgb(202, 101, 0));
+						mapView.getOverlays().add(routeOverlay);	
+					}
+				}
+			}				
+		// redraw map
+		mapView.postInvalidate();
+		
+	}
+
+	@Override
+	public void directionNotAvailable() {
+		// TODO Auto-generated method stub
+		
 	}
 }
