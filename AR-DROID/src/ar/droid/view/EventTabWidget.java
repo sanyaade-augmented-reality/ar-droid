@@ -3,6 +3,8 @@ package ar.droid.view;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TabHost;
 import ar.droid.R;
 
@@ -15,6 +17,11 @@ public class EventTabWidget extends TabActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// pantalla completa
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
 		//se setea el layout para tabs
 		setContentView(R.layout.tab_host);
 		

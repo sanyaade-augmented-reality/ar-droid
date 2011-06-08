@@ -37,6 +37,10 @@
         	<activity android:name=".view.EventTabWidget" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
         	</activity>
         	<activity android:name=".view.EventView" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
+           		<intent-filter>
+                	<action android:name="android.intent.action.MAIN" />
+                	<category android:name="android.intent.category.DEFAULT" />
+            	</intent-filter>
         	</activity>
         	<activity android:name=".view.ActivityView" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
         	</activity>
