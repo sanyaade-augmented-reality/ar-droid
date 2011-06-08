@@ -1,3 +1,5 @@
+import java.sql.Date;
+
 import org.codehaus.groovy.grails.commons.spring.GrailsApplicationContext;
 
 import ar.droid.admin.reader.*
@@ -62,6 +64,7 @@ class BootStrap {
 			returnArray['description'] = it.description
 			returnArray['typeEvent'] = it.typeEvent
 			returnArray['geoPoint'] = it.geoPoint
+			returnArray['eventCalendar'] = it.eventCalendar
 			return returnArray
 		}
 		
@@ -71,6 +74,11 @@ class BootStrap {
 			returnArray['description'] = it.description
 			//returnArray['iconUrl'] = "/typeEntity/showIcon/"+it.id
 			return returnArray
+		}
+		
+		grails.converters.JSON.registerObjectMarshaller(java.util.Date) {
+			return  it?.format("yyyy-MM-dd HH:mm")
+		
 		}
 	}
 	
