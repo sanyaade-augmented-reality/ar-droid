@@ -1,5 +1,7 @@
 package ar.droid.view;
 
+import java.text.SimpleDateFormat;
+
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ public class EventView extends Activity {
 	
 		private Event event;
 		private Entity entity;
+		static SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy HH:mm 'hs.'");
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -28,6 +31,9 @@ public class EventView extends Activity {
 	        
 	        TextView title = (TextView) this.findViewById(R.id.title);
 	        title.setText(event.getTitle());
+	        
+	        TextView subtitle = (TextView) this.findViewById(R.id.sutbtitle);
+	        subtitle.setText(event.getTypeEvent().getDescription());
 	       
 	        
 	       //se recupera el icono a mostrar para el tipo de entidad
@@ -43,6 +49,17 @@ public class EventView extends Activity {
 	        
 	        TextView descr = (TextView) this.findViewById(R.id.description);
 	        descr.setText(event.getDescription());
+	        
+	        TextView place = (TextView) this.findViewById(R.id.place);
+	        place.setText("Lugar: ...........");
+	        
+	     
+	        TextView initdate = (TextView) this.findViewById(R.id.Initdate);
+	        initdate.setText("Inicio: " + formateador.format(event.getEventCalendar().getStartDate()));
+	        
+
+	        TextView enddate = (TextView) this.findViewById(R.id.enddate);
+	        enddate.setText("Fin: "+formateador.format(event.getEventCalendar().getEndDate()));
 	        
 	       /* ImageButton button = (ImageButton) findViewById(R.id.btn_ir_a);
 	        button.setOnClickListener(this);*/
