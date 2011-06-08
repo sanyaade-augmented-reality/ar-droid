@@ -5,10 +5,12 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.droid.admin.calendar.EventCalendar;
 import ar.droid.admin.reader.ReaderNews;
 import ar.droid.config.ARDROIDProperties;
 import ar.droid.config.Request;
 import ar.droid.location.GeoPoint;
+import ar.droid.model.deserializer.EventCalendarDeserializer;
 import ar.droid.model.deserializer.GeoPointDeserializer;
 import ar.droid.model.deserializer.ReaderNewsDeserializer;
 
@@ -41,6 +43,7 @@ public class ResourceHelperJSON extends ResourceHelper {
 		
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(GeoPoint.class,new GeoPointDeserializer());
+		gsonBuilder.registerTypeAdapter(EventCalendar.class,new EventCalendarDeserializer());
 		Gson gson =	gsonBuilder.create();	
 		
 		List<Event> xLsResult  = gson.fromJson(inputStream,listType);

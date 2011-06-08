@@ -1,5 +1,6 @@
 package ar.droid.model;
 
+import ar.droid.admin.calendar.EventCalendar;
 import ar.droid.location.GeoPoint;
 
 public class Event {
