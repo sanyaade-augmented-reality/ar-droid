@@ -11,7 +11,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
@@ -259,7 +262,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			itEnt = types.get(typeEntity).iterator();
 			
 			//se recupera el icono a mostrar para el tipo de entidad
-			Drawable iconTypeEntity =ImageHelperFactory.createImageHelper().getIconTypeEntity(typeEntity);
+			Drawable iconTypeEntity = ImageHelperFactory.createImageHelper().getIconTypeEntity(typeEntity);
+			iconTypeEntity = this.scaleImage(iconTypeEntity, 2);
 			iconTypeEntity.setBounds(0, 0, iconTypeEntity.getIntrinsicWidth(), iconTypeEntity.getIntrinsicHeight());
 		
 			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
@@ -276,6 +280,22 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		mapView.postInvalidate(); 
 	}
 	
+	/**
+	 * Redimensionar un BitmapDrawable
+	 * @param drawable drawable a escalar
+	 * @param scale escala (1 = 100%)
+	 * @return
+	 */
+	private Drawable scaleImage(Drawable drawable, float scale) {
+		BitmapDrawable bdImage = (BitmapDrawable) drawable;
+		Bitmap bitmapOrig = bdImage.getBitmap();
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOrig, 0, 0, bitmapOrig.getWidth(), bitmapOrig.getHeight(), matrix, true);
+        BitmapDrawable bitmapDrawableResized = new BitmapDrawable(resizedBitmap);
+        return bitmapDrawableResized; 
+	}
+
 	private void showEvents(){
 		
 	}
@@ -308,8 +328,13 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		//limpiar mapa los overlays?? o no???
 		if (resultCode == RESULT_OK) {
 			 //recupero la entidad
-		    Entity entity = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity"));
-		    DrivingDirectionsFactory.createDrivingDirections().driveTo(myLocationOverlay.getMyLocation(), (GeoPoint)entity.getGeoPoint(), ar.droid.driving.Mode.WALKING,this);
+			try{
+				Entity entity = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity"));
+				DrivingDirectionsFactory.createDrivingDirections().driveTo(myLocationOverlay.getMyLocation(), (GeoPoint)entity.getGeoPoint(), ar.droid.driving.Mode.WALKING,this);
+			}
+			catch (Throwable t) {
+				Toast.makeText(getApplicationContext(), "Ocurrió un error al determir el recorrido hacia el destino", Toast.LENGTH_LONG).show();
+			}
 	  }
 
 	}
