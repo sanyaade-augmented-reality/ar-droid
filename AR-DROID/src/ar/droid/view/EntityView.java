@@ -61,7 +61,7 @@ public class EntityView extends Activity  implements android.view.View.OnClickLi
 			bundle.putLong("idEntity", entity.getId());
 			Intent mIntent = new Intent();
             mIntent.putExtras(bundle);
-			setResult(RESULT_OK,mIntent);
+            getParent().setResult(RESULT_OK,mIntent);
 			
 			finishFromChild(this);
 		}

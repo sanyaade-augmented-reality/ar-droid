@@ -53,17 +53,11 @@ public class EntityTabWidget extends TabActivity {
 		tabHost.addTab(spec);
 
 		tabHost.setCurrentTab(0);
-
-		
-		
-		
 	}
-	
+
 	@Override
-	public void finishFromChild(Activity child) {
-		Intent intent = child.getIntent();
-	    setResult(RESULT_OK,intent);
-	    super.finishFromChild(child);
+	public void onBackPressed() {
+		super.onBackPressed();
+		setResult(RESULT_CANCELED);
 	}
-
 }
