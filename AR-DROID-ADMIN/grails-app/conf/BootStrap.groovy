@@ -77,7 +77,7 @@ class BootStrap {
 		}
 		
 		grails.converters.JSON.registerObjectMarshaller(java.util.Date) {
-			return  it?.format("yyyy-MM-dd HH:mm")
+			return  it?.format("yyyy-MM-dd'T'HH:mm:ss'Z'")
 		
 		}
 	}
