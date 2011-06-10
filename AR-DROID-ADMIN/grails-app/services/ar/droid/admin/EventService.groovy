@@ -53,9 +53,6 @@ class EventService {
 			
 			def canSave = false
 			
-			println params.positionSameAsEntity
-			println params._positionSameAsEntity
-			
 			// ubicación de la actividad
 			if(params.positionSameAsEntity == "1"){
 				def entity = Entity.get(params.entity.id)
@@ -68,13 +65,16 @@ class EventService {
 				eventInstance.geoPoint.longitude = new BigDecimal(params.longitude)
 				eventInstance.geoPoint.altitude = new BigDecimal(params.altitude)
 			}
+			def photo = eventInstance.photo;
 			
+			eventInstance.properties = params
+						
 			// crear composiciones
+			eventInstance.eventCalendar = EventCalendar.fromString(params.eventCalendar_select)
 			eventInstance.eventCalendar.properties = params.event.eventCalendar
 			
 			// verificar si cambiar o mantener imagen
 			def photo = eventInstance.photo;
-			eventInstance.properties = params
 			if(params.get("photo").size == 0){
 				eventInstance.photo = photo;
 			}
