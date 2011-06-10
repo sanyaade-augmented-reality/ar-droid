@@ -2,6 +2,8 @@ package ar.droid.admin.reader;
 
 import java.util.List;
 
+import ar.droid.model.IReader;
+
 public class ReaderNewsTwitter extends ReaderNews {
 
 	@Override
@@ -12,6 +14,12 @@ public class ReaderNewsTwitter extends ReaderNews {
 	@Override
 	public String getName() {
 		return "Twitter";
+	}
+
+	@Override
+	public void reader(IReader reader) {
+		reader.readerTweeter();
+		
 	}
 
 

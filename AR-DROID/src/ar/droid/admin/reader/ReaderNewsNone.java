@@ -3,6 +3,8 @@ package ar.droid.admin.reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.droid.model.IReader;
+
 public class ReaderNewsNone extends ReaderNews {
 
 	@Override
@@ -13,6 +15,11 @@ public class ReaderNewsNone extends ReaderNews {
 	@Override
 	public String getName() {
 		return "Ninguno";
+	}
+
+	@Override
+	public void reader(IReader reader) {
+		reader.readerNone();		
 	}
 
 }
