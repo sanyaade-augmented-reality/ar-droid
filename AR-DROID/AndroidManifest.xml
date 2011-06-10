@@ -22,27 +22,27 @@
                 	<category android:name="android.intent.category.DEFAULT" />
             	</intent-filter>
         	</activity>
-        	<activity android:name=".view.EntityView" android:label="@string/app_name">
+        	<activity android:name=".activity.EntityActivity" android:label="@string/app_name">
            		<intent-filter>
                 	<action android:name="android.intent.action.MAIN" />
                 	<category android:name="android.intent.category.DEFAULT" />
             	</intent-filter>
           	</activity>        	
-        	<activity android:name=".view.EntityTabWidget" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
+        	<activity android:name=".activity.EntityTabWidget" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
         	</activity>
-        	<activity android:name=".view.ListNewsView" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
+        	<activity android:name=".activity.ListNewsActivity" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
         	</activity>
-        	<activity android:name=".view.ListEventsView" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
+        	<activity android:name=".activity.ListEventsActivity" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
         	</activity>
-        	<activity android:name=".view.EventTabWidget" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
+        	<activity android:name=".activity.EventTabWidget" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
         	</activity>
-        	<activity android:name=".view.EventView" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
+        	<activity android:name=".activity.EventActivity" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
            		<intent-filter>
                 	<action android:name="android.intent.action.MAIN" />
                 	<category android:name="android.intent.category.DEFAULT" />
             	</intent-filter>
         	</activity>
-        	<activity android:name=".view.ActivityView" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
+        	<activity android:name=".activity.ActivityView" android:label="@string/app_name"	android:theme="@android:style/Theme.NoTitleBar">
         	</activity>
         	<uses-library android:name="com.google.android.maps" />
    	 		
