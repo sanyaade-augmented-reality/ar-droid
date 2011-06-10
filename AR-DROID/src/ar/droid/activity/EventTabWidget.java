@@ -1,4 +1,4 @@
-package ar.droid.view;
+package ar.droid.activity;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -30,7 +30,7 @@ public class EventTabWidget extends TabActivity {
 		
 		//se crea inten para lanzar la actividad correspondiente al tab main
 		
-		Intent intent =  new Intent().setClass(this, EventView.class);
+		Intent intent =  new Intent().setClass(this, EventActivity.class);
 		intent.putExtra("idEvent",getIntent().getExtras().getLong("idEvent"));    
 		intent.putExtra("idEntity",getIntent().getExtras().getLong("idEntity"));
 		

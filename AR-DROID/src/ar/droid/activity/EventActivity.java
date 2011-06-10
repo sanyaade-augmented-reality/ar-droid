@@ -1,4 +1,4 @@
-package ar.droid.view;
+package ar.droid.activity;
 
 import java.text.SimpleDateFormat;
 
@@ -15,7 +15,7 @@ import ar.droid.model.Event;
 import ar.droid.model.Resource;
 import ar.droid.resources.ImageHelperFactory;
 
-public class EventView extends Activity {
+public class EventActivity extends Activity {
 	
 		private Event event;
 		private Entity entity;

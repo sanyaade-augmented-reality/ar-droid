@@ -1,4 +1,4 @@
-package ar.droid.view;
+package ar.droid.activity;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import ar.droid.model.Entity;
 import ar.droid.model.Event;
 import ar.droid.model.Resource;
 
-public class ListEventsView extends ListActivity implements OnItemClickListener  {
+public class ListEventsActivity extends ListActivity implements OnItemClickListener  {
 	
 	private Entity entity;
 	private List<Event> events;

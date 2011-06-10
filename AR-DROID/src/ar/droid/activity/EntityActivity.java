@@ -1,4 +1,4 @@
-package ar.droid.view;
+package ar.droid.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import ar.droid.model.Entity;
 import ar.droid.model.Resource;
 import ar.droid.resources.ImageHelperFactory;
 
-public class EntityView extends Activity  implements android.view.View.OnClickListener{
+public class EntityActivity extends Activity  implements android.view.View.OnClickListener{
 	
 	private Entity entity;	
 	@Override

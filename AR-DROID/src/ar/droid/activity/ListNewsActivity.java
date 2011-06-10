@@ -1,4 +1,4 @@
-package ar.droid.view;
+package ar.droid.activity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,12 +19,14 @@ import ar.droid.admin.reader.view.MessageNewsAdapter;
 import ar.droid.model.Entity;
 import ar.droid.model.Resource;
 
-public class ListNewsView extends ListActivity implements OnItemClickListener {
+public class ListNewsActivity extends ListActivity implements OnItemClickListener {
 	
 	private ProgressDialog progressDialog = null; 
 	private Entity entity;
 	private List<Message> messages;
 	private ArrayAdapter<Message> adapter;
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
