@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
+import ar.droid.activity.EntityTabWidget;
 import ar.droid.ar.activity.AugmentedView;
 import ar.droid.ar.activity.SensorsActivity;
 import ar.droid.ar.camara.CameraSurface;
@@ -27,7 +28,6 @@ import ar.droid.ar.common.DataSource;
 import ar.droid.ar.view.Marker;
 import ar.droid.config.ARDROIDProperties;
 import ar.droid.model.Entity;
-import ar.droid.view.EntityTabWidget;
 
 public class MainAR extends SensorsActivity implements OnTouchListener {
 	static String TAG = MainAR.class.getName();
