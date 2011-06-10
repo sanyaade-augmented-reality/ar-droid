@@ -74,7 +74,6 @@ class EventService {
 			eventInstance.eventCalendar.properties = params.event.eventCalendar
 			
 			// verificar si cambiar o mantener imagen
-			def photo = eventInstance.photo;
 			if(params.get("photo").size == 0){
 				eventInstance.photo = photo;
 			}
