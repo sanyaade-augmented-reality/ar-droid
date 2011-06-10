@@ -10,4 +10,8 @@ public class ResourceNewsFactory {
 	public static ResourceNews createResourceNewsFacebook (){
 		return new FacebookREST();
 	}
+	
+	public static ResourceNews createResourceNewsTwitter (){
+		return new TwitterREST();
+	}
 }

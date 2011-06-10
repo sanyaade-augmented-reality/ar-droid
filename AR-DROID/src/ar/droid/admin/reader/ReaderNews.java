@@ -14,6 +14,7 @@ public abstract class ReaderNews{
 	}
 	
 	public abstract List<Message> getMessages();
+	public abstract String getName();
 	
 
 }

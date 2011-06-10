@@ -2,18 +2,17 @@ package ar.droid.admin.reader;
 
 import java.util.List;
 
-public class ReaderNewsFacebook extends ReaderNews {
+public class ReaderNewsTwitter extends ReaderNews {
 
 	@Override
 	public List<Message> getMessages() {
-		return ResourceNewsFactory.createResourceNewsFacebook().getMessages(getParameter());
+		return ResourceNewsFactory.createResourceNewsTwitter().getMessages(getParameter());
 	}
 
 	@Override
 	public String getName() {
-		return "Facebook";
+		return "Twitter";
 	}
-
 
 
 }

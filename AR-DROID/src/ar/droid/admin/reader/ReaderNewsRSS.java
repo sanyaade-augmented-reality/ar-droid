@@ -10,4 +10,9 @@ public class ReaderNewsRSS extends ReaderNews {
 		return ResourceNewsFactory.createResourceNewsRSS().getMessages(getParameter());
 	}
 
+	@Override
+	public String getName() {
+		return "RSS";
+	}
+
 }
