@@ -263,7 +263,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			
 			//se recupera el icono a mostrar para el tipo de entidad
 			Drawable iconTypeEntity = ImageHelperFactory.createImageHelper().getIconTypeEntity(typeEntity);
-			iconTypeEntity = this.scaleImage(iconTypeEntity, 2);
+			iconTypeEntity = scaleImage(iconTypeEntity, 2);
 			iconTypeEntity.setBounds(0, 0, iconTypeEntity.getIntrinsicWidth(), iconTypeEntity.getIntrinsicHeight());
 		
 			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
@@ -360,7 +360,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 
 	@Override
 	public void directionNotAvailable() {
-		// TODO Auto-generated method stub
-		
+		Toast.makeText(getApplicationContext(), "No se recorrido hacia el destino", Toast.LENGTH_LONG).show();
 	}
 }
