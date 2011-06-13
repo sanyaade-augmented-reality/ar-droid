@@ -17,9 +17,10 @@ public class ReaderNewsDeserializer implements JsonDeserializer<ReaderNews> {
 		Log.i("class **** ",json.getAsJsonObject().get("class").getAsString());
 		String nameClass = json.getAsJsonObject().get("class").getAsString();
 		try {
-			Class c = Class.forName(nameClass);
+			Class<?> c = Class.forName(nameClass);
 			ReaderNews object = (ReaderNews)c.newInstance();
-			object.setParameter( json.getAsJsonObject().get("parameter").getAsString());
+			if(!json.getAsJsonObject().get("parameter").isJsonNull())
+				object.setParameter(json.getAsJsonObject().get("parameter").getAsString());
 			return object;
 		} catch (ClassNotFoundException e) {
 			Log.e("ReaderNewsDeserializer", "No se encontro la clase", e);
