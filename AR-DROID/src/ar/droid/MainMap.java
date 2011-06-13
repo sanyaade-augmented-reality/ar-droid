@@ -65,7 +65,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		
         // crear location manager
         if(locationManager == null)
         	locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -169,14 +170,15 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	protected void onPause() {
 	    super.onPause();
 	    myLocationOverlay.disableMyLocation();
+		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 	    myLocationOverlay.enableMyLocation();
-	    //si viene de la pantalla de ver entidad limpiar mapa y armar la ruta
-	    
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 	 
+	    //si viene de la pantalla de ver entidad limpiar mapa y armar la ruta   
 	}
 	
 	@Override
@@ -360,6 +362,12 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 
 	@Override
 	public void directionNotAvailable() {
-		Toast.makeText(getApplicationContext(), "No se recorrido hacia el destino", Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), "No se podido determir un recorrido hacia el destino", Toast.LENGTH_LONG).show();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onResume();
+		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
 	}
 }

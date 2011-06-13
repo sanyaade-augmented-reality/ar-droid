@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 		super.onCreate(savedInstanceState);
 
 		camScreen = new CameraSurface(this);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
 		setContentView(camScreen);
 		
 		// crear layout
@@ -219,5 +221,23 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 				return marker.getEntity();
 		}
 		return null;
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onResume();
+		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
 	}
 }
