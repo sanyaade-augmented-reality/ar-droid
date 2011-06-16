@@ -75,7 +75,7 @@ public class EntityTabWidget extends TabActivity implements IReader {
 		Intent intent =  new Intent().setClass(this, WebNewsActivity.class);
 		intent.putExtra("idEntity",getIntent().getExtras().getLong("idEntity"));  
 		//se crea e incializa el TabSpec y se in se incorpora al tabhost 
-		TabHost.TabSpec  spec = getTabHost().newTabSpec(TAB_NEWS).setIndicator(getResources().getString(R.string.ic_tab_entity_news), getResources().getDrawable(R.drawable.news_web)).setContent(intent);
+		TabHost.TabSpec  spec = getTabHost().newTabSpec(TAB_NEWS).setIndicator(getResources().getString(R.string.ic_tab_entity_news), getResources().getDrawable(R.drawable.ic_tab_entity_news_web)).setContent(intent);
 		getTabHost().addTab(spec);
 	}
 
