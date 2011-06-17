@@ -3,13 +3,19 @@ package ar.droid.activity;
 import java.text.SimpleDateFormat;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ar.droid.R;
+import ar.droid.config.ARDROIDProperties;
 import ar.droid.model.Entity;
 import ar.droid.model.Event;
 import ar.droid.model.Resource;
@@ -63,6 +69,26 @@ public class EventActivity extends Activity {
 	        
 	       /* ImageButton button = (ImageButton) findViewById(R.id.btn_ir_a);
 	        button.setOnClickListener(this);*/
+	        
+	        final Button botonCompartir = (Button) findViewById(R.id.buttonCompartir);
+	        botonCompartir.setOnClickListener(new View.OnClickListener() {
+	             public void onClick(View v) {
+	            	 showDialogCompartir();
+	             }
+	         });
 		}
-
+		
+		protected void showDialogCompartir() {
+			ARDROIDProperties properties = ARDROIDProperties.getInstance();
+			Intent sendIntent = new Intent(Intent.ACTION_SEND);
+			
+		    sendIntent.putExtra(Intent.EXTRA_SUBJECT,
+		    	"Evento " + this.event.getTitle());
+		    sendIntent.putExtra(Intent.EXTRA_TEXT,
+		        "Hola! Voy a asistir al evento " + this.event.getTitle() + 
+		        	". Mas información <a href=\"" + properties.getProperty("ar.droid.server") + 
+		        	"event/evento/" + this.event.getId() + "\">aquí</a>");
+		    sendIntent.setType("text/plain");
+		    startActivity(Intent.createChooser(sendIntent, "Compartir con"));
+		}
 }
