@@ -1,5 +1,9 @@
 package ar.droid.admin
 
+import java.awt.image.renderable.RenderableImage;
+
+import org.apache.catalina.connector.Response;
+
 import ar.droid.admin.calendar.*
 
 class EventController {
@@ -103,4 +107,16 @@ class EventController {
 		def eventInstance = Event.get(params.id)
 		redirect(controller: "activity", action: "create", event: params.id)
 	}
+	
+	
+	
+		def evento = {
+			def eventInstance = Event.get(params.id)
+			if (!eventInstance) {
+					response.outputStream.write("NO existe el evento!")
+			}
+			else {
+				[eventInstance: eventInstance]
+			}
+		}
 }
