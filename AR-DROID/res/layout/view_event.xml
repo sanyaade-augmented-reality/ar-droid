@@ -63,10 +63,20 @@
 			android:layout_height="wrap_content" android:layout_marginTop="1px"
 			android:text="TextView" android:textStyle="italic">
 		</TextView>
-		<Button android:layout_height="wrap_content" android:id="@+id/buttonCompartir"
-			android:text="Compartir" android:layout_width="wrap_content"
-			android:layout_gravity="right"></Button>
-
+		
+	
+		
+		<LinearLayout android:id="@+id/widget28"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:orientation="horizontal" android:background="#fff2f2f2" android:gravity="right">
+			<Button android:layout_height="wrap_content" android:id="@+id/buttonComment"
+				android:text="Comentar" android:layout_width="wrap_content"
+				></Button>
+			<Button android:layout_height="wrap_content" android:id="@+id/buttonShare"
+				android:text="Compartir" android:layout_width="wrap_content"
+				></Button>	
+		</LinearLayout>
+		
 
 	</LinearLayout>
 
