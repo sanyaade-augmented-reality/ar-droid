@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_show_events"
+          android:icon="@drawable/marker"
+          android:title="Mostrar" />
+    <item android:id="@+id/menu_reload_events"
+          android:icon="@drawable/reload"
+          android:title="Actualizar" />    
+</menu>
