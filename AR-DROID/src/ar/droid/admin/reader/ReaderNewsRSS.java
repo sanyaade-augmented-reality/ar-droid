@@ -2,7 +2,7 @@ package ar.droid.admin.reader;
 
 import java.util.List;
 
-import ar.droid.model.IReader;
+import ar.droid.model.IReaderListener;
 
 public class ReaderNewsRSS extends ReaderNews {
 
@@ -18,8 +18,8 @@ public class ReaderNewsRSS extends ReaderNews {
 	}
 
 	@Override
-	public void reader(IReader reader) {
-		reader.readerRSS();
+	public void reader(IReaderListener reader) {
+		reader.doReaderRSS();
 	}
 
 }

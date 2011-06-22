@@ -49,5 +49,11 @@ public class EventTabWidget extends TabActivity {
 		tabHost.setCurrentTab(0);
 		
 	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		setResult(RESULT_CANCELED);
+	}
 
 }

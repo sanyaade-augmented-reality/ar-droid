@@ -1,17 +1,43 @@
 package ar.droid.model;
 
+import java.util.List;
+
 import ar.droid.admin.calendar.EventCalendar;
+import ar.droid.admin.survey.SurveyTemplate;
+import ar.droid.admin.survey.response.SurveyResponse;
 import ar.droid.location.GeoPoint;
 
+import com.google.gson.annotations.Expose;
+
 public class Event {
+	@Expose
 	private Long id;
 	private String title;
 	private String description;
 	private TypeEvent typeEvent;
 	private GeoPoint geoPoint;
 	private EventCalendar eventCalendar;
+	private SurveyTemplate surveyTemplate;
+	
+	private SurveyResponse surveyResponse;
 	
 	
+	public SurveyResponse getSurveyResponse() {
+		return surveyResponse;
+	}
+
+	public void setSurveyResponse(SurveyResponse surveyResponse) {
+		this.surveyResponse = surveyResponse;
+	}
+
+	public SurveyTemplate getSurveyTemplate() {
+		return surveyTemplate;
+	}
+
+	public void setSurveyTemplate(SurveyTemplate surveyTemplate) {
+		this.surveyTemplate = surveyTemplate;
+	}
+
 	public Event() {
 	
 	}

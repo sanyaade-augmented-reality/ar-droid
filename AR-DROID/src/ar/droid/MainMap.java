@@ -338,7 +338,9 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 				Toast.makeText(getApplicationContext(), "Ocurrió un error al determir el recorrido hacia el destino", Toast.LENGTH_LONG).show();
 			}
 	  }
-
+	 else if (resultCode == 5){
+		showEvents();
+	 }
 	}
 
 	@Override
@@ -362,7 +364,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 
 	@Override
 	public void directionNotAvailable() {
-		Toast.makeText(getApplicationContext(), "No se podido determir un recorrido hacia el destino", Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), "No se encontro recorrido hacia el destino", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override

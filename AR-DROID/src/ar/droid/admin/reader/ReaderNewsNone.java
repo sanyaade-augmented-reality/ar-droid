@@ -3,7 +3,7 @@ package ar.droid.admin.reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.droid.model.IReader;
+import ar.droid.model.IReaderListener;
 
 public class ReaderNewsNone extends ReaderNews {
 
@@ -18,8 +18,8 @@ public class ReaderNewsNone extends ReaderNews {
 	}
 
 	@Override
-	public void reader(IReader reader) {
-		reader.readerNone();		
+	public void reader(IReaderListener reader) {
+		reader.doReaderNone();		
 	}
 
 }

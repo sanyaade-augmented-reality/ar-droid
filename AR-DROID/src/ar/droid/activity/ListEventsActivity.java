@@ -6,12 +6,13 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import ar.droid.R;
 import ar.droid.admin.reader.view.EventAdapter;
 import ar.droid.model.Entity;
@@ -24,6 +25,7 @@ public class ListEventsActivity extends ListActivity implements OnItemClickListe
 	private List<Event> events;
 	private ArrayAdapter<Event> adapter;
 
+	private static int RESULT_EVENTS=5; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,4 +60,32 @@ public class ListEventsActivity extends ListActivity implements OnItemClickListe
 	    startActivity(i);
 	    //finishFromChild(this);	
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_events, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+			case R.id.menu_show_events:
+				//this.finish();
+				Bundle bundle = new Bundle();
+				bundle.putLong("idEntity", entity.getId());
+				Intent mIntent = new Intent();
+	            mIntent.putExtras(bundle);
+	            getParent().setResult(RESULT_EVENTS,mIntent);
+	         	finishFromChild(this);
+				return true;
+			case R.id.menu_reload_events:
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
 }

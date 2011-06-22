@@ -13,8 +13,7 @@ import com.google.gson.JsonParseException;
 public class GeoPointDeserializer implements JsonDeserializer<GeoPoint> {
 
 	@Override
-	public GeoPoint deserialize(JsonElement json, Type type, JsonDeserializationContext context)
-			throws JsonParseException {
+	public GeoPoint deserialize(JsonElement json, Type type, JsonDeserializationContext context)throws JsonParseException {
 		Log.i("latitude", json.getAsJsonObject().get("latitude").getAsString());
 		Log.i("longitude", json.getAsJsonObject().get("longitude").getAsString());
 

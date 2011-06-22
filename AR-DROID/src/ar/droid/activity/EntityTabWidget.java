@@ -8,10 +8,10 @@ import android.view.WindowManager;
 import android.widget.TabHost;
 import ar.droid.R;
 import ar.droid.model.Entity;
-import ar.droid.model.IReader;
+import ar.droid.model.IReaderListener;
 import ar.droid.model.Resource;
 
-public class EntityTabWidget extends TabActivity implements IReader {
+public class EntityTabWidget extends TabActivity implements IReaderListener {
 	
 	private static String TAB_INFO ="INFO_TAB";
 	private static String TAB_NEWS ="NEW_TAB";
@@ -65,12 +65,12 @@ public class EntityTabWidget extends TabActivity implements IReader {
 	}
 
 	@Override
-	public void readerNone() {
+	public void doReaderNone() {
 		//no hace nada
 	}
 
 	@Override
-	public void readerWeb() {
+	public void doReaderWeb() {
 		//se crean de la misma manera los demas tabs
 		Intent intent =  new Intent().setClass(this, WebNewsActivity.class);
 		intent.putExtra("idEntity",getIntent().getExtras().getLong("idEntity"));  
@@ -80,20 +80,20 @@ public class EntityTabWidget extends TabActivity implements IReader {
 	}
 
 	@Override
-	public void readerRSS() {
+	public void doReaderRSS() {
 		tabReaderNews(R.drawable.ic_tab_entity_news);	
 		
 	}
 
 	@Override
-	public void readerTweeter() {
+	public void doReaderTweeter() {
 		tabReaderNews(R.drawable.ic_tab_entity_news_twitter);	
 		
 	}
 	
 	
 	@Override
-	public void readerFacebook() {
+	public void doReaderFacebook() {
 		tabReaderNews(R.drawable.ic_tab_entity_news_facebook);		
 	}
 	

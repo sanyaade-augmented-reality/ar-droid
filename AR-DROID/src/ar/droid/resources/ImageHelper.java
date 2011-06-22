@@ -6,7 +6,7 @@ import java.util.Map;
 
 import android.graphics.drawable.Drawable;
 import ar.droid.config.ARDROIDProperties;
-import ar.droid.connection.ConnectionUtil;
+import ar.droid.connection.RESTClient;
 
 
 public abstract class ImageHelper implements IImageHelper {
@@ -21,7 +21,7 @@ public abstract class ImageHelper implements IImageHelper {
 			return _IMAGES.get(url);
 					
 		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
-		InputStream instream = ConnectionUtil.getInputStream(urlServer+url);
+		InputStream instream = RESTClient.doGet(urlServer+url);
 		if (instream != null){
 			Drawable drawable = Drawable.createFromStream(instream, "offers task");
 			_IMAGES.put(url, drawable);
