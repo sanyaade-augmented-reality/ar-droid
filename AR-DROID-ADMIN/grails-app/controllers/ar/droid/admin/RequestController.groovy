@@ -1,5 +1,6 @@
 package ar.droid.admin
 
+import ar.droid.admin.survey.response.SurveyResponse;
 import grails.converters.JSON
 
 class RequestController {
@@ -45,4 +46,25 @@ class RequestController {
 		response.contentLength = eventInstance?.photo.length
 		response.outputStream.write(eventInstance?.photo)
 	}
+	
+	def feedback ={
+		def json = request.JSON
+		def event = Event.get(json.event.id)	
+		
+		println json.toString()
+		if (!event.hasErrors()){
+			def survey = new SurveyResponse()
+			
+			survey.createResponsesFromJSON(event,json)
+		
+			survey.save()
+			
+			//si da error notificar
+		}
+		
+		//si da error notificar
+		
+	}
+	
+	
 }
