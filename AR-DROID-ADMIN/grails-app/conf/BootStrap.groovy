@@ -65,6 +65,7 @@ class BootStrap {
 			returnArray['typeEvent'] = it.typeEvent
 			returnArray['geoPoint'] = it.geoPoint
 			returnArray['eventCalendar'] = it.eventCalendar
+			returnArray['surveyTemplate'] = it.surveyTemplate			
 			return returnArray
 		}
 		
@@ -76,10 +77,57 @@ class BootStrap {
 			return returnArray
 		}
 		
+		grails.converters.JSON.registerObjectMarshaller(SurveyTemplate) {
+			def returnArray = [:]
+			returnArray['class'] = it.class
+			returnArray['id'] = it.id
+			returnArray['description'] = it.description			
+			returnArray['questions'] = it.questions
+			return returnArray
+		}
+		
+		grails.converters.JSON.registerObjectMarshaller(NumericValueQuestion) {
+			def returnArray = [:]
+			returnArray['class'] = it.class
+			returnArray['id'] = it.id
+			returnArray['question'] = it.question
+			returnArray['limitTo'] = it.limitTo
+			returnArray['limitFrom'] = it.limitFrom
+						
+			return returnArray
+		}
+		
+		grails.converters.JSON.registerObjectMarshaller(MultipleChoiceQuestion) {
+			def returnArray = [:]
+			returnArray['class'] = it.class
+			returnArray['id'] = it.id
+			returnArray['question'] = it.question
+			returnArray['maxOptions'] = it.maxOptions
+			returnArray['options'] = it.options
+			return returnArray
+		}
+		
+		grails.converters.JSON.registerObjectMarshaller(TextValueQuestion) {
+			def returnArray = [:]
+			returnArray['class'] = it.class
+			returnArray['id'] = it.id
+			returnArray['question'] = it.question
+			return returnArray
+		}
+		
+		grails.converters.JSON.registerObjectMarshaller(Choice) {
+			def returnArray = [:]
+			returnArray['class'] = it.class
+			returnArray['id'] = it.id
+			returnArray['description'] = it.description
+			return returnArray
+		}
 		grails.converters.JSON.registerObjectMarshaller(java.util.Date) {
 			return  it?.format("yyyy-MM-dd'T'HH:mm:ss'Z'")
 		
 		}
+		
+		
 	}
 	
 	
