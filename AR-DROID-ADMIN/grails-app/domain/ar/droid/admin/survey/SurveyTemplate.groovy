@@ -16,4 +16,13 @@ class SurveyTemplate {
 	public String toString() {
 		return description;
 	}
+	
+	Question first() {
+		def question
+		for(q in questions){
+			question = q
+			break
+		}
+		question
+	}
 }

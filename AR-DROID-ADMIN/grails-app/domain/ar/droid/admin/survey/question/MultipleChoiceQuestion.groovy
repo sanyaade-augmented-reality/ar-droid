@@ -16,11 +16,11 @@ class MultipleChoiceQuestion extends Question{
 	static hasMany = [options:Choice]
            	
     static constraints = {
-		maxOptions(nullable:false)
+		maxOptions(nullable: true)
     }
 	
 	public String getType(){
-		return "Múltiple opción"
+		return "Multiples opciones"
 	}
 	
 	public Integer maxOptions(){

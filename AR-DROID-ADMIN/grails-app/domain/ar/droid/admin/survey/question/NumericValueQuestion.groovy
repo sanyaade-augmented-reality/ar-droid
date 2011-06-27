@@ -11,12 +11,12 @@ class NumericValueQuestion extends Question{
 	}
 	
 	static constraints = {
-		limitTo(nullable:false)
-		limitFrom(nullable:false)
+		limitTo(nullable: true)
+		limitFrom(nullable: true)
     }
 	
 	public String getType(){
-		return "Valor numérico"
+		return "Valor numerico"
 	}
 	
 	public Integer limitTo(){

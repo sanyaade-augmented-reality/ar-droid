@@ -6,19 +6,14 @@ import org.hibernate.mapping.Set
 import ar.droid.admin.survey.SurveyTemplate
 
 class Question {
-	
 	String question
-	//SurveyTemplate surveyTemplate;
+	SurveyTemplate surveyTemplate;
 	
 	def messageSource
 	
 	static transients = ['type']
 	
 	static belongsTo = [surveyTemplate: SurveyTemplate]
-	
-	static mapping = {
-		tablePerHierarchy false
-	}
 	
 	static constraints = {
 		question(blank: false)
