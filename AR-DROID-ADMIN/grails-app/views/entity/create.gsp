@@ -133,7 +133,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerActivity', 'errors')}">
                                     <g:select name="readerActivity_select" from="${application.lsReaderActivities}" optionKey="class" value="${request.readerActivity_select}" onchange="viewParams(this);" />
-                                    <div style="display: none" id="readerActivity_parameter"><div class="subtitle2"><g:message code="entity.param.label" default="Parameter" /></div><g:textField class="input_param2" name="readerActivity.parameter" id="readerActivity.parameter" value="${entityInstance?.readerActivity?.parameter}" /></div>
+                                    <div style="display: none" id="readerActivity_parameter"><div class="subtitle2">Parámetro</div><g:textField class="input_param2" name="readerActivity.parameter" id="readerActivity.parameter" value="${entityInstance?.readerActivity?.parameter}" /></div>
                                 </td>
                                 
                                 <td valign="top" class="name">
@@ -141,7 +141,7 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'readerNews', 'errors')}">
                                     <g:select name="readerNews_select" from="${application.lsReaderNews}" optionKey="class" value="${request.readerNews_select}" onchange="viewParams(this);" />
-                                    <div style="display: none" id="readerNews_parameter"><div class="subtitle2"><g:message code="entity.param.label" default="Parameter" /></div><g:textField class="input_param2" name="readerNews.parameter" id="readerNews.parameter" value="${entityInstance?.readerNews?.parameter}" /></div>
+                                    <div style="display: none" id="readerNews_parameter"><div class="subtitle2">Parámetro</div><g:textField class="input_param2" name="readerNews.parameter" id="readerNews.parameter" value="${entityInstance?.readerNews?.parameter}" /></div>
                                 </td>
                             </tr>
                         

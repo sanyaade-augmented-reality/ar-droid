@@ -36,7 +36,8 @@
                             <th><g:message code="event.geoPoint.label" default="Ubicaci&oacute;n" /></th>
                         
                             <th><g:message code="event.surveyTemplate.label" default="Plantilla de Encuesta" /></th>
-                        
+                        	
+                        	<th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +52,11 @@
                         
                             <td>${fieldValue(bean: eventInstance, field: "surveyTemplate")}</td>
                         
+                        	<td>
+                        		<g:if test="${eventInstance.surveyTemplate != null}">
+                        			<g:link controller="stats" action="show" id="${eventInstance.id}">Estadísticas</g:link>
+                        		</g:if>
+                        	</td>
                         </tr>
                     </g:each>
                     </tbody>

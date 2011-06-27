@@ -88,6 +88,15 @@
                                     <g:select name="entity.id" from="${ar.droid.admin.Entity.list()}" optionKey="id" value="${eventInstance?.entity?.id}"  />
                                 </td>
                             </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="title">Lugar</label>
+                                </td>
+                                <td colspan="3" valign="top" class="value ${hasErrors(bean: eventInstance, field: 'place', 'errors')}">
+                                    <g:textField name="place" value="${eventInstance?.place}" />
+                                </td>
+                            </tr>
                                                     
                             <tr class="prop">
                                 <td valign="top" class="name">

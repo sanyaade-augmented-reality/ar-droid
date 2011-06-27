@@ -65,6 +65,13 @@
                             <td colspan="3" valign="top" class="value">${fieldValue(bean: eventInstance, field: "description")}</td>
                             
                         </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name">Lugar</td>
+                            
+                            <td colspan="3" valign="top" class="value">${fieldValue(bean: eventInstance, field: "place")}</td>
+                            
+                        </tr>
                     
                           <tr class="prop">
                                 <td valign="top" class="name">
@@ -127,6 +134,7 @@
                     <g:hiddenField name="id" value="${eventInstance?.id}" />
                     <span class="button"><g:actionSubmit class="edit" action="edit" value="Editar" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="Eliminar" onclick="return confirm('Seguro de eliminar?');" /></span>
+                    <span class="button"><g:link class="stats" controller="stats" action="show" id="${eventInstance?.id}">Estad&iacute;sticas</g:link></span>
                 </g:form>
             </div>
         </div>

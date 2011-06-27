@@ -44,6 +44,13 @@
                             <td colspan="3" valign="top" class="value">${fieldValue(bean: eventInstance, field: "description")}</td>
                             
                         </tr>
+                        
+                        <tr class="prop">
+                            <td valign="top" class="name">Lugar</td>
+                            
+                            <td colspan="3" valign="top" class="value">${fieldValue(bean: eventInstance, field: "place")}</td>
+                            
+                        </tr>
                     
                           <tr class="prop">
                                 <td valign="top" class="name">

@@ -96,6 +96,16 @@
                                      <g:textArea name="description" value="${eventInstance?.description}" />                                  
                                 </td>
                             </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="title">Lugar</label>
+                                </td>
+                                <td colspan="3" valign="top" class="value ${hasErrors(bean: eventInstance, field: 'place', 'errors')}">
+                                    <g:textField name="place" value="${eventInstance?.place}" />
+                                </td>
+                            </tr>
+                                    
                             
                              <tr class="prop">
                                 <td valign="top" class="name">
