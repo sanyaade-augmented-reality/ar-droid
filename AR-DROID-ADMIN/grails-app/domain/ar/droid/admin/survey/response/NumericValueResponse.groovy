@@ -3,7 +3,7 @@ package ar.droid.admin.survey.response
 import ar.droid.admin.survey.question.NumericValueQuestion;
 
 class NumericValueResponse extends Response{
-	Integer value
+	Double value
 	NumericValueQuestion numericValueQuestion
 	
 	static mapping = {
