@@ -17,7 +17,7 @@ body {
     font: 11px verdana, arial, helvetica, sans-serif;
 }
 #grailsLogo {
-	padding:20px;
+	padding:10px;
 }
 
 a:link, a:visited, a:hover {
@@ -263,6 +263,12 @@ th.desc a {
     margin-left: 3px;
     overflow: visible;
     padding: 2px 6px;
+}
+.buttons input.stats {
+    background: transparent url(../images/skin/stats.png) 5px 50% no-repeat;
+    padding-left: 28px;
+    padding-right: 10px;
+    width: auto;
 }
 .buttons input.delete {
     background: transparent url(../images/skin/database_delete.png) 5px 50% no-repeat;
