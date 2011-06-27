@@ -22,6 +22,7 @@
                         <tr>
                         
                             <g:sortableColumn property="name" title="Descripci&oacute;n" />
+                            <g:sortableColumn property="color" title="Color" />
                         
                         </tr>
                     </thead>
@@ -29,6 +30,7 @@
                     <g:each in="${typeEventInstanceList}" status="i" var="typeEventInstance">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                             <td><g:link action="show" id="${typeEventInstance.id}">${fieldValue(bean: typeEventInstance, field: "description")}</g:link></td>
+                        	<td><span style="background-color: ${fieldValue(bean: typeEventInstance, field: "color")}; width: 10px; height: 10px; border: 1px solid gray;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> #${fieldValue(bean: typeEventInstance, field: "color")}</td>
                         
                         </tr>
                     </g:each>

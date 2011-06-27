@@ -5,6 +5,8 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'typeEvent.label', default: 'TypeEvent')}" />
         <title>Tipos de eventos</title>
+		<g:javascript library="prototype" />
+		<g:javascript src="colorpicker.js" />
     </head>
     <body>
         <div class="nav">
@@ -35,6 +37,19 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: typeEventInstance, field: 'description', 'errors')}">
                                     <g:textField name="description" value="${typeEventInstance?.description}" />
+                                </td>
+                                
+                                <td valign="top" class="name">
+                                    <label for="color">Color</label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: typeEventInstance, field: 'color', 'errors')}">
+                                    <g:textField name="color" value="${typeEventInstance?.color}" />
+									<g:javascript>
+										var colorpicker = new colorPicker('color',{
+											color:'#${typeEventInstance?.color}',
+											previewElement: 'color'
+										});
+									</g:javascript>
                                 </td>
                             </tr>
                         

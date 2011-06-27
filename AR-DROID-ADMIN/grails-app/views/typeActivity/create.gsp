@@ -5,8 +5,6 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'typeActivity.label', default: 'TypeActivity')}" />
         <title>Tipos de actividades</title>
-		<g:javascript library="prototype" />
-		<g:javascript src="colorpicker.js" />
     </head>
     <body>
         <div class="nav">
@@ -34,19 +32,6 @@
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: typeActivityInstance, field: 'description', 'errors')}">
                                     <g:textField name="description" value="${typeActivityInstance?.description}" />
-                                </td>
-                                
-                                <td valign="top" class="name">
-                                    <label for="color">Color</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: typeActivityInstance, field: 'color', 'errors')}">
-                                    <g:textField name="color" id="color" value="${typeActivityInstance?.color}" />
-									<g:javascript>
-										var colorpicker = new colorPicker('color',{
-											color:'#${typeActivityInstance?.color}',
-											previewElement: 'color'
-										});
-									</g:javascript>
                                 </td>
                             </tr>
                         

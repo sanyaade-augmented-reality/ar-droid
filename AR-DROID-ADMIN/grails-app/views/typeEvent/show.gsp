@@ -22,16 +22,12 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name">ID</td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: typeEventInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name">Descripción</td>
                             
                             <td valign="top" class="value">${fieldValue(bean: typeEventInstance, field: "description")}</td>
+                            
+                            <td valign="top" class="name">Color</td>
+                            <td valign="top" class="value"><span style="background-color: ${fieldValue(bean: typeActivityInstance, field: "color")}; width: 10px; height: 10px; border: 1px solid gray;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> #${fieldValue(bean: typeActivityInstance, field: "color")}</td>
                             
                         </tr>
                     
