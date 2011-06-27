@@ -13,6 +13,10 @@ class Event {
 	TypeEvent typeEvent
 	String eid
 	SurveyTemplate surveyTemplate
+	String place
+	
+	int webVisits = 0
+	int clientVisits = 0
 	
 	static hasMany = [activities: Activity, responses: SurveyResponse]
 	static belongsTo = [entity: Entity]

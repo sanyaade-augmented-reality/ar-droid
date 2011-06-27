@@ -56,14 +56,24 @@ class RequestController {
 			def survey = new SurveyResponse()
 			
 			survey.createResponsesFromJSON(event,json)
-		
-			survey.save()
+			
+			if (!survey.hasErrors())
+				survey.save()
 			
 			//si da error notificar
 		}
 		
 		//si da error notificar
 		
+	}
+	
+	def clientVisit = {
+		def json = request.JSON
+		def eventInstance = Event.get(json.event.id)
+		if (!eventInstance.hasErrors()){
+			eventInstance.clientVisits = (eventInstance.clientVisits + 1)
+			eventInstance.save()
+		}
 	}
 	
 	

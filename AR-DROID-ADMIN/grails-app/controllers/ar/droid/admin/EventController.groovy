@@ -108,15 +108,15 @@ class EventController {
 		redirect(controller: "activity", action: "create", event: params.id)
 	}
 	
-	
-	
-		def evento = {
-			def eventInstance = Event.get(params.id)
-			if (!eventInstance) {
-					response.outputStream.write("NO existe el evento!")
-			}
-			else {
-				[eventInstance: eventInstance]
-			}
+	def evento = {
+		def eventInstance = Event.get(params.id)
+		if (!eventInstance) {
+				response.outputStream.write("NO existe el evento!")
 		}
+		else {
+			eventInstance.clientVisits = (eventInstance.clientVisits + 1)
+			eventInstance.save()
+			[eventInstance: eventInstance]
+		}
+	}
 }
