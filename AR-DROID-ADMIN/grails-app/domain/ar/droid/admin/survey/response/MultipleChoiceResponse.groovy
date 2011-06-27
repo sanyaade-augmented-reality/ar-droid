@@ -1,9 +1,6 @@
 package ar.droid.admin.survey.response
 
-import com.sun.tools.javac.main.JavacOption.Option;
-
-import ar.droid.admin.survey.question.Choice;
-import ar.droid.admin.survey.question.MultipleChoiceQuestion;
+import ar.droid.admin.survey.question.*
 
 class MultipleChoiceResponse extends Response {
 	MultipleChoiceQuestion multipleChoiceQuestion
@@ -25,5 +22,14 @@ class MultipleChoiceResponse extends Response {
 			options.add (Choice.get(c.id))
 		}
 		
+	}
+	
+	Choice first() {
+		def choice
+		for(o in options){
+			choice = o
+			break
+		}
+		choice
 	}
 }

@@ -12,7 +12,7 @@
         </g:each>
         
         <g:each in="${responses}" var="r">
-        	opt${r.multipleChoiceQuestion.id}++;
+        	opt${r.first().first().id}++;
         </g:each>
         
         <g:each in="${question.options}" status="i" var="option_d">
