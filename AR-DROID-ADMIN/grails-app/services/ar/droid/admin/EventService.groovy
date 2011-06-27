@@ -34,8 +34,11 @@ class EventService {
 				canSave = true
 			}
 		}
-		if(canSave)
+		if(canSave){			
+			eventInstance.webVisits = 0
+			eventInstance.clientVisits = 0
 			eventInstance.save(flush: true)
+		}
 			
 		return eventInstance;
 	}
