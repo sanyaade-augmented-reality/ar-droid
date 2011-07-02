@@ -21,7 +21,7 @@ class Event {
 	static hasMany = [activities: Activity, responses: SurveyResponse]
 	static belongsTo = [entity: Entity]
 	
-	/**Esto indicar que el GeoPoint es una composición*/
+	/**Esto indicar que el GeoPoint es una composiciï¿½n*/
 	static embedded = ['geoPoint']
 	
 	static mapping = {
@@ -34,7 +34,7 @@ class Event {
 		description(blank: false)
 		eid(nullable:true)
 		surveyTemplate(nullable:true)
-		photo(nullable:true)
+		photo(nullable:true, size:0..5000000)
     }
 	
 	@Override

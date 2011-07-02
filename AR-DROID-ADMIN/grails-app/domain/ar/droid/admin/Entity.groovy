@@ -20,12 +20,16 @@ class Entity {
 	ReaderNews readerNews
 	ReaderActivity readerActivity
 	
+	Date ultimaActualizacion
+	long ultimoId
+	
 	/**con la siguiente sentencia se declaran validaciones, existen muchas predefinidas como la de url, etc*/
 	static constraints = {
 		url(url:true)	
 		name(blank: false)
 		readerActivity(nullable: false)
 		readerNews(nullable: false)
+		photo(size:0..5000000)
 	}
 	static mapping = {
 		description type: 'text'
