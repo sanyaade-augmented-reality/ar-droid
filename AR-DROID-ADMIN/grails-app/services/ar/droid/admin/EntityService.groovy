@@ -1,5 +1,7 @@
 package ar.droid.admin;
 
+import com.ibm.icu.text.SimpleDateFormat
+
 import ar.droid.admin.reader.ReaderNews
 import ar.droid.admin.reader.ReaderActivity
 
@@ -12,15 +14,18 @@ class EntityService {
 		entityInstance.readerActivity = ReaderActivity.fromString(params.readerActivity_select)
 		entityInstance.readerNews = ReaderNews.fromString(params.readerNews_select)
 		
+		entityInstance.ultimaActualizacion = new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1979")
+		entityInstance.ultimoId = 0
+		
 		// crear composiciones
 		entityInstance.readerActivity.properties = params.readerActivity
 		entityInstance.readerNews.properties = params.readerNews
 		
 		entityInstance.geoPoint = new GeoPoint()
 		
-		// validar posición
+		// validar posiciÃ³n
 		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-			entityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicación')
+			entityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaciï¿½n')
 		}
 		else {
 			// armar geopoint
@@ -47,7 +52,7 @@ class EntityService {
 			entityInstance.properties = params
 			
 			if(params.get("photo").size == 0){
-				entityInstance.photo = photo;
+				entityInstance.photo = photo
 			}
 			
 			// modificar geopoint
@@ -67,7 +72,7 @@ class EntityService {
 		return entityInstance
 	}
 	
-	def synchronizeEvents(entityInstance,params){
-		entityInstance.readerActivity.synchronizeEvents(entityInstance,params);
+	def synchronizeEvents(entityInstance, params){
+		entityInstance.readerActivity.synchronizeEvents(entityInstance, params);
 	}
 }
