@@ -111,8 +111,14 @@ class EntityController {
 	
 	def sinevent = {
 		def entityInstance = Entity.get(params.id)
-		params.facebookdata = session?.facebook
-		entityService.synchronizeEvents(entityInstance,params);
+		entityService.synchronizeEvents(entityInstance, params);
 		redirect(action: "show", id: params.id)
+	}
+	
+	def sincronizeallvent = {
+		Entity.list().each{ entityInstance ->
+			entityService.synchronizeEvents(entityInstance, params)
+		}
+		redirect(action: "list")
 	}
 }

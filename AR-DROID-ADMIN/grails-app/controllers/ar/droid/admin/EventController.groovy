@@ -68,7 +68,7 @@ class EventController {
     def update = {		
 		def eventInstance = eventService.updateEvent(params)
 		if(eventInstance.hasErrors()){
-			 eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Evento')] as Object[], "Otro usuario modificò el objeto")
+			 eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Evento')] as Object[], "Otro usuario modificï¿½ el objeto")
              render(view: "edit", model: [eventInstance: eventInstance])
 		}
 		else{
