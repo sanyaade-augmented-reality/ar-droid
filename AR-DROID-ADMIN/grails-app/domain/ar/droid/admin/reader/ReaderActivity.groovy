@@ -4,7 +4,6 @@ import ar.droid.admin.Entity
 import groovy.lang.GroovyClassLoader
 
 class ReaderActivity {
-	//def static lsReaderActivities = [new ReaderActivityNone(), new ReaderActivityFacebook(), new ReaderActivityApi()]
 	
 	String parameter
 	Entity entity
@@ -20,7 +19,6 @@ class ReaderActivity {
 		return Class.forName(domainClass, true, new GroovyClassLoader()).newInstance()
 	}
 	
-	/*public static ReaderActivity toString(ReaderNews objectValue) {
-		return objectValue.getClass().toString()
-	}*/
+	def synchronizeEvents(entityInstance, params){
+	}
 }

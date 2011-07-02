@@ -1,6 +1,7 @@
 package ar.droid.admin.reader
 
 class ReaderActivityApi extends ReaderActivity {
+	def readerActivityService
 	
 	static mapping = {
 		tablePerHierarchy false
@@ -16,6 +17,6 @@ class ReaderActivityApi extends ReaderActivity {
 	}
 	
 	def synchronizeEvents(entityInstance,params){
-		
+		readerActivityService.synchronizeEventsDroid(entityInstance,params);
 	}
 }
