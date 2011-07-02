@@ -3,6 +3,7 @@
 <table>
 	<thead>
 		<tr>
+			<th>Fecha</th>
 			<g:sortableColumn property="comment"
 				title="${message(code: 'response.comment.label', default: 'Comentarios')}" />
 			<th>Acciones</th>
@@ -11,6 +12,9 @@
 	<tbody>
 		<g:each in="${responses}" status="i" var="responseInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+				<td>
+				${fieldValue(bean: responseInstance, field: "fecha")}
+				</td>
 				<td>
 				${fieldValue(bean: responseInstance, field: "comment")}
 				</td>

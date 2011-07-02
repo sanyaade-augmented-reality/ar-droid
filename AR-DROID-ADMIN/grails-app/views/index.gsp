@@ -99,9 +99,11 @@
             <g:link class="index_link" controller="activity">Actividades</g:link>
             <br />
             <g:link class="index_link" controller="surveyTemplate">Plantillas</g:link>
-            <g:link class="index_link" controller="question">Preguntas</g:link><br /><br />
+            <g:link class="index_link" controller="question">Preguntas</g:link>
+            <br />
+            <g:link class="index_link" controller="entity" action="sincronizeallvent">Sinronizar eventos</g:link><br /><br />
             <n:hasRole name="${AdminsService.ADMIN_ROLE}">
-       			<g:link class="index_link" controller="admins" action="index" class="icon icon_user_go">Administer Application</g:link></li>
+       			<g:link class="index_link" controller="admins" action="index" class="icon icon_user_go">Administrar aplicación</g:link>
 			</n:hasRole>
             <g:link class="index_link icon icon_cross" controller="auth" action="logout">Logout</g:link>
                         	
