@@ -5,24 +5,28 @@
 		data.addColumn('string', 'Opcion');
         data.addColumn('number', 'Valor');
 		
-        data.addRows(${question.maxOptions});
+        data.addRows(${(question.limitFrom - question.limitTo) + 1});
 
-        <g:set var="c" value="${0}" />
-        <g:while test="c < question.maxOptions">
-        	var opt${c} = 0;
-        	<g:set var="c" value="${c + 1}" />
+        <g:set var="c" value="${question.limitTo}" />
+        <g:while test="${c <= question.limitFrom}" >
+        	var opt${c}_0value = 0;
+        	<% c++ %>
         </g:while>
         
         <g:each in="${responses}" var="r">
-        	opt${r.value}++;
+        	<g:if test="${r.first().value.toFloat() <= question.limitFrom.toFloat()}">
+        		opt${r.first().value.toString().replace('.','_')}value++;
+        	</g:if>
         </g:each>
         
-        <g:each in="${question.options}" status="i" var="option_d">
-        	data.setValue(${i}, 0, '${option_d.description}');
-        	data.setValue(${i}, 1, opt${option_d.id});
-        </g:each>
+        <g:set var="i" value="${question.limitTo}" />
+        <g:while test="${i <= question.limitFrom}" >
+    		data.setValue(${i-1}, 0, 'Valor ${i}');
+    		data.setValue(${i-1}, 1, opt${i}_0value);
+    		<% i++ %>
+    	</g:while>
 
-		var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         chart.draw(data, {width: 450, height: 300});
 	}
 
