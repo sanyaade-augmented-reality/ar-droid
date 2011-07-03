@@ -1,13 +1,13 @@
 package ar.droid.admin
 
-import ar.droid.admin.survey.response.Response
+import ar.droid.admin.survey.response.SurveyResponse
 
 class StatsController {
     static allowedMethods = [show: "GET"]
 
     def show = {
 		def eventInstance = Event.get(params.id)
-		if(!eventInstance.hasErrors()){
+		if(eventInstance != null){
 			[eventInstance: eventInstance, question: eventInstance.surveyTemplate.first(), questions: eventInstance.surveyTemplate.questions, responses: eventInstance.responses]
 		}
 		else
@@ -15,9 +15,9 @@ class StatsController {
 	}
 	
 	def deleteResponse = {
-		def responseInstance = Response.get(params.id)
-		if(!responseInstance.hasErrors()){
-			Response.delete(params.id)
+		def responseInstance = SurveyResponse.get(params.id)
+		if(responseInstance != null){
+			responseInstance.delete()
 		}
 		redirect(controller: "stats", action: "show", params: params)
 	}
