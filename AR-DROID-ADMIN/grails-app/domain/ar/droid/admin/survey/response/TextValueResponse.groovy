@@ -18,6 +18,6 @@ class TextValueResponse extends Response {
 	
 	def createResponseFromJSON(objetJson){
 		textValueQuestion = TextValueQuestion.get(objetJson.textValueQuestion.id)
-		comment = objetJson.comment
+		this.comment = objetJson.comment
 	}
 }
