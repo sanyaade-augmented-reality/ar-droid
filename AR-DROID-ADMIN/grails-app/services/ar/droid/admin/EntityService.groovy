@@ -23,6 +23,12 @@ class EntityService {
 		
 		entityInstance.geoPoint = new GeoPoint()
 		
+		// agrego foto?
+		if(params.get("photo") == null || params.get("photo").size == 0){
+			def filePhoto = new File("images/sin imagen.jpg")
+			entityInstance.photo = filePhoto.getBytes()
+		}
+		
 		// validar posición
 		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
 			entityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaci�n')
@@ -51,7 +57,7 @@ class EntityService {
 			def photo = entityInstance.photo;
 			entityInstance.properties = params
 			
-			if(params.get("photo").size == 0){
+			if(params.get("photo") == null || params.get("photo").size == 0){
 				entityInstance.photo = photo
 			}
 			
