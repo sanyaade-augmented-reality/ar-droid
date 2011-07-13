@@ -1,8 +1,6 @@
 package ar.droid.admin
 
-import java.awt.image.renderable.RenderableImage;
 
-import org.apache.catalina.connector.Response;
 
 import ar.droid.admin.calendar.*
 
