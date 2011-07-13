@@ -1,10 +1,16 @@
 package ar.droid.admin
 
+import com.sun.tools.jdi.JDWP.Event.Composite.Events;
+
 import ar.droid.admin.survey.response.SurveyResponse;
 import grails.converters.JSON
 
 class RequestController {
+
+	def eventService
 	
+	
+
 	def typeEntities = {
 		render TypeEntity.list() as JSON
 	}
@@ -24,6 +30,10 @@ class RequestController {
 	def events = {
 		def entity = Entity.get(params.id);
 		render entity.events as JSON 
+	}
+	
+	def allevents = {
+		render Event.list() as JSON
 	}
 	
 	def imageEntity ={
@@ -54,11 +64,12 @@ class RequestController {
 		println json.toString()
 		if (!event.hasErrors()){
 			def survey = new SurveyResponse()
+			survey.date = new Date()
 			
 			survey.createResponsesFromJSON(event,json)
 			
 			if (!survey.hasErrors())
-				survey.save()
+				eventService.saveResponse(survey)
 			
 			//si da error notificar
 		}
