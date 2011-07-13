@@ -6,8 +6,9 @@ import org.hibernate.mapping.Set
 import ar.droid.admin.survey.SurveyTemplate
 
 class Question {
+	
 	String question
-	SurveyTemplate surveyTemplate;
+	//SurveyTemplate surveyTemplate;
 	
 	def messageSource
 	
