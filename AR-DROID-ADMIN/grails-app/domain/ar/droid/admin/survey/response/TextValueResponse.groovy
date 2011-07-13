@@ -11,13 +11,13 @@ class TextValueResponse extends Response {
 	}
 	
     static constraints = {
-		value(nullable:true)
+		comment(nullable:true)
 		textValueQuestion(nullable:true)
     }
 	
 	
 	def createResponseFromJSON(objetJson){
 		textValueQuestion = TextValueQuestion.get(objetJson.textValueQuestion.id)
-		this.comment = objetJson.comment
+		comment = objetJson.comment
 	}
 }
