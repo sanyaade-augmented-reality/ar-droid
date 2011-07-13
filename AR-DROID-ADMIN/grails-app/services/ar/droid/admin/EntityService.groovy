@@ -1,6 +1,7 @@
 package ar.droid.admin;
 
-import com.ibm.icu.text.SimpleDateFormat
+
+import java.text.SimpleDateFormat;
 
 import ar.droid.admin.reader.ReaderNews
 import ar.droid.admin.reader.ReaderActivity
