@@ -65,7 +65,9 @@ class BootStrap {
 			returnArray['typeEvent'] = it.typeEvent
 			returnArray['geoPoint'] = it.geoPoint
 			returnArray['eventCalendar'] = it.eventCalendar
-			returnArray['surveyTemplate'] = it.surveyTemplate			
+			returnArray['surveyTemplate'] = it.surveyTemplate
+			returnArray['idEntity'] = it.entity.id
+			returnArray['place'] = it.place			
 			return returnArray
 		}
 		
