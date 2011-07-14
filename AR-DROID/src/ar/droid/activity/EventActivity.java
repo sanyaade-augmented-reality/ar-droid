@@ -134,8 +134,8 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 			
 		    sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Evento " + this.event.getTitle());
 		    sendIntent.putExtra(Intent.EXTRA_TEXT,"Hola! Voy a asistir al evento " + this.event.getTitle() + 
-		        	". Mas información <a href=\"" + properties.getProperty("ar.droid.server") + 
-		        	"/event/evento/" + this.event.getId() + "\">aquí</a>");
+		        	". Mas información en " + properties.getProperty("ar.droid.server") + 
+		        	"/event/evento/" + this.event.getId() + ".");
 		    sendIntent.setType("text/plain");
 		    startActivity(Intent.createChooser(sendIntent, "Compartir con"));
 		}
