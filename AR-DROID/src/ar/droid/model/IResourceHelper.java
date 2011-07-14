@@ -10,5 +10,7 @@ public interface IResourceHelper {
 	
 	public List<Event> getEvents(Entity entity);
 	
+	public List<Event> getEvents();
+	
 	public void saveResponse(SurveyResponse surveyResponse);
 }

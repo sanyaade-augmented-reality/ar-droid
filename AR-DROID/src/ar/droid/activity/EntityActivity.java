@@ -6,8 +6,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ar.droid.R;
@@ -46,26 +48,43 @@ public class EntityActivity extends Activity  implements android.view.View.OnCli
         TextView descr = (TextView) this.findViewById(R.id.description);
         descr.setText(entity.getDescription());
         
-        ImageButton button = (ImageButton) findViewById(R.id.btn_ir_a);
-        button.setOnClickListener(this);
+       // ImageButton button = (ImageButton) findViewById(R.id.btn_ir_a);
+       // button.setOnClickListener(this);
    }
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId()==R.id.btn_ir_a){
+		//if (v.getId()==R.id.btn_ir_a){
 			//implemtar el Ir A
 			//para esto se debe pasar a la actividad principal que es la que muestra el mapa los puntos to y from del camino
 			//luego finalizar la actividad
 			
-			Bundle bundle = new Bundle();
-			bundle.putLong("idEntity", entity.getId());
-			Intent mIntent = new Intent();
-            mIntent.putExtras(bundle);
-            getParent().setResult(RESULT_OK,mIntent);
 			
-			finishFromChild(this);
+		}
+	//}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_entity, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+			case R.id.menu_goto_entity:
+				Bundle bundle = new Bundle();
+				bundle.putLong("idEntity", entity.getId());
+				Intent mIntent = new Intent();
+	            mIntent.putExtras(bundle);
+	            getParent().setResult(RESULT_OK,mIntent);
+				finishFromChild(this);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
-
-
 }

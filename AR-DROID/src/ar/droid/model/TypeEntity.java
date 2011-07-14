@@ -4,6 +4,14 @@ public class TypeEntity {
 	
 	private Long id;
 	private String description;
+	private String color;
+	
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
 	//private String iconUrl;
 	public Long getId() {
 		return id;

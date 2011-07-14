@@ -81,7 +81,7 @@ public class ListEventsActivity extends ListActivity implements OnItemClickListe
 	            getParent().setResult(RESULT_EVENTS,mIntent);
 	         	finishFromChild(this);
 				return true;
-			case R.id.menu_reload_events:
+			case R.id.menu_goto_event:
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

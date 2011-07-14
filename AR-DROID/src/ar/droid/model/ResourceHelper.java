@@ -6,7 +6,7 @@ import java.io.Reader;
 
 import ar.droid.connection.RESTClient;
 
-public abstract class ResourceHelper  implements IResourceHelper {
+public abstract class ResourceHelper  implements IResourceHelper{
 	
 	
 	protected Reader loadManySerialized(String url){
@@ -15,10 +15,8 @@ public abstract class ResourceHelper  implements IResourceHelper {
 		  if (instream!= null){
 			  return new InputStreamReader(instream);
 		  }
-		  
 		  return null;
           
-	}
+	}	
 	
-
 }

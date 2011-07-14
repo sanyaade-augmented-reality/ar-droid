@@ -3,6 +3,7 @@ package ar.droid.model;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import ar.droid.admin.calendar.EventCalendar;
@@ -52,9 +53,15 @@ public class ResourceHelperJSON extends ResourceHelper {
 		gsonBuilder.registerTypeAdapter(SurveyTemplate.class,new SurveyTemplateDeserializer());
 		Gson gson =	gsonBuilder.create();	
 		
-		List<Event> xLsResult  = gson.fromJson(inputStream,listType);
-	
-		return xLsResult;
+		List<Event> events  = gson.fromJson(inputStream,listType);
+		
+		Iterator<Event> it = events.iterator();
+		
+		while (it.hasNext()) {
+			Event event = (Event) it.next();
+			event.setEntity(entity);			
+		}
+		return events;
 	}
 	
 	public void saveResponse(SurveyResponse surveyResponse){
@@ -64,5 +71,29 @@ public class ResourceHelperJSON extends ResourceHelper {
 		Gson gson =	gsonBuilder.create();
 		RESTClient.doPut(gson.toJsonTree(surveyResponse).getAsJsonObject(), urlServer + "/request/feedback");
 		
+	}
+
+	@Override
+	public List<Event> getEvents() {
+		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		Reader inputStream = loadManySerialized(urlServer + Request.GET_ALL_EVENTS);
+		Type listType = new TypeToken<ArrayList<Event>>() {}.getType();
+		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(GeoPoint.class,new GeoPointDeserializer());
+		gsonBuilder.registerTypeAdapter(EventCalendar.class,new EventCalendarDeserializer());
+		gsonBuilder.registerTypeAdapter(SurveyTemplate.class,new SurveyTemplateDeserializer());
+		Gson gson =	gsonBuilder.create();	
+		
+		List<Event> events  = gson.fromJson(inputStream,listType);
+		
+		Iterator<Event> it = events.iterator();
+		
+		while (it.hasNext()) {
+			Event event = (Event) it.next();
+			event.setEntity(Resource.getInstance().getEntity(event.getIdEntity()));
+			event.getEntity().addEvent(event);
+		}	
+		return events;
 	}
 }

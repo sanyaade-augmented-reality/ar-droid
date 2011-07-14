@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,16 +40,22 @@ import ar.droid.driving.view.RouteOverlay;
 import ar.droid.location.LocationListenerGPS;
 import ar.droid.location.MyLocationOverlayFirstRun;
 import ar.droid.model.Entity;
+import ar.droid.model.Event;
 import ar.droid.model.Resource;
 import ar.droid.model.TypeEntity;
+import ar.droid.model.TypeEvent;
 import ar.droid.resources.ImageHelperFactory;
 import ar.droid.view.EntityOverlayItem;
+import ar.droid.view.EventOverlayItem;
 import ar.droid.view.MapEntityItemizedOverlay;
+import ar.droid.view.MapEventItemizedOverlay;
+import ar.droid.view.SpotBalloon;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.OverlayItem;
 
 public class MainMap extends MapActivity implements IDirectionsListener{
 	static String TAG = MainMap.class.getName();
@@ -61,6 +68,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     private MyLocationOverlay myLocationOverlay;
 	private Resources resources;
 	private LocationManager locationManager;
+	
+	private ProgressDialog progressDialog = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +87,9 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         // setear layout
         setContentView(R.layout.mainmap);
         
+     
+
+        
         ARDROIDProperties.createProperties(getApplicationContext());
         
         // crear mapa
@@ -86,6 +98,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         mapView.displayZoomControls(true);
         mapView.setBuiltInZoomControls(true);
     	mapView.getController().setZoom(17);
+    	
     	
     	// inicializar mapa
     	this.initMap();
@@ -163,6 +176,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 
 	@Override
 	protected boolean isRouteDisplayed() {
+		
 		return true;
 	}
 	
@@ -232,54 +246,72 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		        
 		    case R.id.menu_show:
 		        return true;
+		    case R.id.menu_events:
+		    	showEvents();
+		        return true;
+		    case R.id.menu_entities:
+		    	showEntities();
+		        return true;
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
 	}
 	
 
-	
-	
+		
+	/**muestra en el mapa todo los eventos registrado en el sistema
+	 * */
 	private void showEntities(){
-		//Se recupera las entidades a mostrar en el mapa
-		List<Entity> xLs =Resource.getInstance().getEntities();
 		
-		//se agrupan entidades por tipo de entidad
-		Iterator<Entity> itEnt = xLs.iterator();
-		Map<TypeEntity, List<Entity>> types = new HashMap<TypeEntity, List<Entity>>();		
-		while (itEnt.hasNext()) {
-			Entity entity = (Entity) itEnt.next();
-			List<Entity> listEntities = new ArrayList<Entity>();
-			if (types.get(entity.getTypeEntity())!=null){
-				listEntities = types.get(entity.getTypeEntity());
-			}
-			listEntities.add(entity);
-			types.put(entity.getTypeEntity(), listEntities);
-		}
-	
-		//se crean los overlays con la info de las entidades
-		Iterator<TypeEntity> itTypesEnt = types.keySet().iterator();
-		while (itTypesEnt.hasNext()) {
-			TypeEntity typeEntity = itTypesEnt.next();
-			itEnt = types.get(typeEntity).iterator();
-			
-			//se recupera el icono a mostrar para el tipo de entidad
-			Drawable iconTypeEntity = ImageHelperFactory.createImageHelper().getIconTypeEntity(typeEntity);
-			iconTypeEntity = scaleImage(iconTypeEntity, 2);
-			iconTypeEntity.setBounds(0, 0, iconTypeEntity.getIntrinsicWidth(), iconTypeEntity.getIntrinsicHeight());
+		 Runnable viewOrders = new Runnable(){
+	            public void run() {
+	            	mapView.getOverlays().clear();
+	            	//Se recupera las entidades a mostrar en el mapa
+	        		List<Entity> xLs =Resource.getInstance().getEntities();
+	        		
+	        		//se agrupan entidades por tipo de entidad
+	        		Iterator<Entity> itEnt = xLs.iterator();
+	        		Map<TypeEntity, List<Entity>> types = new HashMap<TypeEntity, List<Entity>>();		
+	        		while (itEnt.hasNext()) {
+	        			Entity entity = (Entity) itEnt.next();
+	        			List<Entity> listEntities = new ArrayList<Entity>();
+	        			if (types.get(entity.getTypeEntity())!=null){
+	        				listEntities = types.get(entity.getTypeEntity());
+	        			}
+	        			listEntities.add(entity);
+	        			types.put(entity.getTypeEntity(), listEntities);
+	        		}
+	        	
+	        		//se crean los overlays con la info de las entidades
+	        		Iterator<TypeEntity> itTypesEnt = types.keySet().iterator();
+	        		while (itTypesEnt.hasNext()) {
+	        			TypeEntity typeEntity = itTypesEnt.next();
+	        			itEnt = types.get(typeEntity).iterator();
+	        			
+	        			//se recupera el icono a mostrar para el tipo de entidad
+	        			Drawable iconTypeEntity = ImageHelperFactory.createImageHelper().getIconTypeEntity(typeEntity);
+	        			iconTypeEntity = scaleImage(iconTypeEntity, 2);
+	        			iconTypeEntity.setBounds(0, 0, iconTypeEntity.getIntrinsicWidth(), iconTypeEntity.getIntrinsicHeight());
+	        		
+	        			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
+	        			MapEntityItemizedOverlay mapEntityOverlay = new MapEntityItemizedOverlay(iconTypeEntity,mapView,MainMap.this);
+	        			while (itEnt.hasNext()) {
+	        				Entity entity = (Entity) itEnt.next();			
+	        				EntityOverlayItem overlayitemEntity = new EntityOverlayItem(entity.getGeoPoint(),entity.getName(),entity.getDescription(),entity);
+	        				mapEntityOverlay.addOverlay(overlayitemEntity);
+	        				
+	        			}
+	        			//se incorpora los overlay al mapa
+	        			
+	        			mapView.getOverlays().add(mapEntityOverlay);
+	        			
+	        		}
+	        		mapView.postInvalidate(); 
+	            }
+	        };
+	        Thread thread =  new Thread(null, viewOrders,"agentcargaentidades" );
+	        thread.start();
 		
-			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
-			MapEntityItemizedOverlay mapEntityOverlay = new MapEntityItemizedOverlay(iconTypeEntity,mapView,this);
-			while (itEnt.hasNext()) {
-				Entity entity = (Entity) itEnt.next();			
-				EntityOverlayItem overlayitemEntity = new EntityOverlayItem(entity.getGeoPoint(),entity.getName(),entity.getDescription(),entity);
-				mapEntityOverlay.addOverlay(overlayitemEntity);
-				
-			}
-			//se incorpora los overlay al mapa
-			mapView.getOverlays().add(mapEntityOverlay);
-		}
-		mapView.postInvalidate(); 
 	}
 	
 	/**
@@ -296,11 +328,79 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOrig, 0, 0, bitmapOrig.getWidth(), bitmapOrig.getHeight(), matrix, true);
         BitmapDrawable bitmapDrawableResized = new BitmapDrawable(resizedBitmap);
         return bitmapDrawableResized; 
+        
 	}
 
+	/**muestra en el mapa los eventos de todas las entidades
+	 * */
 	private void showEvents(){
+		mapView.getOverlays().clear();
+		//ordeno por ubicacion los eventos
+		List<Event> ls =Resource.getInstance().getEvents();
+		Map<ar.droid.location.GeoPoint,List<Event>> posiciones = new HashMap<ar.droid.location.GeoPoint,List<Event>>();
+		Iterator<Event> itEvent = ls.iterator();
+		while (itEvent.hasNext()) {
+			Event event = (Event) itEvent.next();
+			List<Event> listEvents = new ArrayList<Event>();
+			if (posiciones.get(event.getGeoPoint()) != null){
+				listEvents = posiciones.get(event.getGeoPoint());
+			}
+			listEvents.add(event);
+			
+			posiciones.put(event.getGeoPoint(),listEvents);
+		}
 		
-	}
+		/*Map<TypeEvent, List<Event>> types = new HashMap<TypeEvent, List<Event>>();		
+		while (itEvent.hasNext()) {
+			Event event = (Event) itEvent.next();
+			List<Event> listEvents = new ArrayList<Event>();
+			if (types.get(event.getTypeEvent()) != null){
+				listEvents = types.get(event.getTypeEvent());
+			}
+			listEvents.add(event);
+			types.put(event.getTypeEvent(),listEvents);
+		}*/
+
+		/*Iterator <TypeEvent> itTypeEvent = types.keySet().iterator();
+		while (itTypeEvent.hasNext()) {
+			TypeEvent typeEvent = (TypeEvent) itTypeEvent.next();
+			List<Event> events = types.get(typeEvent);
+			itEvent = events.iterator();
+			
+			Drawable drawable = new SpotBalloon(Color.parseColor("#"+typeEvent.getColor()));
+			MapEventItemizedOverlay mapEventOverlay = new MapEventItemizedOverlay(drawable,mapView,this);
+			
+			while (itEvent.hasNext()) {
+				Event event = (Event) itEvent.next();			
+				EventOverlayItem overlayitemEvent = new EventOverlayItem(event.getGeoPoint(),event.getTitle(),event.getDescription(),event);
+				mapEventOverlay.addOverlay(overlayitemEvent);
+				mapView.getOverlays().add(mapEventOverlay);
+			}	
+		}*/
+		
+		
+		Iterator <ar.droid.location.GeoPoint> itPoint = posiciones.keySet().iterator();
+		while (itPoint.hasNext()) {
+			ar.droid.location.GeoPoint geopoint = (ar.droid.location.GeoPoint) itPoint.next();
+			List<Event> events = posiciones.get(geopoint);
+			itEvent = events.iterator();
+			
+			//aca cuando hay muchos eventos mostrar distinto en vez de circulo un cuadrado o circulo multicolor
+			Drawable drawable = new SpotBalloon(Color.parseColor("#"+events.get(0).getTypeEvent().getColor()));
+			if (events.size()>1)
+				drawable = getResources().getDrawable(R.drawable.multievent);
+			MapEventItemizedOverlay mapEventOverlay = new MapEventItemizedOverlay(drawable,mapView,this);
+			
+			while (itEvent.hasNext()) {
+				Event event = (Event) itEvent.next();			
+				EventOverlayItem overlayitemEvent = new EventOverlayItem(event.getGeoPoint(),event.getTitle(),event.getDescription(),event);
+				mapEventOverlay.addOverlay(overlayitemEvent);
+				mapView.getOverlays().add(mapEventOverlay);
+			}	
+		}
+		
+		
+	}	
 	
 	private void showMsgCameraError() {
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -325,18 +425,29 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	}
 	
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+	protected void onActivityResult(int requestCode, int resultCode, final Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
 		//limpiar mapa los overlays?? o no???
 		if (resultCode == RESULT_OK) {
 			 //recupero la entidad
-			try{
-				Entity entity = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity"));
-				DrivingDirectionsFactory.createDrivingDirections().driveTo(myLocationOverlay.getMyLocation(), (GeoPoint)entity.getGeoPoint(), ar.droid.driving.Mode.WALKING,this);
-			}
-			catch (Throwable t) {
-				Toast.makeText(getApplicationContext(), "Ocurrió un error al determir el recorrido hacia el destino", Toast.LENGTH_LONG).show();
-			}
+			 //se cargan las noticias en un thread
+	        Runnable viewOrders = new Runnable(){
+	            public void run() {
+	            	try{
+	            		Entity entity = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity"));
+	    				DrivingDirectionsFactory.createDrivingDirections().driveTo(myLocationOverlay.getMyLocation(), (GeoPoint)entity.getGeoPoint(), ar.droid.driving.Mode.WALKING,MainMap.this);
+	    			}
+	    			catch (Throwable t) {
+	    				Toast.makeText(getApplicationContext(), "Ocurrió un error al determir el recorrido hacia el destino", Toast.LENGTH_LONG).show();
+	    			}
+	            }
+	        };
+	        Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
+	        thread.start();
+	        
+	        //se lanza el dialogo de espera hasta que se cargen las noticas
+	        progressDialog = ProgressDialog.show(this,"","Cargando recorrido....");
+			
 	  }
 	 else if (resultCode == 5){
 		showEvents();
@@ -359,11 +470,13 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			}				
 		// redraw map
 		mapView.postInvalidate();
+		progressDialog.dismiss();
 		
 	}
 
 	@Override
 	public void directionNotAvailable() {
+		progressDialog.dismiss();
 		Toast.makeText(getApplicationContext(), "No se encontro recorrido hacia el destino", Toast.LENGTH_LONG).show();
 	}
 	

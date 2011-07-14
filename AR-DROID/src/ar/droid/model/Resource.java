@@ -10,6 +10,7 @@ public class Resource {
 	}
 	
 	public List<Entity> entities = null;
+	public List<Event> allevents = null;
 	
 	public  List<Entity> getEntities(){
 		if (entities ==null)
@@ -22,6 +23,13 @@ public class Resource {
 			entity.setEvents(ResourceHelperFactory.createResourceHelper().getEvents(entity));
 		}
 		return entity.getEvents();
+	}
+	
+	public  List<Event> getEvents(){
+		if (allevents == null){
+			allevents = ResourceHelperFactory.createResourceHelper().getEvents();
+		}
+		return allevents;
 	}
 	
 	public Entity getEntity(Long id){

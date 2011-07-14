@@ -59,7 +59,7 @@ public class ListNewsActivity extends ListActivity implements OnItemClickListene
         thread.start();
         
         //se lanza el dialogo de espera hasta que se cargen las noticas
-        progressDialog = ProgressDialog.show(this,"Por favor espere..","Cargando Noticias....");
+        progressDialog = ProgressDialog.show(this,"","Cargando Noticias....");
         
         getListView().setOnItemClickListener(this);
   	}

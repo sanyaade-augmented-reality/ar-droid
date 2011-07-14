@@ -1,7 +1,5 @@
 package ar.droid.model;
 
-import java.util.List;
-
 import ar.droid.admin.calendar.EventCalendar;
 import ar.droid.admin.survey.SurveyTemplate;
 import ar.droid.admin.survey.response.SurveyResponse;
@@ -18,7 +16,34 @@ public class Event {
 	private GeoPoint geoPoint;
 	private EventCalendar eventCalendar;
 	private SurveyTemplate surveyTemplate;
+	private String place;
 	
+	private Entity entity;
+	private Long idEntity;
+	
+	public Long getIdEntity() {
+		return idEntity;
+	}
+
+	public void setIdEntity(Long idEntity) {
+		this.idEntity = idEntity;
+	}
+
+	public Entity getEntity() {
+		return entity;
+	}
+
+	public void setEntity(Entity entity) {
+		this.entity = entity;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
 	private SurveyResponse surveyResponse;
 	
 	

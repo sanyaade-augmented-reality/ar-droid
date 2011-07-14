@@ -1,8 +1,8 @@
 package ar.droid.view;
 
+import ar.droid.location.GeoPoint;
 import ar.droid.model.Entity;
 
-import ar.droid.location.GeoPoint;
 import com.google.android.maps.OverlayItem;
 
 public class EntityOverlayItem extends OverlayItem {
@@ -25,4 +25,6 @@ public class EntityOverlayItem extends OverlayItem {
 	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}
+	
+	
 }

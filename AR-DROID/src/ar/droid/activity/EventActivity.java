@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import ar.droid.R;
 import ar.droid.admin.survey.question.Choice;
@@ -71,7 +72,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        descr.setText(event.getDescription());
 	        
 	        TextView place = (TextView) this.findViewById(R.id.place);
-	        place.setText("Lugar: ...........");
+	        place.setText("Lugar: " + event.getPlace());
 	        
 	     
 	        TextView initdate = (TextView) this.findViewById(R.id.Initdate);
@@ -81,9 +82,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        TextView enddate = (TextView) this.findViewById(R.id.enddate);
 	        enddate.setText("Fin: "+formateador.format(event.getEventCalendar().getEndDate()));
 	        
-	        /*ImageButton button = (ImageButton) findViewById(R.id.btn_ir_a);
-	        button.setOnClickListener(this);*/
-	        
+	 	        
 	        final Button btnShare= (Button) findViewById(R.id.buttonShare);
 	        btnShare.setOnClickListener(new View.OnClickListener() {
 	             public void onClick(View v) {
@@ -167,7 +166,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 				builder.setMultiChoiceItems(options, selected, new DialogInterface.OnMultiChoiceClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int item, boolean isChecked) {
-						//selected[item] = isChecked;
+						selected[item] = isChecked;
 						//ir guardando las opciones elegidas	
 					}
 				});
@@ -214,10 +213,15 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(numericValueQuestion.getQuestion());
 			
-			final EditText input = new EditText(this);
-		    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+			final RatingBar ratingBar = new RatingBar(getApplicationContext());
+			ratingBar.setRating(0f);
+			ratingBar.setMax(numericValueQuestion.getLimitTo());
+			ratingBar.setStepSize(0.5f);
+			
+			/*final EditText input = new EditText(this);
+		    input.setInputType(InputType.TYPE_CLASS_NUMBER);*/
 		    
-		    builder.setView(input);
+		    builder.setView(ratingBar);
 
 			
 			builder.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
@@ -227,7 +231,8 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 					surveyResponse.setEvent(event);
 					NumericValueResponse numericValueResponse = new NumericValueResponse();
 					numericValueResponse.setNumericValueQuestion(numericValueQuestion);
-					numericValueResponse.setValue(new Integer(input.getText().toString()));
+					
+					numericValueResponse.setValue(new Float(ratingBar.getRating()).intValue());
 					surveyResponse.addResponse(numericValueResponse);
 					
 					ResourceHelperFactory.createResourceHelper().saveResponse(surveyResponse);

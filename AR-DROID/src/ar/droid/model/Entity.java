@@ -1,5 +1,6 @@
 package ar.droid.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ar.droid.admin.reader.ReaderNews;
@@ -107,7 +108,13 @@ public class Entity {
 		return events;
 	}
 	
-   public Event getEvent(Long idEvent){
+	public void addEvent(Event event){
+		if (getEvents() == null)
+			setEvents(new ArrayList<Event>());
+		getEvents().add(event);
+	}
+	
+    public Event getEvent(Long idEvent){
 	   Event event= new Event(idEvent);
 	   int index = getEvents().indexOf(event);
 	   if (index!= -1){

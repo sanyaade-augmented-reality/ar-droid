@@ -2,7 +2,6 @@ package ar.droid.connection;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -37,16 +36,12 @@ public class RESTClient {
         			entity.setContentType("application/json");
         			httpPut.setEntity(entity);
         	        HttpResponse response = httpclient.execute(httpPut);
-        		} catch (UnsupportedEncodingException e) {
+        	        
+        		} catch (Exception e) {
         			Log.e("Error","doPut",e);
         			e.printStackTrace();
-        		} catch (ClientProtocolException e) {
-        			Log.e("Error","doPut",e);
-        			e.printStackTrace();
-        		} catch (IOException e) {
-        			Log.e("Error","doPut",e);
-        			e.printStackTrace();
-        		}                
+        			
+        		}              
         	}
         };  
         

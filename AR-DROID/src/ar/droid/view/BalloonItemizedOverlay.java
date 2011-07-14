@@ -17,16 +17,20 @@ package ar.droid.view;
 
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import ar.droid.R;
-
 import ar.droid.location.GeoPoint;
+
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
@@ -39,7 +43,7 @@ import com.google.android.maps.OverlayItem;
  * 
  * @author Jeff Gilfelt
  */
-public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends ItemizedOverlay<Item> {
+public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends ItemizedOverlay<Item> implements  DialogInterface.OnClickListener {
 
 	private MapView mapView;
 	private BalloonOverlayView<Item> balloonView;
@@ -48,6 +52,12 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends I
 	final MapController mc;
 	private Item currentFocussedItem;
 	private int currentFocussedIndex;
+	
+
+	protected Boolean getItemTap() {
+		return false;
+	}
+
 	
 	/**
 	 * Create a new BalloonItemizedOverlay
@@ -59,9 +69,9 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends I
 		super(defaultMarker);
 		this.mapView = mapView;
 		viewOffset = 0;
-		mc = mapView.getController();
+		mc = mapView.getController();	
+		
 	}
-	
 	/**
 	 * Set the horizontal distance between the marker and the bottom of the information
 	 * balloon. The default is 0 which works well for center bounded markers. If your
@@ -90,53 +100,90 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends I
 		return false;
 	}
 
+	/**
+	 * Override this method to handle a "tap" on a balloon. By default, does nothing 
+	 * and returns false.
+	 * 
+	 * @param index - The index of the item whose balloon is tapped.
+	 * @param arg0 - The item whose balloon is tapped.
+	 * @return true if you handled the tap, otherwise false.
+	 */
+	protected boolean onItemTap(DialogInterface arg0, int index) {
+		return false;
+	}
+	
+	public List<OverlayItem> getItemsToShow(int index) {
+		return new ArrayList<OverlayItem>();
+	}
 	/* (non-Javadoc)
 	 * @see com.google.android.maps.ItemizedOverlay#onTap(int)
 	 */
 	@Override
-	protected final boolean onTap(int index) {
-		
-		currentFocussedIndex = index;
-		currentFocussedItem = createItem(index);
-		
-		boolean isRecycled;
-		if (balloonView == null) {
-			balloonView = createBalloonOverlayView();
-			clickRegion = (View) balloonView.findViewById(R.id.balloon_inner_layout);
-			clickRegion.setOnTouchListener(createBalloonTouchListener());
-			isRecycled = false;
-		} else {
-			isRecycled = true;
+	protected  boolean onTap(int index) {
+		if (getItemTap()){
+			createOnTapItem(index);
 		}
-	
-		balloonView.setVisibility(View.GONE);
+		else{
+			currentFocussedIndex = index;
+			currentFocussedItem = createItem(index);			
+			boolean isRecycled;
+			if (balloonView == null) {
+				balloonView = createBalloonOverlayView();
+				clickRegion = (View) balloonView.findViewById(R.id.balloon_inner_layout);
+				clickRegion.setOnTouchListener(createBalloonTouchListener());
+				isRecycled = false;
+			} else {
+				isRecycled = true;
+			}
 		
-		List<Overlay> mapOverlays = mapView.getOverlays();
-		if (mapOverlays.size() > 1) {
-			hideOtherBalloons(mapOverlays);
+			balloonView.setVisibility(View.GONE);
+			
+			
+			List<Overlay> mapOverlays = mapView.getOverlays();
+			if (mapOverlays.size() > 1) {
+				hideOtherBalloons(mapOverlays);
+			}
+			
+			balloonView.setData(currentFocussedItem);
+			
+			GeoPoint point = new GeoPoint(currentFocussedItem.getPoint());
+			MapView.LayoutParams params = new MapView.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, point,
+					MapView.LayoutParams.BOTTOM_CENTER);
+			params.mode = MapView.LayoutParams.MODE_MAP;
+			
+			balloonView.setVisibility(View.VISIBLE);
+			
+		
+			if (isRecycled) {
+				balloonView.setLayoutParams(params);
+			} else {
+				mapView.addView(balloonView, params);
+			}
+			mc.animateTo(point);
 		}
-		
-		balloonView.setData(currentFocussedItem);
-		
-		GeoPoint point = new GeoPoint(currentFocussedItem.getPoint());
-		MapView.LayoutParams params = new MapView.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, point,
-				MapView.LayoutParams.BOTTOM_CENTER);
-		params.mode = MapView.LayoutParams.MODE_MAP;
-		
-		balloonView.setVisibility(View.VISIBLE);
-
-		if (isRecycled) {
-			balloonView.setLayoutParams(params);
-		} else {
-			mapView.addView(balloonView, params);
-		}
-		
-		mc.animateTo(point);
 		
 		return true;
 	}
 
+	protected  void createOnTapItem(int index) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mapView.getContext());
+		builder.setTitle("TEST");
+		String options[] = new String[getItemsToShow(index).size()];
+		
+		Iterator<OverlayItem> option = getItemsToShow(index).iterator();
+		int i =0;
+		while (option.hasNext()) {
+			OverlayItem OverlayItem =option.next();
+			options[i] = OverlayItem.getTitle() + " " + OverlayItem.getSnippet() ;
+			i++;
+		}
+		builder.setItems(options,this);
+		builder.setCancelable(true);
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
 	/**
 	 * Creates the balloon view. Override to create a sub-classed view that
 	 * can populate additional sub-views.
@@ -211,4 +258,12 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends I
 		};
 	}
 	
+	 
+	@Override
+	public void onClick(DialogInterface arg0, int arg1) {
+		onItemTap(arg0, arg1);
+	}
+
+	
 }
+

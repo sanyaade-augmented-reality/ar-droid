@@ -1,36 +1,41 @@
 package ar.droid.view;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import ar.droid.activity.EntityTabWidget;
 
 import com.google.android.maps.MapView;
+import com.google.android.maps.OverlayItem;
 
 public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverlayItem> {
 
-	private ArrayList<EntityOverlayItem> mOverlays = new ArrayList<EntityOverlayItem>();
+	private List<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private Context mContext;
 	private MapView mapView;
 	private Activity activity;
+	
 	
 	public MapEntityItemizedOverlay(Drawable defaultMarker,MapView mapView,Activity activity) {
 		super(boundCenterBottom(defaultMarker),mapView);
 		mContext = mapView.getContext();
 		this.mapView = mapView;
 		this.activity = activity;
+		populate();
 	}
 
 	@Override
 	protected EntityOverlayItem createItem(int i) {
-		 return mOverlays.get(i);
+		 return (EntityOverlayItem)mOverlays.get(i);
 	}
 	
 	public void addOverlay(EntityOverlayItem overlay) {
-	    mOverlays.add(overlay);
+		mOverlays.add(overlay);
 	    populate();
 	}
 
@@ -40,6 +45,9 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
 
 	}
 	
+	public List<OverlayItem> getOverlas() {
+		return mOverlays;
+	}
 
 	@Override
 	protected boolean onBalloonTap(int index, EntityOverlayItem item) {
@@ -60,5 +68,6 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
          return true;
 	}
 
+	
 
 }
