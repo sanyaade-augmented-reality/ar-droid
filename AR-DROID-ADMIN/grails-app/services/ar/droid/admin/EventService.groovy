@@ -90,4 +90,8 @@ class EventService {
 		}
 		return eventInstance
 	}
+	
+	def saveResponse(survey) {
+		survey.save()
+	}
 }
