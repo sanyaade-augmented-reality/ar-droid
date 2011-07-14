@@ -10,6 +10,6 @@
 	<ImageView android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/imageView1" android:src="@drawable/logo"></ImageView>
 	<TextView android:id="@+id/widget62" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-		android:text="AR-DROID es una aplicación de Realidad Aumentada para el ámbito universitario de la Universidad Naciaonal de La Plata">
+		android:text="AR-Droid es una aplicación de Realidad Aumentada para el ámbito universitario de la Universidad Naciaonal de La Plata.">
 	</TextView>
 </TableLayout>
