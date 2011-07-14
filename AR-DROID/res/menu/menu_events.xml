@@ -3,7 +3,7 @@
     <item android:id="@+id/menu_show_events"
           android:icon="@drawable/marker"
           android:title="Mostrar" />
-    <item android:id="@+id/menu_reload_events"
-          android:icon="@drawable/reload"
-          android:title="Actualizar" />    
+   <item android:id="@+id/menu_goto_event"
+          android:icon="@drawable/flag"
+          android:title="ir a..." />   
 </menu>
