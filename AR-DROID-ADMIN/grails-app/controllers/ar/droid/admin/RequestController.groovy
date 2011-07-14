@@ -64,7 +64,7 @@ class RequestController {
 		println json.toString()
 		if (!event.hasErrors()){
 			def survey = new SurveyResponse()
-			survey.date = new Date()
+			survey.fecha = new Date()
 			
 			survey.createResponsesFromJSON(event,json)
 			
