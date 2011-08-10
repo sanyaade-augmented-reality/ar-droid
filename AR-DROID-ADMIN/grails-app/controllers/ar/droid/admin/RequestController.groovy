@@ -1,8 +1,6 @@
 package ar.droid.admin
 
-import com.sun.tools.jdi.JDWP.Event.Composite.Events;
-
-import ar.droid.admin.survey.response.SurveyResponse;
+import ar.droid.admin.survey.response.SurveyResponse
 import grails.converters.JSON
 
 class RequestController {
