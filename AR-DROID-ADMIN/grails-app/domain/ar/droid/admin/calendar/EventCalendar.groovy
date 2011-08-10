@@ -1,8 +1,7 @@
 package ar.droid.admin.calendar
 
-import java.sql.Time;
-
-import ar.droid.admin.Event;
+import java.sql.Time
+import ar.droid.admin.Event
 
 class EventCalendar {
 	Date startDate
@@ -21,14 +20,14 @@ class EventCalendar {
 	}
 	
 	public boolean isToday(){
-		return false;
+		return false
 	}
 	
 	public boolean isWeekle(){
-		return false;
+		return false
 	}
 	
 	public boolean isMonthly(){
-		return false;
+		return false
 	}
 }
