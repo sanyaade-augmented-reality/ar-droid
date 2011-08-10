@@ -19,4 +19,16 @@ class EventCalendar {
 		def domainClass = keyValue.substring(6)
 		return Class.forName(domainClass, true, new GroovyClassLoader()).newInstance()			
 	}
+	
+	public boolean isToday(){
+		return false;
+	}
+	
+	public boolean isWeekle(){
+		return false;
+	}
+	
+	public boolean isMonthly(){
+		return false;
+	}
 }
