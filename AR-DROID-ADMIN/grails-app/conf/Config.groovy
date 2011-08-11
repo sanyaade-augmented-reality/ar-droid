@@ -1,15 +1,3 @@
-// locations to search for config files that get merged into the main config
-// config files can either be Java properties files or ConfigSlurper scripts
-
-// grails.config.locations = [ "classpath:${appName}-config.properties",
-//                             "classpath:${appName}-config.groovy",
-//                             "file:${userHome}/.grails/${appName}-config.properties",
-//                             "file:${userHome}/.grails/${appName}-config.groovy"]
-
-// if(System.properties["${appName}.config.location"]) {
-//    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
-// }
-
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
@@ -26,22 +14,15 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
                       form: 'application/x-www-form-urlencoded',
                       multipartForm: 'multipart/form-data'
                     ]
-// The default codec used to encode data with ${}
 grails.views.default.codec = "none" // none, html, base64
 grails.views.gsp.encoding = "UTF-8"
 grails.converters.encoding = "UTF-8"
-// enable Sitemesh preprocessing of GSP pages
 grails.views.gsp.sitemesh.preprocess = true
-// scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
 
-// Set to false to use the new Grails 1.2 JSONBuilder in the render method
 grails.json.legacy.builder = false
-// enabled native2ascii conversion of i18n properties files
 grails.enable.native2ascii = true
-// whether to install the java.util.logging bridge for sl4j. Disable for AppEngine!
 grails.logging.jul.usebridge = true
-// packages to include in Spring bean scanning
 grails.spring.bean.packages = []
 
 // set per-environment serverURL stem for creating absolute links
@@ -60,9 +41,6 @@ environments {
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
    rootLogger="debug,stdout"
    
    appenders {
@@ -81,13 +59,7 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate', 'org.mortbay.log'
 }
+
 facebook.applicationSecret='a511dae2169d13558351bd2aa4ff2966'
 facebook.applicationId='122540491154119'
 facebook.secure=false
-
-/*
- * ID de la aplicación 122540491154119
-Clave API 6e208071fb05d660ce44117b05ef3c9d
-Código secreto de la aplicación a511dae2169d13558351bd2aa4ff2966
- Gabr*/
-//nimble es para login de usuarios 
