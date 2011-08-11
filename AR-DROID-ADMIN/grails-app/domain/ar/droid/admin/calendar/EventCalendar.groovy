@@ -19,15 +19,15 @@ class EventCalendar {
 		return Class.forName(domainClass, true, new GroovyClassLoader()).newInstance()			
 	}
 	
-	public boolean isToday(){
-		return false
+	def isToday = {
+		false
 	}
 	
-	public boolean isWeekle(){
-		return false
+	def isWeekle = {
+		false
 	}
 	
-	public boolean isMonthly(){
-		return false
+	def isMonthly = {
+		false
 	}
 }

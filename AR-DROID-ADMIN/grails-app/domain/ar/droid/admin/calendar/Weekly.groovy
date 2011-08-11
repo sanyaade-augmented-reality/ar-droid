@@ -13,7 +13,7 @@ class Weekly extends RepeatCalendar {
 		return "Weekly";
 	}
 	
-	public boolean isToday(){
+	def isToday = {
 		Date hoy = new Date()
 		def diaSemana = hoy.getAt(Calendar.DAY_OF_WEEK)
 		if(hoy.compareTo(this.startDate) >= 0 && diaSemana == dayOfWeek)
@@ -22,13 +22,13 @@ class Weekly extends RepeatCalendar {
 			return false
 	}
 	
-	public boolean isWeekle(){
+	def isWeekle = {
 		Date hoy = new Date()
 		if(hoy.compareTo(this.startDate) >= 0)
 			return true
 	}
 	
-	public boolean isMonthly(){
+	def isMonthly = {
 		Date hoy = new Date()
 		if(hoy.compareTo(this.startDate) >= 0)
 			return true

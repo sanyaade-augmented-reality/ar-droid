@@ -12,7 +12,7 @@ class Monthly extends RepeatCalendar {
 		return "Monthly";
 	}
 	
-	public boolean isToday(){
+	def isToday = {
 		Date hoy = new Date()
 		def diaMes = hoy.getAt(Calendar.DAY_OF_MONTH)
 		if(hoy.compareTo(this.startDate) >= 0 && diaMes == this.dayOfMonth)
@@ -21,7 +21,7 @@ class Monthly extends RepeatCalendar {
 			return false
 	}
 	
-	public boolean isWeekle(){
+	def isWeekle = {
 		Date hoy = new Date()
 		def diaMes = hoy.getAt(Calendar.DAY_OF_MONTH)
 		if(hoy.compareTo(this.startDate) < 0)
@@ -36,7 +36,7 @@ class Monthly extends RepeatCalendar {
 		}
 	}
 	
-	public boolean isMonthly(){
+	def isMonthly = {
 		Date hoy = new Date()
 		if(hoy.compareTo(this.startDate) >= 0)
 			return true

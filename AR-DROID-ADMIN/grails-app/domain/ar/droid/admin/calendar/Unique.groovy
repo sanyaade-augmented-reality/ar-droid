@@ -15,7 +15,7 @@ class Unique extends EventCalendar{
 		return "Unique";
 	}
 	
-	public boolean isToday(){
+	def isToday = {
 		//Es para hoy si la fecha de inicio es hoy
 		//o si ya empezo y la fecha de inicio es mayor igual a hoy
 		Date today = new Date()
@@ -24,7 +24,7 @@ class Unique extends EventCalendar{
 		return  ok;
 	}
 	
-	public boolean isWeekle(){
+	def isWeekle = {
 		//es para esta semana si la fecha de inicio es
 		Date today = new Date()
 		Date dateLimit= new Date()
@@ -33,7 +33,7 @@ class Unique extends EventCalendar{
 		
 	}
 	
-	public boolean isMonthly(){
+	def isMonthly = {
 		//es para esta semana si la fecha de inicio es
 		Date today = new Date()
 		Date dateLimit= new Date()

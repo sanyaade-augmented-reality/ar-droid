@@ -10,7 +10,7 @@ class Daily extends EventCalendar{
 		return "Daily";
 	}
 	
-	public boolean isToday(){
+	def isToday = {
 		Date hoy = new Date()
 		if(hoy.compareTo(this.startDate) >= 0)
 			return true
@@ -18,11 +18,11 @@ class Daily extends EventCalendar{
 			return false
 	}
 	
-	public boolean isWeekle(){
+	def isWeekle = {
 		return this.isToday()
 	}
 	
-	public boolean isMonthly(){
+	def isMonthly = {
 		return this.isToday()
 	}
 }
