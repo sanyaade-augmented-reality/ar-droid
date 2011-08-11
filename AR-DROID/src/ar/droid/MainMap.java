@@ -43,7 +43,6 @@ import ar.droid.model.Entity;
 import ar.droid.model.Event;
 import ar.droid.model.Resource;
 import ar.droid.model.TypeEntity;
-import ar.droid.model.TypeEvent;
 import ar.droid.resources.ImageHelperFactory;
 import ar.droid.view.EntityOverlayItem;
 import ar.droid.view.EventOverlayItem;
@@ -55,7 +54,6 @@ import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.OverlayItem;
 
 public class MainMap extends MapActivity implements IDirectionsListener{
 	static String TAG = MainMap.class.getName();
@@ -247,7 +245,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    case R.id.menu_show:
 		        return true;
 		    case R.id.menu_events:
-		    	showEvents();
+		    	showOptionsEvents();
 		        return true;
 		    case R.id.menu_entities:
 		    	showEntities();
@@ -330,10 +328,27 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         return bitmapDrawableResized; 
         
 	}
+	
+	private void showOptionsEvents() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Filtro Eventos");
+		String options[] = new String[]{"Hoy","7 Días","30 Días"};
+		final String parameter[] = new String[]{"today","month","week"};
+		builder.setItems(options,new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				showEvents(parameter[which]);
+			}
+		});
+		builder.setCancelable(true);
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
 
 	/**muestra en el mapa los eventos de todas las entidades
 	 * */
-	private void showEvents(){
+	private void showEvents(String option){
+		
 		mapView.getOverlays().clear();
 		//ordeno por ubicacion los eventos
 		List<Event> ls =Resource.getInstance().getEvents();
@@ -450,7 +465,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			
 	  }
 	 else if (resultCode == 5){
-		showEvents();
+		showEvents("");
 	 }
 	}
 

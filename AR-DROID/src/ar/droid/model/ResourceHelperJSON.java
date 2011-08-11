@@ -75,8 +75,16 @@ public class ResourceHelperJSON extends ResourceHelper {
 
 	@Override
 	public List<Event> getEvents() {
+		return getEvents("");
+	}
+	
+	@Override
+	public List<Event> getEvents(String option) {
 		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
-		Reader inputStream = loadManySerialized(urlServer + Request.GET_ALL_EVENTS);
+		String url = urlServer + Request.GET_ALL_EVENTS;
+		if (!"".equals(option))
+			url = url + "/" + option;		
+		Reader inputStream = loadManySerialized(url);
 		Type listType = new TypeToken<ArrayList<Event>>() {}.getType();
 		
 		GsonBuilder gsonBuilder = new GsonBuilder();
