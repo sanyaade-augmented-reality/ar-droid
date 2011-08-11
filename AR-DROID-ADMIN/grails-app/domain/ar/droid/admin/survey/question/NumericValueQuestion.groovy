@@ -1,7 +1,5 @@
 package ar.droid.admin.survey.question
 
-import org.springframework.context.i18n.LocaleContextHolder;
-
 class NumericValueQuestion extends Question{
 	Integer limitTo
 	Integer limitFrom
@@ -16,7 +14,7 @@ class NumericValueQuestion extends Question{
     }
 	
 	public String getType(){
-		return "Valor numerico"
+		return "Valor numérico"
 	}
 	
 	public Integer limitTo(){

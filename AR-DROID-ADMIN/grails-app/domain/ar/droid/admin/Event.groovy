@@ -41,5 +41,17 @@ class Event {
 	public String toString() {
 		return title
 	}
+	
+	def isToday = {
+		this.eventCalendar.isToday()
+	}
+	
+	def isWeekle = {
+		this.eventCalendar.isWeekle()
+	}
+	
+	def isMonthly = {
+		this.eventCalendar.isMonthly()
+	}
 }
 

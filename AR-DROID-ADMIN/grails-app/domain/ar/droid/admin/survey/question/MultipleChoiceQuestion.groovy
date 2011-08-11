@@ -1,9 +1,8 @@
 package ar.droid.admin.survey.question
 
-import java.util.List;
+import java.util.List
 
-import org.hibernate.mapping.Set;
-import org.springframework.context.i18n.LocaleContextHolder;
+import org.hibernate.mapping.Set
 
 
 class MultipleChoiceQuestion extends Question{
@@ -20,7 +19,7 @@ class MultipleChoiceQuestion extends Question{
     }
 	
 	public String getType(){
-		return "Multiples opciones"
+		return "Múltiples opciones"
 	}
 	
 	public Integer maxOptions(){
