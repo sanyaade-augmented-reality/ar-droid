@@ -123,7 +123,7 @@
 			<fb:login-button perms="email,publish_stream" onlogin="facebookLogin();" size="large">
 				<g:message code="Autorizar aplicaciones Facebook"/>
 			</fb:login-button>
-			
+			<!-- 
 			<div id="controllerList" class="dialog">	
                 <h2>Administrar:</h2>
                 <ul>
@@ -132,6 +132,7 @@
                     </g:each>
                 </ul>
             </div>
+             -->
         </div>
     </body>
 </html>
