@@ -19,6 +19,9 @@ class Unique extends EventCalendar{
 		//Es para hoy si la fecha de inicio es hoy
 		//o si ya empezo y la fecha de inicio es mayor igual a hoy
 		Date today = new Date()
+		today.clearTime();
+		startDate.clearTime();
+		endDate.clearTime();
 		boolean ok = (today.compareTo(startDate)==0);
 		ok = ok || (startDate.before(today) && !endDate.before(today));
 		return  ok;
