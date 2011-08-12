@@ -109,13 +109,13 @@ class EventService {
 	
 	def filterEvent(event,token){
 		boolean ok = false;
-		if ("today"== token){
+		if ("today".equals(token)){
 			ok = event.eventCalendar.isToday();
 		}
-		else if ("week"== token){
+		else if ("week".equals(token)){
 			ok = event.eventCalendar.isWeekle();
 		}
-		else if ("month"== token){
+		else if ("month".equals(token)){
 			ok = event.eventCalendar.isMonthly();
 		}
 		return ok;
