@@ -94,4 +94,30 @@ class EventService {
 	def saveResponse(survey) {
 		survey.save()
 	}
+	
+	def events (params) {
+		println params.id
+		def listevents =[]
+		for (Event event : Event.list()) {
+			boolean ok = filterEvent(event,params.id)
+			if (ok){
+				listevents.add(event)
+			}
+		}
+		return listevents
+	}
+	
+	def filterEvent(event,token){
+		boolean ok = false;
+		if ("today"== token){
+			ok = event.eventCalendar.isToday();
+		}
+		else if ("week"== token){
+			ok = event.eventCalendar.isWeekle();
+		}
+		else if ("month"== token){
+			ok = event.eventCalendar.isMonthly();
+		}
+		return ok;
+	}
 }
