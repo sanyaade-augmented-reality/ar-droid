@@ -5,10 +5,11 @@ import grails.converters.JSON
 
 class RequestController {
 
+	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	
 	def eventService
 	
 	
-
 	def typeEntities = {
 		render TypeEntity.list() as JSON
 	}
@@ -29,9 +30,11 @@ class RequestController {
 		def entity = Entity.get(params.id);
 		render entity.events as JSON 
 	}
-	
+		
 	def allevents = {
-		render Event.list() as JSON
+		//tomar  parametro y filtro
+		//render Event.list() as JSON
+		render eventService.events(params) as JSON
 	}
 	
 	def imageEntity ={
