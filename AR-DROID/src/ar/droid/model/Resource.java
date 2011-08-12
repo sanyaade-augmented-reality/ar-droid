@@ -1,5 +1,6 @@
 package ar.droid.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Resource {
@@ -10,7 +11,8 @@ public class Resource {
 	}
 	
 	public List<Entity> entities = null;
-	public List<Event> allevents = null;
+	
+	private HashMap<String, List<Event>> allevents = new HashMap<String, List<Event>>(); 
 	
 	public  List<Entity> getEntities(){
 		if (entities ==null)
@@ -25,11 +27,11 @@ public class Resource {
 		return entity.getEvents();
 	}
 	
-	public  List<Event> getEvents(){
-		if (allevents == null){
-			allevents = ResourceHelperFactory.createResourceHelper().getEvents();
+	public  List<Event> getEvents(String param){
+		if (allevents.get(param)== null){
+			allevents.put(param,ResourceHelperFactory.createResourceHelper().getEvents(param));
 		}
-		return allevents;
+		return allevents.get(param);
 	}
 	
 	public Entity getEntity(Long id){

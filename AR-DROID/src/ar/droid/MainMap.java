@@ -336,8 +336,10 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		final String parameter[] = new String[]{"today","month","week"};
 		builder.setItems(options,new DialogInterface.OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				showEvents(parameter[which]);
+			public void onClick(DialogInterface dialog, final int which) {
+				
+        		showEvents(parameter[which]);
+        						
 			}
 		});
 		builder.setCancelable(true);
@@ -348,10 +350,10 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	/**muestra en el mapa los eventos de todas las entidades
 	 * */
 	private void showEvents(String option){
-		
+		//progressDialog = ProgressDialog.show(MainMap.this,"","Cargando eventos....");
 		mapView.getOverlays().clear();
 		//ordeno por ubicacion los eventos
-		List<Event> ls =Resource.getInstance().getEvents();
+		List<Event> ls =Resource.getInstance().getEvents(option);
 		Map<ar.droid.location.GeoPoint,List<Event>> posiciones = new HashMap<ar.droid.location.GeoPoint,List<Event>>();
 		Iterator<Event> itEvent = ls.iterator();
 		while (itEvent.hasNext()) {
@@ -364,35 +366,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			
 			posiciones.put(event.getGeoPoint(),listEvents);
 		}
-		
-		/*Map<TypeEvent, List<Event>> types = new HashMap<TypeEvent, List<Event>>();		
-		while (itEvent.hasNext()) {
-			Event event = (Event) itEvent.next();
-			List<Event> listEvents = new ArrayList<Event>();
-			if (types.get(event.getTypeEvent()) != null){
-				listEvents = types.get(event.getTypeEvent());
-			}
-			listEvents.add(event);
-			types.put(event.getTypeEvent(),listEvents);
-		}*/
-
-		/*Iterator <TypeEvent> itTypeEvent = types.keySet().iterator();
-		while (itTypeEvent.hasNext()) {
-			TypeEvent typeEvent = (TypeEvent) itTypeEvent.next();
-			List<Event> events = types.get(typeEvent);
-			itEvent = events.iterator();
-			
-			Drawable drawable = new SpotBalloon(Color.parseColor("#"+typeEvent.getColor()));
-			MapEventItemizedOverlay mapEventOverlay = new MapEventItemizedOverlay(drawable,mapView,this);
-			
-			while (itEvent.hasNext()) {
-				Event event = (Event) itEvent.next();			
-				EventOverlayItem overlayitemEvent = new EventOverlayItem(event.getGeoPoint(),event.getTitle(),event.getDescription(),event);
-				mapEventOverlay.addOverlay(overlayitemEvent);
-				mapView.getOverlays().add(mapEventOverlay);
-			}	
-		}*/
-		
 		
 		Iterator <ar.droid.location.GeoPoint> itPoint = posiciones.keySet().iterator();
 		while (itPoint.hasNext()) {
@@ -414,6 +387,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			}	
 		}
 		
+		//progressDialog.dismiss();
 		
 	}	
 	
@@ -446,7 +420,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		if (resultCode == RESULT_OK) {
 			 //recupero la entidad
 			 //se cargan las noticias en un thread
-	        Runnable viewOrders = new Runnable(){
+	        	Runnable viewOrders = new Runnable(){
 	            public void run() {
 	            	try{
 	            		Entity entity = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity"));
@@ -465,7 +439,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			
 	  }
 	 else if (resultCode == 5){
-		showEvents("");
+		//showEvents("");
 	 }
 	}
 
