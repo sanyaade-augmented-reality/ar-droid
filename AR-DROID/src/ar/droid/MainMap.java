@@ -213,14 +213,16 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			 MenuInflater inflater = getMenuInflater();
 			 inflater.inflate(R.menu.menu_type_events, menu);
 		}
+		else 
 		if (showEntities){
 			menu.clear();
 			 MenuInflater inflater = getMenuInflater();
 			 inflater.inflate(R.menu.menu_type_entity, menu);
 		}
-		else{ menu.clear();
-		 MenuInflater inflater = getMenuInflater();
-		 inflater.inflate(R.menu.menu_map, menu);
+		else{ 
+			menu.clear();
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.menu_map, menu);
 		}
 		return true;
 	}
@@ -271,6 +273,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    case R.id.menu_show:
 		        return true;
 		    case R.id.menu_events:
+		    	showEvents=true;
 		    	showOptionsEvents();
 		        return true;
 		    case R.id.menu_entities:
@@ -450,7 +453,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	/**muestra en el mapa los eventos de todas las entidades
 	 * */
 	private void showEvents(String option){
-		showEvents = true;
 		List<Event> ls =Resource.getInstance().getEvents(option);
 		allevents =  ls;
 		showEvents(ls);
