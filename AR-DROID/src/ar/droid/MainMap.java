@@ -305,7 +305,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	private void showOptionsTypeEntities() {
 		//showEntities=true;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Capas - Eventos ");
+		builder.setTitle("Capas - Entidades ");
 		List<TypeEntity> typeEntity = Resource.getInstance().getTypeEntities();
 		final ArrayAdapter<TypeEntity> itemlist = new TypeEntityAdapter(this,typeEntity);
 		builder.setSingleChoiceItems(itemlist,-1,new DialogInterface.OnClickListener() {
