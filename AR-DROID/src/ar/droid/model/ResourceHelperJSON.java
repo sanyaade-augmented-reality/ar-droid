@@ -104,4 +104,28 @@ public class ResourceHelperJSON extends ResourceHelper {
 		}	
 		return events;
 	}
+
+	@Override
+	public List<TypeEvent> getTypeEvents() {
+		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		String url = urlServer + Request.GET_ALL_TYPE_EVENTS;
+		Reader inputStream = loadManySerialized(url);
+		Type listType = new TypeToken<ArrayList<TypeEvent>>() {}.getType();
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		Gson gson =	gsonBuilder.create();	
+		List<TypeEvent> events  = gson.fromJson(inputStream,listType);
+		return events;
+	}
+
+	@Override
+	public List<TypeEntity> getTypeEntities() {
+		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		String url = urlServer + Request.GET_ALL_TYPE_ENTITIES;
+		Reader inputStream = loadManySerialized(url);
+		Type listType = new TypeToken<ArrayList<TypeEntity>>() {}.getType();
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		Gson gson =	gsonBuilder.create();	
+		List<TypeEntity> typeEntities  = gson.fromJson(inputStream,listType);
+		return typeEntities;
+	}
 }

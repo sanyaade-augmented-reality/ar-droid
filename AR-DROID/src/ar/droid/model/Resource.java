@@ -12,8 +12,27 @@ public class Resource {
 	
 	public List<Entity> entities = null;
 	
+	public List<TypeEvent> typeEvents = null;
+	
+	public List<TypeEntity> typeEntities = null;
+	
 	private HashMap<String, List<Event>> allevents = new HashMap<String, List<Event>>(); 
 	
+	
+	
+	public  List<TypeEvent> getTypeEvents(){
+		if (typeEvents ==null)
+			typeEvents = 	ResourceHelperFactory.createResourceHelper().getTypeEvents();
+		return typeEvents;
+		
+	}
+	
+	public  List<TypeEntity> getTypeEntities(){
+		if (typeEntities ==null)
+			typeEntities = 	ResourceHelperFactory.createResourceHelper().getTypeEntities();
+		return typeEntities;
+		
+	}
 	public  List<Entity> getEntities(){
 		if (entities ==null)
 			entities = 	 ResourceHelperFactory.createResourceHelper().getEntities();

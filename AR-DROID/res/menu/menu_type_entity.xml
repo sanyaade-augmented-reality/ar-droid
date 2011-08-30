@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_show_type_entities"
+          android:icon="@drawable/icon_mostrar"
+          android:title="Tipos de Entidades" />
+   <item android:id="@+id/menu_goto2"
+          android:icon="@drawable/icon_cerrar"
+          android:title="Volver" />   
+</menu>

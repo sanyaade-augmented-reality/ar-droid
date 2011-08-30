@@ -30,7 +30,7 @@ public class SpotBalloon extends Drawable {
     @Override
     public void draw(Canvas canvas) {          
          canvas.setViewport(WIDTH, HEIGHT);
-         canvas.drawCircle(0, 0, 11, blackTextPaint);
+        canvas.drawCircle(0, 0, 11, blackTextPaint);
          canvas.drawCircle(0, 0, 10, spotBalloonPaint);
          
     }

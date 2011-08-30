@@ -11,7 +11,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -27,8 +26,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import ar.droid.admin.reader.view.TypeEntityAdapter;
+import ar.droid.admin.reader.view.TypeEventsAdapter;
 import ar.droid.ar.common.ARData;
 import ar.droid.config.ARDROIDProperties;
 import ar.droid.driving.DrivingDirectionsFactory;
@@ -43,6 +45,7 @@ import ar.droid.model.Entity;
 import ar.droid.model.Event;
 import ar.droid.model.Resource;
 import ar.droid.model.TypeEntity;
+import ar.droid.model.TypeEvent;
 import ar.droid.resources.ImageHelperFactory;
 import ar.droid.view.EntityOverlayItem;
 import ar.droid.view.EventOverlayItem;
@@ -64,10 +67,14 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	
 	private MapView mapView;
     private MyLocationOverlay myLocationOverlay;
-	private Resources resources;
+	//private Resources resources;
 	private LocationManager locationManager;
+	private boolean showEvents=false;
+	private boolean showEntities=false;
 	
 	private ProgressDialog progressDialog = null;
+	
+	private List<Event> allevents = new ArrayList<Event>();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,11 +95,11 @@ public class MainMap extends MapActivity implements IDirectionsListener{
      
 
         
-        ARDROIDProperties.createProperties(getApplicationContext());
+      ///  ARDROIDProperties.createProperties(getApplicationContext());
         
         // crear mapa
         mapView = (MapView) findViewById(R.id.mapview);
-        resources = getResources();
+       // resources = getResources();
         mapView.displayZoomControls(true);
         mapView.setBuiltInZoomControls(true);
     	mapView.getController().setZoom(17);
@@ -199,6 +206,25 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	    inflater.inflate(R.menu.menu_map, menu);
 	    return true;
 	}
+	@Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+		if (showEvents){
+			 menu.clear();
+			 MenuInflater inflater = getMenuInflater();
+			 inflater.inflate(R.menu.menu_type_events, menu);
+		}
+		if (showEntities){
+			menu.clear();
+			 MenuInflater inflater = getMenuInflater();
+			 inflater.inflate(R.menu.menu_type_entity, menu);
+		}
+		else{ menu.clear();
+		 MenuInflater inflater = getMenuInflater();
+		 inflater.inflate(R.menu.menu_map, menu);
+		}
+		return true;
+	}
+
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -248,8 +274,24 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    	showOptionsEvents();
 		        return true;
 		    case R.id.menu_entities:
+		    	showEntities=true;
 		    	showEntities();
 		        return true;
+		    case R.id.menu_show_type_events:
+		    	showOptionsTypeEvents();
+		    	return true;
+		    case R.id.menu_goto1:
+		    	showEvents=false;
+		    	showEntities();
+		    	return true;
+		    case R.id.menu_show_type_entities:
+		    	showOptionsTypeEntities();
+		    	return true;
+		    case R.id.menu_goto2:
+		    	showEntities=false;
+		    	showEntities();
+		    	return true;
+		  
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
@@ -257,18 +299,76 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	
 
 		
+	private void showOptionsTypeEntities() {
+		//showEntities=true;
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Capas - Eventos ");
+		List<TypeEntity> typeEntity = Resource.getInstance().getTypeEntities();
+		final ArrayAdapter<TypeEntity> itemlist = new TypeEntityAdapter(this,typeEntity);
+		builder.setSingleChoiceItems(itemlist,-1,new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, final int which) {
+				TypeEntity typeEntity = itemlist.getItem(which);
+				dialog.dismiss();
+				List<Entity> entityFilter = new ArrayList<Entity>();
+				for (Entity entity: Resource.getInstance().getEntities()) {
+					if (entity.getTypeEntity().equals(typeEntity)){
+						entityFilter.add(entity);
+					}
+				}
+				showEntities(entityFilter);
+			}
+		});
+		//builder.setCancelable(true);
+		AlertDialog alert = builder.create();
+		alert.getListView().setBackgroundColor(Color.WHITE);
+		alert.show();
+		
+		
+	}
+
+	private void showOptionsTypeEvents() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Capas - Eventos ");
+		List<TypeEvent> typeEvents = Resource.getInstance().getTypeEvents();
+		final ArrayAdapter<TypeEvent> itemlist = new TypeEventsAdapter(this,typeEvents);
+		builder.setSingleChoiceItems(itemlist,-1,new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, final int which) {
+				TypeEvent typeEvent = itemlist.getItem(which);
+				dialog.dismiss();	
+				List<Event> eventsFilter = new ArrayList<Event>();
+				for (Event event: allevents) {
+					if (event.getTypeEvent().equals(typeEvent)){
+						eventsFilter.add(event);
+					}
+				}
+				showEvents(eventsFilter);
+			}
+		});
+		//builder.setCancelable(true);
+		AlertDialog alert = builder.create();
+		alert.getListView().setBackgroundColor(Color.WHITE);
+		alert.show();
+		
+	}
+
 	/**muestra en el mapa todo los eventos registrado en el sistema
 	 * */
 	private void showEntities(){
-		
+		//Se recupera las entidades a mostrar en el mapa
+		List<Entity> entities =Resource.getInstance().getEntities();
+		showEntities(entities);
+	}
+	
+	private void showEntities(final List<Entity> entities){
 		 Runnable viewOrders = new Runnable(){
 	            public void run() {
 	            	mapView.getOverlays().clear();
-	            	//Se recupera las entidades a mostrar en el mapa
-	        		List<Entity> xLs =Resource.getInstance().getEntities();
+	            	
 	        		
 	        		//se agrupan entidades por tipo de entidad
-	        		Iterator<Entity> itEnt = xLs.iterator();
+	        		Iterator<Entity> itEnt = entities.iterator();
 	        		Map<TypeEntity, List<Entity>> types = new HashMap<TypeEntity, List<Entity>>();		
 	        		while (itEnt.hasNext()) {
 	        			Entity entity = (Entity) itEnt.next();
@@ -309,7 +409,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	        };
 	        Thread thread =  new Thread(null, viewOrders,"agentcargaentidades" );
 	        thread.start();
-		
 	}
 	
 	/**
@@ -334,6 +433,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		builder.setTitle("Filtro Eventos");
 		String options[] = new String[]{"Hoy","7 Días","30 Días"};
 		final String parameter[] = new String[]{"today","month","week"};
+		
 		builder.setItems(options,new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, final int which) {
@@ -350,12 +450,16 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	/**muestra en el mapa los eventos de todas las entidades
 	 * */
 	private void showEvents(String option){
-		//progressDialog = ProgressDialog.show(MainMap.this,"","Cargando eventos....");
-		mapView.getOverlays().clear();
-		//ordeno por ubicacion los eventos
+		showEvents = true;
 		List<Event> ls =Resource.getInstance().getEvents(option);
+		allevents =  ls;
+		showEvents(ls);
+	}	
+	
+	private void showEvents(List<Event> eventsToShow){
+		mapView.getOverlays().clear();
 		Map<ar.droid.location.GeoPoint,List<Event>> posiciones = new HashMap<ar.droid.location.GeoPoint,List<Event>>();
-		Iterator<Event> itEvent = ls.iterator();
+		Iterator<Event> itEvent = eventsToShow.iterator();
 		while (itEvent.hasNext()) {
 			Event event = (Event) itEvent.next();
 			List<Event> listEvents = new ArrayList<Event>();
@@ -386,10 +490,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 				mapView.getOverlays().add(mapEventOverlay);
 			}	
 		}
-		
-		//progressDialog.dismiss();
-		
-	}	
+		mapView.postInvalidate();
+	}
 	
 	private void showMsgCameraError() {
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -438,9 +540,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	        progressDialog = ProgressDialog.show(this,"","Cargando recorrido....");
 			
 	  }
-	 else if (resultCode == 5){
-		//showEvents("");
-	 }
+	 	
+				Log.i("onActivityResult ", ""+resultCode);
 	}
 
 	@Override
