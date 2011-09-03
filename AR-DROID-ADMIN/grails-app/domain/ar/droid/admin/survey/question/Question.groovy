@@ -45,6 +45,10 @@ class Question {
 	}
 	
 
+	def getSummary (responses){
+		
+	}
+	
 	
 	
 	

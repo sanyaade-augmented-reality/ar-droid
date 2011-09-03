@@ -79,6 +79,14 @@ class RequestController {
 		
 	}
 	
+	
+	def summaryFeedbak = {
+		def event = Event.get(params.id);
+		def result = event.surveyTemplate.first().getSummary(event.responses)
+		render result as JSON;	
+	}
+	
+	
 	def clientVisit = {
 		def json = request.JSON
 		def eventInstance = Event.get(json.event.id)
