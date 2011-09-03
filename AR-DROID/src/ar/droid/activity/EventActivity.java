@@ -7,15 +7,21 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
+import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import ar.droid.R;
@@ -26,6 +32,7 @@ import ar.droid.admin.survey.question.NumericValueQuestion;
 import ar.droid.admin.survey.question.TextValueQuestion;
 import ar.droid.admin.survey.response.MultipleChoiceResponse;
 import ar.droid.admin.survey.response.NumericValueResponse;
+import ar.droid.admin.survey.response.Summary;
 import ar.droid.admin.survey.response.SurveyResponse;
 import ar.droid.admin.survey.response.TextValueResponse;
 import ar.droid.config.ARDROIDProperties;
@@ -49,13 +56,32 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 			entity = Resource.getInstance().getEntity(getIntent().getExtras().getLong("idEntity"));
 			event = entity.getEvent(getIntent().getExtras().getLong("idEvent"));
 			
+			//recuperar comentarios eventos
+			Summary summary = Resource.getInstance().getSummary(event);
 			
-	        TextView title = (TextView) this.findViewById(R.id.title);
+			TextView title = (TextView) this.findViewById(R.id.title);
 	        title.setText(event.getTitle());
 	        
 	        TextView subtitle = (TextView) this.findViewById(R.id.sutbtitle);
+	        subtitle.setTextColor(Color.parseColor("#"+event.getTypeEvent().getColor()));
 	        subtitle.setText(event.getTypeEvent().getDescription());
 	       
+	        TextView rank = (TextView) this.findViewById(R.id.rank);
+	        rank.setText(summary.getDescription());
+	        RatingBar ratingbar = (RatingBar)this.findViewById(R.id.ratingBar);
+	        if (summary.getRating() == -1){
+	        	ratingbar.setVisibility(View.INVISIBLE);
+	        }
+	        else{
+	            ratingbar.setRating(summary.getRating());
+		    }
+	        
+	        ListView comments = (ListView) this.findViewById(R.id.comments);
+	       // comments.setMinimumHeight(40 * summary.getComments().size());
+	        if (!summary.getComments().isEmpty()){
+	        	 comments.getLayoutParams().height =comments.getLayoutParams().height + (50*summary.getComments().size());
+	        	comments.setAdapter(new ArrayAdapter<String>(this,R.layout.row_list_comment ,R.id.comment,summary.getComments()));
+	        }
 	        
 	       //se recupera el icono a mostrar para el tipo de entidad
 			Drawable imageEvent =ImageHelperFactory.createImageHelper().getImageEvent(event);

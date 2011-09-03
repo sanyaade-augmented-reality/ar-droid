@@ -11,16 +11,26 @@
 			android:gravity="center" android:textColor="#ff000000">
 		</TextView>
 		<TextView android:id="@+id/sutbtitle" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:layout_marginTop="4px"
+			android:layout_height="wrap_content" android:layout_marginTop="3px"
 			android:text="TextView" android:gravity="center" android:ellipsize="marquee"
+			android:textSize="16sp" android:textStyle="bold"
 			android:textColor="#ff999999">
+		</TextView>
+		<RatingBar android:id="@+id/ratingBar" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:numStars="5" 
+		  style="?android:attr/ratingBarStyleSmall">
+		</RatingBar>
+			<TextView android:id="@+id/rank" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textSize="16sp"
+			android:text="TextView" android:gravity="right" android:ellipsize="marquee" android:textColor="#ff000000"
+			 >
 		</TextView>
 		<View android:id="@+id/widget1" android:background="#fff9f9f9"
 			android:layout_width="wrap_content" android:layout_height="1dip" />
 
 		<ImageView android:id="@+id/imageEntity"
 			android:layout_width="fill_parent" android:layout_height="200px"
-			android:layout_marginTop="2px" android:layout_marginBottom="2px"
+			android:layout_marginTop="5px" android:layout_marginBottom="2px"
 			android:layout_marginLeft="1px" android:layout_marginRight="1px">
 		</ImageView>
 		<View android:id="@+id/widget1" android:background="#fff9f9f9"
@@ -70,6 +80,17 @@
 				></Button>	
 		</LinearLayout>
 		
+		<ListView
+			android:id="@+id/comments"
+    		android:layout_width="wrap_content"
+    		android:layout_height="50px"
+    		android:background="#ffe3e3e4"
+			android:cacheColorHint="#00000000"
+    		android:divider="#fff2f2f2"
+    		android:scrollbars="vertical"
+            android:dividerHeight="5px">    
+    	</ListView>
+	
 
 	</LinearLayout>
 

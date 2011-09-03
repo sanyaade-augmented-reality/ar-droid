@@ -3,6 +3,8 @@ package ar.droid.model;
 import java.util.HashMap;
 import java.util.List;
 
+import ar.droid.admin.survey.response.Summary;
+
 public class Resource {
 	
 	private static Resource resource;
@@ -75,4 +77,12 @@ public class Resource {
 		}
 		return resource;
 	}
+	
+	public Summary getSummary(Event event){
+		Summary ss =ResourceHelperFactory.createResourceHelper().getSummary(event); 
+		return ss;
+	}
+	
+	
+	
 }

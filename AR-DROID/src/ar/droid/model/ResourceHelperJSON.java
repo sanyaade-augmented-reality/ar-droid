@@ -10,6 +10,7 @@ import ar.droid.admin.calendar.EventCalendar;
 import ar.droid.admin.reader.ReaderNews;
 import ar.droid.admin.survey.SurveyTemplate;
 import ar.droid.admin.survey.response.Response;
+import ar.droid.admin.survey.response.Summary;
 import ar.droid.admin.survey.response.SurveyResponse;
 import ar.droid.config.ARDROIDProperties;
 import ar.droid.config.Request;
@@ -127,5 +128,14 @@ public class ResourceHelperJSON extends ResourceHelper {
 		Gson gson =	gsonBuilder.create();	
 		List<TypeEntity> typeEntities  = gson.fromJson(inputStream,listType);
 		return typeEntities;
+	}
+
+	@Override
+	public Summary getSummary(Event event) {
+		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		String url = urlServer + Request.GET_SUMMARY_FEEDBACK + "/"+event.getId();
+		Reader inputStream = loadManySerialized(url);
+		return (new Gson()).fromJson(inputStream, Summary.class);
+			
 	}
 }

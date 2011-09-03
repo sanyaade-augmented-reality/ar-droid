@@ -10,4 +10,6 @@ public class Request {
 	public static String GET_ALL_TYPE_EVENTS = "/request/typeEvents";
 	public static String GET_ALL_TYPE_ENTITIES = "/request/typeEntities";
 	
+	public static String GET_SUMMARY_FEEDBACK = "/request/summaryFeedbak";
+	
 }
