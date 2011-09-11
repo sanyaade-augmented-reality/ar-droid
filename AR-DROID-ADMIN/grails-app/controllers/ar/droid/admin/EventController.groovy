@@ -109,12 +109,28 @@ class EventController {
 	def evento = {
 		def eventInstance = Event.get(params.id)
 		if (!eventInstance) {
-				response.outputStream.write("NO existe el evento!")
+				response.outputStream.write("NO existe el evento que quiere visualizar!")
 		}
 		else {
 			eventInstance.clientVisits = (eventInstance.clientVisits + 1)
 			eventInstance.save()
 			[eventInstance: eventInstance]
+		}
+	}
+	
+	def comentarios 
+		def eventInstance = Event.get(params.id)
+		if (!eventInstance) {
+				response.outputStream.write("NO existe el evento que quiere visualizar!")
+		}
+		else {
+			def commentarios = []
+			for (SurveyResponse sr : eventInstance.responses) {
+				TextValueResponse tvr = sr.first()
+				commentarios.add(tvr)
+			}
+			
+			[eventInstance: eventInstance, comentarios: ]
 		}
 	}
 }

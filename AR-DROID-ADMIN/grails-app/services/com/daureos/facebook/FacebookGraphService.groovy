@@ -1,6 +1,7 @@
 package com.daureos.facebook
 
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.codehaus.groovy.grails.web.json.JSONArray;
 
 import grails.converters.JSON
@@ -169,11 +170,10 @@ class FacebookGraphService {
 						
 			// results are returned, errors are thrown
 			if (error) {
-				exception = new FacebookGraphException(error)
 				if (exception.type == 'OAuthException') {
 					invalidateFacebookData()
 				}
-				throw exception
+				throw new FacebookGraphException(error)
 			}
 		}
 		
