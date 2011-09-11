@@ -11,7 +11,7 @@ public class SpotBalloon extends Drawable {
     private static final Paint blackTextPaint = new Paint();
     private static final int HEIGHT = 20;
     private static final int WIDTH = 100;
-    private String name;
+    //private String name;
     
     public SpotBalloon(int alpha, int r, int g, int b) {
          spotBalloonPaint.setARGB(alpha, r, g, b);
@@ -48,7 +48,7 @@ public class SpotBalloon extends Drawable {
     public void setColorFilter(ColorFilter cf) {
     }
     
-    public void setName(String name){
+    /*public void setName(String name){
          this.name = name;
-    }
+    }*/
 }

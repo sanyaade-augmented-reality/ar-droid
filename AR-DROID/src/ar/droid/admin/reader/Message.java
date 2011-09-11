@@ -1,7 +1,9 @@
 package ar.droid.admin.reader;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import android.util.Log;
@@ -43,8 +45,22 @@ public class Message implements Comparable<Message>{
 
 
 	public String getDate() {
+		GregorianCalendar hoy = new GregorianCalendar();
+		//GregorianCalendar calHasta = new GregorianCalendar();
+		//Calendar hoy = Calendar.getInstance();
+		
+		if (hoy.getTime().compareTo(date)==0)
+			return "Hoy";
+		else{
+			hoy.add(Calendar.DATE, -1);
+			if (hoy.getTime().compareTo(date)==0)
+				return "Ayer";
+		}
+		
 		SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es_ES"));
-		return formateador.format(date);
+		return formateador.format(date);		
+		
+		
 	}
 
 

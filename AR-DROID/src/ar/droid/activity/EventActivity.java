@@ -2,6 +2,7 @@ package ar.droid.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,10 +14,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
-import android.util.AttributeSet;
+import android.text.util.Linkify;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,16 +70,27 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        RatingBar ratingbar = (RatingBar)this.findViewById(R.id.ratingBar);
 	        if (summary.getRating() == -1){
 	        	ratingbar.setVisibility(View.INVISIBLE);
+	        	ratingbar.getLayoutParams().height = 0;
 	        }
 	        else{
 	            ratingbar.setRating(summary.getRating());
 		    }
 	        
 	        ListView comments = (ListView) this.findViewById(R.id.comments);
-	       // comments.setMinimumHeight(40 * summary.getComments().size());
 	        if (!summary.getComments().isEmpty()){
-	        	 comments.getLayoutParams().height =comments.getLayoutParams().height + (50*summary.getComments().size());
+	        	rank.setAutoLinkMask(0);
+	        	//Pattern pattern = Pattern.compile("Ver Todos");
+	        	//rank.setText(summary.getDescription() + "-  Ver Todos" );
+	        	//Linkify.addLinks(rank,pattern, entity.getUrl(),null,null);
+	        	rank.setMovementMethod(LinkMovementMethod.getInstance());
+	        	String text = summary.getDescription()+ "<a href='http://www.google.com'>   Ver Todos</a>";
+	        	rank.setText(Html.fromHtml(text));
+	         	comments.getLayoutParams().height =comments.getLayoutParams().height + (40*summary.getComments().size());
 	        	comments.setAdapter(new ArrayAdapter<String>(this,R.layout.row_list_comment ,R.id.comment,summary.getComments()));
+	        }
+	        else{
+	        	comments.setVisibility(View.INVISIBLE);
+	        	comments.getLayoutParams().height = 0;
 	        }
 	        
 	       //se recupera el icono a mostrar para el tipo de entidad

@@ -105,8 +105,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     	mapView.getController().setZoom(17);
     	
     	
-    	// inicializar mapa
-    	this.initMap();
     	
     	//carga entidades al iniciar el mapa
     	showEntities();       
@@ -365,12 +363,13 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	}
 	
 	private void showEntities(final List<Entity> entities){
-		 Runnable viewOrders = new Runnable(){
+		// inicializar mapa
+		mapView.getOverlays().clear();
+        initMap();
+		
+        Runnable viewOrders = new Runnable(){
 	            public void run() {
-	            	mapView.getOverlays().clear();
-	            	
-	        		
-	        		//se agrupan entidades por tipo de entidad
+	            	//se agrupan entidades por tipo de entidad
 	        		Iterator<Entity> itEnt = entities.iterator();
 	        		Map<TypeEntity, List<Entity>> types = new HashMap<TypeEntity, List<Entity>>();		
 	        		while (itEnt.hasNext()) {
@@ -403,11 +402,10 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	        				
 	        			}
 	        			//se incorpora los overlay al mapa
-	        			
 	        			mapView.getOverlays().add(mapEntityOverlay);
 	        			
 	        		}
-	        		mapView.postInvalidate(); 
+	        		mapView.postInvalidate();
 	            }
 	        };
 	        Thread thread =  new Thread(null, viewOrders,"agentcargaentidades" );
@@ -460,6 +458,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	
 	private void showEvents(List<Event> eventsToShow){
 		mapView.getOverlays().clear();
+		initMap();
 		Map<ar.droid.location.GeoPoint,List<Event>> posiciones = new HashMap<ar.droid.location.GeoPoint,List<Event>>();
 		Iterator<Event> itEvent = eventsToShow.iterator();
 		while (itEvent.hasNext()) {

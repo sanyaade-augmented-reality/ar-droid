@@ -3,6 +3,7 @@ package ar.droid.admin.reader.view;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                }
                 if(bt != null){
                       bt.setText(e.getTypeEvent().getDescription());
+                      bt.setTextColor(Color.parseColor("#" + e.getTypeEvent().getColor()));
                 }
         }
         return v;
