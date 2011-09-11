@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_show_type_events"
-          android:icon="@drawable/icon_mostrar"
+          android:icon="@drawable/icon_layers"
           android:title="Tipos de Eventos" />
    <item android:id="@+id/menu_goto1"
-          android:icon="@drawable/icon_cerrar"
+          android:icon="@drawable/icon_back"
           android:title="Volver" />   
 </menu>

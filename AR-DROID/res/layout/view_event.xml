@@ -67,7 +67,8 @@
 			android:text="TextView" android:textStyle="italic">
 		</TextView>
 		
-	
+		<View android:id="@+id/widget1" android:background="#fff9f9f9"
+			android:layout_width="wrap_content" android:layout_height="2dip" />
 		
 		<LinearLayout android:id="@+id/widget28"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
@@ -79,6 +80,9 @@
 				android:text="Compartir" android:layout_width="wrap_content"
 				></Button>	
 		</LinearLayout>
+		
+		<View android:id="@+id/widget1" android:background="#fff9f9f9"
+			android:layout_width="wrap_content" android:layout_height="2dip" />
 		
 		<ListView
 			android:id="@+id/comments"
