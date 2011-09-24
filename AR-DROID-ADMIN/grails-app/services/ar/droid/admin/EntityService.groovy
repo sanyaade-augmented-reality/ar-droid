@@ -26,7 +26,7 @@ class EntityService {
 		
 		// agrego foto?
 		if(params.get("photo") == null || params.get("photo").size == 0){
-			def filePhoto = new File("images/sin imagen.jpg")
+			def filePhoto = new File("images/sin_imagen.jpg")
 			entityInstance.photo = filePhoto.getBytes()
 		}
 		

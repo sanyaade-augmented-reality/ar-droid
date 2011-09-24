@@ -17,7 +17,7 @@ class EventService {
 		
 		// agrego foto?
 		if(params.get("photo") == null || params.get("photo").size == 0){
-			def filePhoto = new File("web-app/images/sin imagen.jpg")
+			def filePhoto = new File("web-app/images/sin_imagen.jpg")
 			eventInstance.photo = filePhoto.getBytes()
 		}
 		
