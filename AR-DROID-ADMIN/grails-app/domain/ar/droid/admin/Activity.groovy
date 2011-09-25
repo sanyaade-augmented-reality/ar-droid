@@ -17,7 +17,7 @@ class Activity {
 		geoPoint(nullable: true)
 	}
 	
-	/**Esto indicar que el GeoPoint es una composiciÃ³n*/
+	/**Esto indicar que el GeoPoint es una composición*/
 	static embedded = ['geoPoint']
 	
 	@Override
