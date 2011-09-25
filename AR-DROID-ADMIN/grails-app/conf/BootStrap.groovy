@@ -16,7 +16,7 @@ class BootStrap {
 		servletContext.lsReaderNews = [new ReaderNewsNone(), new ReaderNewsRSS(), new ReaderNewsWeb(), new ReaderNewsFacebook(),new ReaderNewsTwitter()]
 		servletContext.lsReaderActivities = [new ReaderActivityNone(), new ReaderActivityFacebook(), new ReaderActivityApi()]
 		servletContext.lsEventCalendars = [new Unique(), new Daily(), new Weekly(), new Monthly()]
-		servletContext.mpDayOfTheWeek = ["0": "Domingo", "1": "Lunes", "2": "Martes", "3": "Míercoles", "4": "Jueves", "5": "Viernes", "6": "Sabado"]
+		servletContext.mpDayOfTheWeek = ["0": "Domingo", "1": "Lunes", "2": "Martes", "3": "Míercoles", "4": "Jueves", "5": "Viernes", "6": "Sábado"]
 		
 		// tendria que crear si no existe el tipo de evento 1-ninguno
 		// template te gusta? si/no
