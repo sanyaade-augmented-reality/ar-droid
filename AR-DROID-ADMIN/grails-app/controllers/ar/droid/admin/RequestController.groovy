@@ -83,7 +83,7 @@ class RequestController {
 	def summaryFeedbak = {
 		def event = Event.get(params.id);
 		def result = ["rating": -1, "description":"(0 votos)", "comments":[]];
-		if(event.surveyTemplate.first() == null)
+		if(event != null && event.surveyTemplate.first() == null)
 			result = event.surveyTemplate.first().getSummary(event.responses)
 		render result as JSON;	
 	}
@@ -98,5 +98,10 @@ class RequestController {
 		}
 	}
 	
+	def searchEvents = {
+		def text = params.text.trim()
+		def results = Event.findAll("from Event as e where (e.title like ? or e.description like ?)", ["%" + text + "%", "%" + text + "%"])
+		render results as JSON;	
+	}
 	
 }
