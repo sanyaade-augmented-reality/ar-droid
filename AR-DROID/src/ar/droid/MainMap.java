@@ -40,6 +40,7 @@ import ar.droid.driving.Route;
 import ar.droid.driving.Step;
 import ar.droid.driving.view.RouteOverlay;
 import ar.droid.location.LocationListenerGPS;
+import ar.droid.location.MyCustomLocationOverlay;
 import ar.droid.location.MyLocationOverlayFirstRun;
 import ar.droid.model.Entity;
 import ar.droid.model.Event;
@@ -134,7 +135,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     
 	private void initMap(){
     	Log.d(TAG, "Inicializando localización");
-        myLocationOverlay = new MyLocationOverlay(this, mapView);
+        myLocationOverlay = new MyCustomLocationOverlay(this, mapView);
         mapView.getOverlays().add(myLocationOverlay);
         myLocationOverlay.enableCompass();
         myLocationOverlay.enableMyLocation();
