@@ -16,9 +16,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.TextView;
 import ar.droid.activity.EntityTabWidget;
 import ar.droid.ar.activity.AugmentedView;
@@ -27,7 +27,7 @@ import ar.droid.ar.camara.CameraSurface;
 import ar.droid.ar.common.ARData;
 import ar.droid.ar.common.DataSource;
 import ar.droid.ar.view.Marker;
-import ar.droid.config.ARDROIDProperties;
+import ar.droid.config.ARDroidPreferences;
 import ar.droid.model.Entity;
 
 public class MainAR extends SensorsActivity implements OnTouchListener {
@@ -39,7 +39,6 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 	private static CameraSurface camScreen = null;
 	private static AugmentedView augmentedView = null;
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,7 +98,7 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 	}
 
 	private static float calcZoomLevel() {
-		int zoomLevel = ARDROIDProperties.getInstance().getIntProperty("ar.droid.ar.zoomlevel");
+		int zoomLevel = ARDroidPreferences.getInt("zoomMapPref", 14);
 		float myout = 5;
 
 		if (zoomLevel <= 26) {
@@ -124,7 +123,7 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 		ARData.setRadius(zoomLevel);
 		ARData.setZoomLevel(String.valueOf(zoomLevel));
 
-		int defZoomLevel = ARDROIDProperties.getInstance().getIntProperty("ar.droid.ar.zoomlevel");
+		int defZoomLevel = ARDroidPreferences.getInt("zoomMapPref", 14);
 		ARData.setZoomProgress(defZoomLevel);
 	};
 

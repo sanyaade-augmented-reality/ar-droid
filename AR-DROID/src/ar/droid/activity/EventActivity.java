@@ -34,7 +34,7 @@ import ar.droid.admin.survey.response.NumericValueResponse;
 import ar.droid.admin.survey.response.Summary;
 import ar.droid.admin.survey.response.SurveyResponse;
 import ar.droid.admin.survey.response.TextValueResponse;
-import ar.droid.config.ARDROIDProperties;
+import ar.droid.config.ARDroidPreferences;
 import ar.droid.model.Entity;
 import ar.droid.model.Event;
 import ar.droid.model.Resource;
@@ -165,13 +165,12 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 		}
 		
 		protected void showDialogCompartir() {
-			ARDROIDProperties properties = ARDROIDProperties.getInstance();
+			String urlServer = ARDroidPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
 			Intent sendIntent = new Intent(Intent.ACTION_SEND);
 			
 		    sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Evento " + this.event.getTitle());
 		    sendIntent.putExtra(Intent.EXTRA_TEXT,"Hola! Voy a asistir al evento " + this.event.getTitle() + 
-		        	". Mas información en " + properties.getProperty("ar.droid.server") + 
-		        	"/event/evento/" + this.event.getId() + ".");
+		        	". Mas información en " + urlServer + "/event/evento/" + this.event.getId() + ".");
 		    sendIntent.setType("text/plain");
 		    startActivity(Intent.createChooser(sendIntent, "Compartir con"));
 		}

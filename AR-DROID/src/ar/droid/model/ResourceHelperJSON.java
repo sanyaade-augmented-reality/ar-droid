@@ -12,7 +12,7 @@ import ar.droid.admin.survey.SurveyTemplate;
 import ar.droid.admin.survey.response.Response;
 import ar.droid.admin.survey.response.Summary;
 import ar.droid.admin.survey.response.SurveyResponse;
-import ar.droid.config.ARDROIDProperties;
+import ar.droid.config.ARDroidPreferences;
 import ar.droid.config.Request;
 import ar.droid.connection.RESTClient;
 import ar.droid.location.GeoPoint;
@@ -28,9 +28,10 @@ import com.google.gson.reflect.TypeToken;
 
 
 public class ResourceHelperJSON extends ResourceHelper {
-
+	private String urlServer = ARDroidPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+	
 	public List<Entity> getEntities(){
-		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		
 		Reader inputStream = loadManySerialized(urlServer + Request.GET_ENTITIES);
 		Type listType = new TypeToken<ArrayList<Entity>>() {}.getType();
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -44,7 +45,6 @@ public class ResourceHelperJSON extends ResourceHelper {
 	
 	@Override
 	public List<Event> getEvents(Entity entity) {
-		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
 		Reader inputStream = loadManySerialized(urlServer + Request.GET_EVENTS + "/"+entity.getId());
 		Type listType = new TypeToken<ArrayList<Event>>() {}.getType();
 		
@@ -65,8 +65,7 @@ public class ResourceHelperJSON extends ResourceHelper {
 		return events;
 	}
 	
-	public void saveResponse(SurveyResponse surveyResponse){
-		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");				
+	public void saveResponse(SurveyResponse surveyResponse){			
 		GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
 		gsonBuilder.registerTypeAdapter(Response.class, new ResponseSerializer());
 		Gson gson =	gsonBuilder.create();
@@ -81,7 +80,6 @@ public class ResourceHelperJSON extends ResourceHelper {
 	
 	@Override
 	public List<Event> getEvents(String option) {
-		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
 		String url = urlServer + Request.GET_ALL_EVENTS;
 		if (!"".equals(option))
 			url = url + "/" + option;		
@@ -108,7 +106,6 @@ public class ResourceHelperJSON extends ResourceHelper {
 
 	@Override
 	public List<TypeEvent> getTypeEvents() {
-		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
 		String url = urlServer + Request.GET_ALL_TYPE_EVENTS;
 		Reader inputStream = loadManySerialized(url);
 		Type listType = new TypeToken<ArrayList<TypeEvent>>() {}.getType();
@@ -120,7 +117,6 @@ public class ResourceHelperJSON extends ResourceHelper {
 
 	@Override
 	public List<TypeEntity> getTypeEntities() {
-		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
 		String url = urlServer + Request.GET_ALL_TYPE_ENTITIES;
 		Reader inputStream = loadManySerialized(url);
 		Type listType = new TypeToken<ArrayList<TypeEntity>>() {}.getType();
@@ -132,7 +128,6 @@ public class ResourceHelperJSON extends ResourceHelper {
 
 	@Override
 	public Summary getSummary(Event event) {
-		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
 		String url = urlServer + Request.GET_SUMMARY_FEEDBACK + "/"+event.getId();
 		Reader inputStream = loadManySerialized(url);
 		return (new Gson()).fromJson(inputStream, Summary.class);

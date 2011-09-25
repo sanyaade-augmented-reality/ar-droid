@@ -32,7 +32,7 @@ import android.widget.Toast;
 import ar.droid.admin.reader.view.TypeEntityAdapter;
 import ar.droid.admin.reader.view.TypeEventsAdapter;
 import ar.droid.ar.common.ARData;
-import ar.droid.config.ARDROIDProperties;
+import ar.droid.config.ARDroidPreferences;
 import ar.droid.driving.DrivingDirectionsFactory;
 import ar.droid.driving.IDirectionsListener;
 import ar.droid.driving.Leg;
@@ -118,8 +118,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         
         Location location;
      	// crear lisener para el GPS
-    	int minTime = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mintime");
-        int minDistance = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mindistance");
+    	int minTime = new Integer(ARDroidPreferences.getString("gpsTimePref", "5000"));
+        int minDistance = new Integer(ARDroidPreferences.getString("gpsDistPref", "5"));
         
     	// salir si ya esta creada la instancia
     	if(savedInstanceState != null){
@@ -137,8 +137,9 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     	Log.d(TAG, "Inicializando localización");
         myLocationOverlay = new MyCustomLocationOverlay(this, mapView);
         mapView.getOverlays().add(myLocationOverlay);
-        myLocationOverlay.enableCompass();
         myLocationOverlay.enableMyLocation();
+        if(ARDroidPreferences.getBool("oriMapPref", true))
+        	myLocationOverlay.enableCompass();
         myLocationOverlay.runOnFirstFix(new MyLocationOverlayFirstRun(mapView, myLocationOverlay));
     } 
 
@@ -255,7 +256,9 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    		Log.d(TAG, "Error inicializando Camara", e);
 				}
 		        return true;
-		    case R.id.menu_find:
+		    case R.id.menu_config:
+		    	Intent myIntent = new Intent(MainMap.this, Config.class);
+	    		startActivity(myIntent);
 		        return true;
 		    case R.id.menu_position:
 		    	// el GPS esta habilitado?
@@ -359,7 +362,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	 * */
 	private void showEntities(){
 		//Se recupera las entidades a mostrar en el mapa
-		List<Entity> entities =Resource.getInstance().getEntities();
+		List<Entity> entities = Resource.getInstance().getEntities();
 		showEntities(entities);
 	}
 	
@@ -391,7 +394,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	        			
 	        			//se recupera el icono a mostrar para el tipo de entidad
 	        			Drawable iconTypeEntity = ImageHelperFactory.createImageHelper().getIconTypeEntity(typeEntity);
-	        			iconTypeEntity = scaleImage(iconTypeEntity, 2);
+	        			iconTypeEntity = scaleImage(iconTypeEntity);
 	        			iconTypeEntity.setBounds(0, 0, iconTypeEntity.getIntrinsicWidth(), iconTypeEntity.getIntrinsicHeight());
 	        		
 	        			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
@@ -419,7 +422,9 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	 * @param scale escala (1 = 100%)
 	 * @return
 	 */
-	private Drawable scaleImage(Drawable drawable, float scale) {
+	private Drawable scaleImage(Drawable drawable) {
+		float scale = ARDroidPreferences.getInt("iconSizePref", 2);
+		
 		BitmapDrawable bdImage = (BitmapDrawable) drawable;
 		Bitmap bitmapOrig = bdImage.getBitmap();
         Matrix matrix = new Matrix();

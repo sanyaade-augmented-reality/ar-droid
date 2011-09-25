@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.graphics.drawable.Drawable;
-import ar.droid.config.ARDROIDProperties;
+import ar.droid.config.ARDroidPreferences;
 import ar.droid.connection.RESTClient;
 
 
@@ -20,7 +20,7 @@ public abstract class ImageHelper implements IImageHelper {
 		if(_IMAGES.containsKey(url))
 			return _IMAGES.get(url);
 					
-		String urlServer = ARDROIDProperties.getInstance().getProperty("ar.droid.server");
+		String urlServer = ARDroidPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
 		InputStream instream = RESTClient.doGet(urlServer+url);
 		if (instream != null){
 			Drawable drawable = Drawable.createFromStream(instream, "offers task");

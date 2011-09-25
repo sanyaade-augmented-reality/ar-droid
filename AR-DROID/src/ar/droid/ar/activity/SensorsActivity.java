@@ -19,7 +19,7 @@ import android.widget.TextView;
 import ar.droid.MainAR;
 import ar.droid.ar.common.ARData;
 import ar.droid.ar.common.Matrix;
-import ar.droid.config.ARDROIDProperties;
+import ar.droid.config.ARDroidPreferences;
 import ar.droid.location.LocationListenerGPSAR;
 
 public abstract class SensorsActivity extends Activity implements SensorEventListener {
@@ -101,9 +101,8 @@ public abstract class SensorsActivity extends Activity implements SensorEventLis
 
 			locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-			int minTime = ARDROIDProperties.getInstance().getIntProperty("ar.droid.gps.mintime");
-			int minDistance = ARDROIDProperties.getInstance().getIntProperty(
-					"ar.droid.gps.mindistance");
+	    	int minTime = ARDroidPreferences.getInt("gpsTimePref", 5000);
+	        int minDistance = ARDroidPreferences.getInt("gpsDistPref", 5);
 
 			if (locationListener == null) {
 				Location location = locationMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
