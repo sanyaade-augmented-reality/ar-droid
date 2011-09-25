@@ -105,7 +105,7 @@ function tableToDirection(pTable,index){
 	nodes.each(function(row){
 		var tds = $A(row.getElementsByTagName('TD'));
 		if (tds.length>0){
-			var latlngStr = tds[3].innerHTML.split("@",2);
+			var latlngStr = tds[index].innerHTML.split("@",2);
 			var lat = parseFloat(latlngStr[0]);
 			var lng = parseFloat(latlngStr[1]);
 			var latlng = new google.maps.LatLng(lat,lng);
@@ -115,7 +115,7 @@ function tableToDirection(pTable,index){
 				if (status == google.maps.GeocoderStatus.OK) {
 						if (results[1]) {
   		 				var xTitle = results[0].formatted_address;
-  						tds[3].innerHTML  = xTitle;
+  						tds[index].innerHTML  = xTitle;
    				 	}        
 				} 
 				});
