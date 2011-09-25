@@ -1,6 +1,6 @@
 package ar.droid.admin.survey.response
 
-import ar.droid.admin.survey.question.TextValueQuestion;
+import ar.droid.admin.survey.question.TextValueQuestion
 
 class TextValueResponse extends Response {
 	String comment	
