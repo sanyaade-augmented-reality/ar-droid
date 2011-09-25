@@ -17,7 +17,7 @@ class NumericValueQuestion extends Question{
     }
 	
 	public String getType(){
-		return "Valor numÃ©rico"
+		return "Valor numérico"
 	}
 	
 	public Integer limitTo(){
