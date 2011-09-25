@@ -82,7 +82,9 @@ class RequestController {
 	
 	def summaryFeedbak = {
 		def event = Event.get(params.id);
-		def result = event.surveyTemplate.first().getSummary(event.responses)
+		def result = ["rating": -1, "description":"(0 votos)", "comments":[]];
+		if(event.surveyTemplate.first() == null)
+			result = event.surveyTemplate.first().getSummary(event.responses)
 		render result as JSON;	
 	}
 	
