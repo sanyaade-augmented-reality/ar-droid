@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Configuración de AR-DROID">
+		<EditTextPreference android:summary="Ingrese la dirección del servidor a conectar"
+			android:defaultValue="http://www.gabrielnegri.com.ar:8080/ardroid"
+			android:title="URL Servidor" android:key="urlServerPref" android:persistent="true" />
+
+		<EditTextPreference android:inputType="number"
+			android:summary="Ingrese la Zoom inicial del mapa"
+			android:defaultValue="14" android:title="Zoom Inicial" android:key="zoomMapPref" android:persistent="true" />
+
+		<CheckBoxPreference android:summary="Mostrar icono de orientación en vista Mapa"
+			android:defaultValue="true" android:title="Mostrar orientación"
+			android:key="oriMapPref" android:persistent="true" />
+
+		<ListPreference android:title="Tamaño de los iconos"
+			android:summary="Seleccione el tamaño de lo iconos en mapa y RA"
+			android:key="iconSizePref" android:defaultValue="2" android:entries="@array/iconSize"
+			android:entryValues="@array/iconSize_values" android:persistent="true" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="Ubicación y GPS">
+		<EditTextPreference android:inputType="number"
+			android:summary="Ingrese la cantidad de metros mínimo para actualizar"
+			android:defaultValue="5" android:title="Actualización - Metros"
+			android:key="gpsDistPref" android:persistent="true" />
+
+		<EditTextPreference android:inputType="number"
+			android:summary="Ingrese la cantidad de milisegundos mínimo para actualizar"
+			android:defaultValue="5000" android:title="Actualización - Tiempo"
+			android:key="gpsTimePref" android:persistent="true" />
+	</PreferenceCategory>
+</PreferenceScreen>

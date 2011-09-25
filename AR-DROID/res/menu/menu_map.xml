@@ -6,9 +6,9 @@
     <item android:id="@+id/menu_position"
           android:icon="@drawable/icon_posicion"
           android:title="Mi posición" />
-    <item android:id="@+id/menu_find"
-          android:icon="@drawable/icon_buscar"
-          android:title="Buscar" />
+    <item android:id="@+id/menu_config"
+          android:icon="@drawable/icon_config"
+          android:title="Configuración" />
     <item android:id="@+id/menu_events"
           android:icon="@drawable/icon_mostrar"
           android:title="Eventos" />
