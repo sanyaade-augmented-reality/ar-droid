@@ -38,7 +38,7 @@ function addPlaceMarker(location, title, reset) {
 		position: location, 
 		map: mapInstance,
 		title: title,
-		icon: '/AR-DROID-ADMIN/images/marker/arrow.png'
+		icon: '/ardroid/images/marker/arrow.png'
 	});
 	
 	if(reset){
