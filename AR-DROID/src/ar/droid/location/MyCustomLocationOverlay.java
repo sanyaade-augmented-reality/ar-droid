@@ -15,7 +15,6 @@ import com.google.android.maps.MyLocationOverlay;
 
 public class MyCustomLocationOverlay extends MyLocationOverlay {
 	private Context mContext;
-	private float mOrientation;
 
 	public MyCustomLocationOverlay(Context context, MapView mapView) {
 		super(context, mapView);
@@ -32,7 +31,11 @@ public class MyCustomLocationOverlay extends MyLocationOverlay {
 		Bitmap arrowBitmap = BitmapFactory.decodeResource(
 				mContext.getResources(), R.drawable.arrow);
 		Matrix matrix = new Matrix();
-		matrix.postRotate(this.getOrientation());
+		
+		// dirección donde se dirije
+		if(lastFix.getBearing() > 0)
+			matrix.postRotate(lastFix.getBearing());
+		
 		Bitmap rotatedBmp = Bitmap.createBitmap(arrowBitmap, 0, 0,
 				arrowBitmap.getWidth(), arrowBitmap.getHeight(), matrix, true);
 		// add the rotated marker to the canvas
@@ -45,14 +48,5 @@ public class MyCustomLocationOverlay extends MyLocationOverlay {
 	@Override
 	public synchronized void onLocationChanged(Location location) {
 		super.onLocationChanged(location);
-	}
-
-	public void setOrientation(float newOrientation) {
-		mOrientation = newOrientation;
-	}
-
-	@Override
-	public float getOrientation() {
-		return ((super.getOrientation() - 360) * -1);
 	}
 }
