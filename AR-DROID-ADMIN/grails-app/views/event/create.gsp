@@ -68,7 +68,7 @@
                 <g:renderErrors bean="${eventInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:uploadForm action="save">
                 <div class="dialog">
                     <table>
                         <tbody>
@@ -122,7 +122,7 @@
                                 <td valign="top" class="name">
                                     <label for="photo">Foto</label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: entityInstance, field: 'photo', 'errors')}">
+                                <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'photo', 'errors')}">
                                     <input type="file" id="photo" name="photo" />
                                 </td>
                             </tr>
@@ -164,7 +164,7 @@
                 <div class="buttons">
                     <span class="button"><g:submitButton name="create" class="save" value="Crear" /></span>
                 </div>
-            </g:form>
+            </g:uploadForm>
         </div>
     </body>
 </html>

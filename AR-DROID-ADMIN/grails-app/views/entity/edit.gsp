@@ -69,7 +69,7 @@
                 <g:renderErrors bean="${entityInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:uploadForm method="post">
+            <g:uploadForm action="save">
                 <g:hiddenField name="id" value="${entityInstance?.id}" />
                 <g:hiddenField name="version" value="${entityInstance?.version}" />
                 <div class="dialog">

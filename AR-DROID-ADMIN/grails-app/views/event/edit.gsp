@@ -65,7 +65,7 @@
                 <g:renderErrors bean="${eventInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form method="post"  enctype="multipart/form-data">
+            <g:uploadForm action="save">
                 <g:hiddenField name="id" value="${eventInstance?.id}" />
                 <g:hiddenField name="version" value="${eventInstance?.version}" />
                 <div class="dialog">
@@ -186,7 +186,7 @@
                     <span class="button"><g:actionSubmit class="add" action="newactivity" value="${message(code: 'default.add.label', args: [message(code: 'activity.label', default: 'Activity')])}" /></span>
                 
                 </div>
-            </g:form>
+            </g:uploadForm>
         </div>
     </body>
 </html>
