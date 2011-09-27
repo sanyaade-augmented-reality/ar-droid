@@ -1,8 +1,10 @@
 package ar.droid.location;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -13,14 +15,13 @@ import ar.droid.MainAR;
 import ar.droid.ar.common.ARData;
 
 public class LocationListenerGPSAR implements LocationListener {
-	static int VIEW_ADDRESS = 100000000;
 	static String TAG = LocationListenerGPSAR.class.getName();
 	protected Location lastKnowLocation;
 	protected MainAR activity;
 	private TextView locationText;
 
-	public LocationListenerGPSAR(MainAR activity, TextView locationText, Location lastKnowLocation) {
-		this.activity = activity;
+	public LocationListenerGPSAR(Activity activity, TextView locationText, Location lastKnowLocation) {
+		this.activity = (MainAR) activity;
 		this.lastKnowLocation = lastKnowLocation;
 		this.locationText = locationText;
 		this.showAddress();
@@ -79,6 +80,10 @@ public class LocationListenerGPSAR implements LocationListener {
 			}
 		}
 
+		//sumar altitud
+		DecimalFormat df = new DecimalFormat("0.#");
+		addressName += "\n" + "Alt. " + df.format(lastKnowLocation.getAltitude()) + " mts.";
+		
 		// armar texto
 		if (locationText != null) {
 			locationText.setText(addressName);
