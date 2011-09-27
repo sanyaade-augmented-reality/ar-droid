@@ -93,19 +93,12 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         // setear layout
         setContentView(R.layout.mainmap);
         
-     
-
-        
-      ///  ARDROIDProperties.createProperties(getApplicationContext());
-        
         // crear mapa
         mapView = (MapView) findViewById(R.id.mapview);
-       // resources = getResources();
+        // resources = getResources();
         mapView.displayZoomControls(true);
         mapView.setBuiltInZoomControls(true);
     	mapView.getController().setZoom(17);
-    	
-    	
     	
     	//carga entidades al iniciar el mapa
     	showEntities();       
@@ -118,8 +111,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         
         Location location;
      	// crear lisener para el GPS
-    	int minTime = new Integer(ARDroidPreferences.getString("gpsTimePref", "5000"));
-        int minDistance = new Integer(ARDroidPreferences.getString("gpsDistPref", "5"));
+    	int minTime = ARDroidPreferences.getInt("gpsTimePref", 5000);
+        int minDistance = ARDroidPreferences.getInt("gpsDistPref", 5);
         
     	// salir si ya esta creada la instancia
     	if(savedInstanceState != null){
@@ -234,8 +227,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	    switch (item.getItemId()) {
 		    case R.id.menu_close:
 		    	Log.d(TAG, "Salir");
-		    	int pid = android.os.Process.myPid(); 
-		    	android.os.Process.killProcess(pid); 
+				System.runFinalizersOnExit(true);
+				System.exit(0);
 		        return true;
 		    case R.id.menu_ar:
 		    	// puede iniciar RA?
@@ -247,9 +240,13 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	    		}
 		    	// abrir realidad aumentada
 		    	try{ 		
+		    		ProgressDialog dialog = ProgressDialog.show(MainMap.this, "", 
+	                        "Cargando...", true);
+		    		dialog.show();
 		    		ARData.setCurrentLocation(myLocationOverlay.getLastFix());
 		    		Intent myIntent = new Intent(MainMap.this, MainAR.class);
 		    		startActivity(myIntent);
+		    		dialog.dismiss();
 		    	}
 		    	catch (Exception e) {
 		    		this.showMsgCameraError();
@@ -272,8 +269,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    	new MyLocationOverlayFirstRun(mapView, myLocationOverlay).run();
 		        return true;
 		        
-		    case R.id.menu_show:
-		        return true;
 		    case R.id.menu_events:
 		    	showEvents=true;
 		    	showOptionsEvents();
@@ -581,5 +576,24 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	protected void onStop() {
 		super.onResume();
 		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+	}
+	
+	public void onBackPressed() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Salir de AR-Droid?").setCancelable(false)
+				.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						System.runFinalizersOnExit(true);
+						System.exit(0);
+					}
+				})
+				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 }
