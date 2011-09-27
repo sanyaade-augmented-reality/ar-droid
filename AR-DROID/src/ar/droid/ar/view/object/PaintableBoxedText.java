@@ -5,9 +5,15 @@ import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 
+/**
+ * This class extends PaintableObject to draw text with a box surrounding it.
+ * 
+ * @author Justin Wetherell <phishman3579@gmail.com>
+ */
 public class PaintableBoxedText extends PaintableObject {
     private float width=0, height=0;
 	private float areaWidth=0, areaHeight=0;
+	private ArrayList<String> lineList = null;
 	private String[] lines = null;
 	private float[] lineWidths = null;
 	private float lineHeight = 0;
@@ -25,20 +31,34 @@ public class PaintableBoxedText extends PaintableObject {
 	}
 
 	public PaintableBoxedText(String txtInit, float fontSizeInit, float maxWidth, int borderColor, int bgColor, int textColor) {
+		set(txtInit, fontSizeInit, maxWidth, borderColor, bgColor, textColor);
+	}
+	
+	public void set(String txtInit, float fontSizeInit, float maxWidth, int borderColor, int bgColor, int textColor) {
+		if (txtInit==null) return;
+		
 		this.borderColor = borderColor;
 		this.backgroundColor = bgColor;
 		this.textColor = textColor;
 		this.pad = getTextAsc();
 
+		set(txtInit, fontSizeInit, maxWidth);
+	}
+	
+	public void set(String txtInit, float fontSizeInit, float maxWidth) {
+		if (txtInit==null) return;
+
 		try {
 			prepTxt(txtInit, fontSizeInit, maxWidth);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			prepTxt("TEXT PARSE ERROR", 12, 200);
+			prepTxt("TEXT PARSE ERROR", 10, 200);
 		}
 	}
-
+	
 	private void prepTxt(String txtInit, float fontSizeInit, float maxWidth) {
+		if (txtInit==null) return;
+		
 		setFontSize(fontSizeInit);
 
 		txt = txtInit;
@@ -46,7 +66,8 @@ public class PaintableBoxedText extends PaintableObject {
 		areaWidth = maxWidth - pad * 2;
 		lineHeight = getTextAsc() + getTextDesc();
 
-		ArrayList<String> lineList = new ArrayList<String>();
+		if (lineList==null) lineList = new ArrayList<String>();
+		else lineList.clear();
 
 		BreakIterator boundary = BreakIterator.getWordInstance();
 		boundary.setText(txt);
@@ -73,8 +94,8 @@ public class PaintableBoxedText extends PaintableObject {
 		String line = txt.substring(start, prevEnd);
 		lineList.add(line);
 
-		lines = new String[lineList.size()];
-		lineWidths = new float[lineList.size()];
+		if (lines==null || lines.length!=lineList.size()) lines = new String[lineList.size()];
+		if (lineWidths==null || lineWidths.length!=lineList.size()) lineWidths = new float[lineList.size()];
 		lineList.toArray(lines);
 
 		maxLineWidth = 0;
@@ -91,6 +112,8 @@ public class PaintableBoxedText extends PaintableObject {
 	}
 
 	public void paint(Canvas canvas) {
+		if (canvas==null) return;
+		
 	    setFontSize(fontSize);
 
 		setFill(true);

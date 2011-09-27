@@ -2,12 +2,21 @@ package ar.droid.ar.view.object;
 
 import android.graphics.Canvas;
 
+/**
+ * This class extends PaintableObject and adds the ability to rotate and scale.
+ * 
+ * @author Justin Wetherell <phishman3579@gmail.com>
+ */
 public class PaintablePosition extends PaintableObject {
     private float myX=0, myY=0, width=0, height=0;
-    private PaintableObject obj = null;
     private float objX=0, objY=0, objRotation=0, objScale=0;
-
+    private PaintableObject obj = null;
+    
     public PaintablePosition(PaintableObject drawObj, float x, float y, float rotation, float scale) {
+    	set(drawObj, x, y, rotation, scale);
+    }
+
+    public void set(PaintableObject drawObj, float x, float y, float rotation, float scale) {
         obj = drawObj;
         objX = x;
         objY = y;
@@ -29,6 +38,8 @@ public class PaintablePosition extends PaintableObject {
     }
 
     public void paint(Canvas canvas) {
+    	if (canvas==null || obj==null) return;
+    	
         paintObj(canvas, obj, objX, objY, objRotation, objScale);
     }
     
@@ -40,10 +51,12 @@ public class PaintablePosition extends PaintableObject {
         return myY;
     }
 
+    @Override
     public float getWidth() {
         return width;
     }
 
+    @Override
     public float getHeight() {
         return height;
     }
