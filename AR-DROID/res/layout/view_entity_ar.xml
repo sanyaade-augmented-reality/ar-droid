@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:padding="20dp">
+	<LinearLayout android:id="@+id/linearLayout2"
+		android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="10dp">
+		<ImageView 
+			android:id="@+id/image_e_ar" android:layout_width="wrap_content"
+			android:layout_height="fill_parent" android:layout_margin="5dp" />
+		<TextView android:text="TextView" android:id="@+id/text_e_ar"
+			android:layout_height="fill_parent" android:layout_width="wrap_content" android:padding="2dp" />
+	</LinearLayout>
+	<Button android:text="Ir a la entidad" android:layout_height="wrap_content" android:id="@+id/button_e_ar" android:layout_width="wrap_content" android:layout_gravity="right" />
+</LinearLayout>

@@ -2,10 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_mapa"
           android:title="Vista Mapa" android:icon="@drawable/icon_mapa"/>
-    <item android:id="@+id/menu_find"
-          android:title="Buscar" android:icon="@drawable/icon_buscar"/>
-    <item android:id="@+id/menu_show"
-          android:title="Mostrar" android:icon="@drawable/icon_mostrar"/>
-    <item android:id="@+id/menu_close"
-          android:title="Salir" android:icon="@drawable/icon_cerrar"/>
 </menu>

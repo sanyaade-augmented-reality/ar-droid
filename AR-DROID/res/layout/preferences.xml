@@ -30,4 +30,15 @@
 			android:defaultValue="5000" android:title="Actualización - Tiempo"
 			android:key="gpsTimePref" android:persistent="true" />
 	</PreferenceCategory>
+
+	<PreferenceCategory android:title="Realidad Aumentada">
+		<CheckBoxPreference android:summary="Mostrar radar de previsualización en vista RA"
+			android:defaultValue="true" android:title="Mostrar Radar"
+			android:key="raRadarPref" android:persistent="true" />
+
+		<EditTextPreference android:inputType="number"
+			android:summary="Ingrese la distancia en metros de alcance de la vista"
+			android:defaultValue="2000" android:title="Alcance RA"
+			android:key="raDistPref" android:persistent="true" />
+	</PreferenceCategory>
 </PreferenceScreen>
