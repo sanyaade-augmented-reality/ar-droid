@@ -1,12 +1,10 @@
 package ar.droid;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
-import ar.droid.config.ARDroidPreferences;
 
 public class Config extends PreferenceActivity {
 	static String TAG = Config.class.getName();
@@ -31,7 +29,8 @@ public class Config extends PreferenceActivity {
 		super.onBackPressed();
 		
 		Toast.makeText(getBaseContext(),
-				"Preferencias guardadas. Reinicie la aplicación para aplicar los cambios.", Toast.LENGTH_LONG)
+				"Preferencias guardadas." + "\n" + 
+						"Reinicie la aplicación para aplicar los cambios.", Toast.LENGTH_LONG)
 				.show();
 	}
 }

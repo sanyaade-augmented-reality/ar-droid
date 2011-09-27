@@ -21,10 +21,18 @@ public class ARDroidPreferences {
 	}
 
 	public static String getString(String key, String defValue) {
-		return ARDroidPreferences.getPreferences().getString(key, defValue);
+		if(ARDroidPreferences.getPreferences() == null)
+			return defValue;
+		try {
+			return ARDroidPreferences.getPreferences().getString(key, defValue);
+		} catch (Exception e) {
+			return defValue;
+		}
 	}
 
 	public static int getInt(String key, int defValue) {
+		if(ARDroidPreferences.getPreferences() == null)
+			return defValue;
 		try {
 			return new Integer(ARDroidPreferences.getPreferences().getString(
 					key, new Integer(defValue).toString())).intValue();
@@ -34,6 +42,8 @@ public class ARDroidPreferences {
 	}
 
 	public static float getFloat(String key, float defValue) {
+		if(ARDroidPreferences.getPreferences() == null)
+			return defValue;
 		try {
 			return new Float(ARDroidPreferences.getPreferences().getString(key,
 					new Float(defValue).toString())).floatValue();
@@ -43,6 +53,8 @@ public class ARDroidPreferences {
 	}
 
 	public static boolean getBool(String key, boolean defValue) {
+		if(ARDroidPreferences.getPreferences() == null)
+			return defValue;
 		try {
 			return new Boolean(ARDroidPreferences.getPreferences().getString(
 					key, new Boolean(defValue).toString())).booleanValue();
