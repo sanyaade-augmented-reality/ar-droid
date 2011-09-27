@@ -1,59 +1,71 @@
 package ar.droid;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import android.content.Intent;
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.TextView;
-import ar.droid.activity.EntityTabWidget;
 import ar.droid.ar.activity.AugmentedView;
 import ar.droid.ar.activity.SensorsActivity;
 import ar.droid.ar.camara.CameraSurface;
 import ar.droid.ar.common.ARData;
+import ar.droid.ar.common.ARDroidDataSource;
 import ar.droid.ar.common.DataSource;
+import ar.droid.ar.view.IconMarker;
 import ar.droid.ar.view.Marker;
 import ar.droid.config.ARDroidPreferences;
 import ar.droid.model.Entity;
+import ar.droid.resources.ImageHelperFactory;
 
-public class MainAR extends SensorsActivity implements OnTouchListener {
-	static String TAG = MainAR.class.getName();
-	private static final Logger logger = Logger.getLogger(MainAR.class.getSimpleName());
+/**
+ * @author gabriel
+ *
+ */
+public class MainAR extends SensorsActivity {
+	private static final Logger logger = Logger.getLogger(MainAR.class
+			.getSimpleName());
 
-	private static DataSource source = null;
+	private static Collection<DataSource> sources = null;
+	private static Thread thread = null;
 
+	private static WakeLock wakeLock = null;
 	private static CameraSurface camScreen = null;
 	private static AugmentedView augmentedView = null;
+	
+	private static List<Marker> markers = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		camScreen = new CameraSurface(this);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
 		setContentView(camScreen);
-		
-		// crear layout
-		LayoutParams augLayout = new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.WRAP_CONTENT);
-		
+
 		augmentedView = new AugmentedView(this);
+		LayoutParams augLayout = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+
 		addContentView(augmentedView, augLayout);
-		
+
 		// agragar texto de posición
 		locationText = new TextView(this);
 		locationText.setTextColor(Color.RED);
@@ -61,102 +73,105 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 		locationText.setTextSize(15);
 		locationText.setGravity(Gravity.RIGHT);
 		locationText.bringToFront();
-		addContentView(locationText, augLayout);
+		LayoutParams textLayout = new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.FILL_PARENT);
+		addContentView(locationText, textLayout);
 
 		// Setear el alcance de realidad
 		updateDataOnZoom();
-		
-		// crear el source
-		if (source == null) {
-			source = new DataSource();
-		}
-	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		logger.info("onDestroy()");
+		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		wakeLock = pm
+				.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+
+		if (sources == null) {
+			sources = new ArrayList<DataSource>();
+
+			DataSource ardroidDS = new ARDroidDataSource();
+			sources.add(ardroidDS);
+		}
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
 
-		Location lastLocation = ARData.getCurrentLocation();
-		if (lastLocation != null)
-			updateData(lastLocation.getLatitude(), lastLocation.getLongitude(), lastLocation.getAltitude());
+		Location last = ARData.getCurrentLocation();
+		if (last != null)
+			updateData(last.getLatitude(), last.getLongitude(),
+					last.getAltitude());
 	}
-
-	@Override
-	public void onSensorChanged(SensorEvent evt) {
-		super.onSensorChanged(evt);
-
-		if (evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER
-				|| evt.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-			augmentedView.postInvalidate();
-		}
-	}
-
-	private static float calcZoomLevel() {
-		int zoomLevel = ARDroidPreferences.getInt("zoomMapPref", 14);
-		float myout = 5;
-
-		if (zoomLevel <= 26) {
-			myout = zoomLevel / 25f;
-		} else if (25 < zoomLevel && zoomLevel < 50) {
-			myout = (1 + (zoomLevel - 25)) * 0.38f;
-		} else if (25 == zoomLevel) {
-			myout = 1;
-		} else if (50 == zoomLevel) {
-			myout = 10;
-		} else if (50 < zoomLevel && zoomLevel < 75) {
-			myout = (10 + (zoomLevel - 50)) * 0.83f;
-		} else {
-			myout = (30 + (zoomLevel - 75) * 2f);
-		}
-
-		return myout;
-	}
-
-	protected void updateDataOnZoom() {
-		float zoomLevel = calcZoomLevel();
-		ARData.setRadius(zoomLevel);
-		ARData.setZoomLevel(String.valueOf(zoomLevel));
-
-		int defZoomLevel = ARDroidPreferences.getInt("zoomMapPref", 14);
-		ARData.setZoomProgress(defZoomLevel);
-	};
-
-	private static Thread thread = null;
 
 	public void updateData(final double lat, final double lon, final double alt) {
 		if (thread != null && thread.isAlive()) {
-			logger.info("Hay una instancia de actuaización en curso");
+			logger.info("Hay una actualización en progreso");
 			return;
 		}
 
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				download(source, lat, lon, alt);
-				logger.info("Termina actualización");
+				logger.info("actualización - Start");
+				for (DataSource source : sources) {
+					download(source, lat, lon, alt);
+				}
+				logger.info("actualización - Stop");
 			}
 		});
 		thread.start();
 	}
 
-	private static boolean download(DataSource source, double lat, double lon, double alt) {
+	private static boolean download(DataSource source, double lat, double lon,
+			double alt) {
 		if (source == null)
 			return false;
 
-		List<Marker> markers = source.getEntities();
-		if (markers == null)
-			return false;
+		if(markers == null){
+			// obtener entidades
+			List<Entity> entities = source.getEntities(lat, lon, alt);
+			if (entities == null)
+				return false;
 
-		logger.info(source.getClass().getSimpleName() + " size=" + markers.size());
-
-		ARData.addMarkers(markers);
+			// convertir a markers
+			markers = convertToMarkers(entities);
+			ARData.addMarkers(markers);
+		}
 		return true;
+	}
+
+	private static List<Marker> convertToMarkers(List<Entity> entities) {
+		List<Marker> markers = new ArrayList<Marker>();
+		Iterator<Entity> it = entities.iterator();
+		while (it.hasNext()) {
+			Entity entity = (Entity) it.next();
+			Drawable iconTypeEntity = ImageHelperFactory.createImageHelper()
+					.getIconTypeEntity(entity.getTypeEntity());
+			
+			// crear un marker a partir de la entidad
+			Marker marker = new IconMarker(entity, scaleImage(iconTypeEntity));
+			markers.add(marker);
+		}
+		return markers;
+	}
+	
+	/**
+	 * Redimensionar un BitmapDrawable
+	 * @param drawable drawable a escalar
+	 * @param scale escala (1 = 100%)
+	 * @return
+	 */
+	private static Drawable scaleImage(Drawable drawable) {
+		float scale = ARDroidPreferences.getInt("iconSizePref", 2);
+		scale -= 0.5;
+		
+		BitmapDrawable bdImage = (BitmapDrawable) drawable;
+		Bitmap bitmapOrig = bdImage.getBitmap();
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmapOrig, 0, 0, bitmapOrig.getWidth(), bitmapOrig.getHeight(), matrix, true);
+        BitmapDrawable bitmapDrawableResized = new BitmapDrawable(resizedBitmap);
+        return bitmapDrawableResized; 
+        
 	}
 
 	@Override
@@ -175,68 +190,33 @@ public class MainAR extends SensorsActivity implements OnTouchListener {
 			// volver al mapa
 			this.finish();
 			return true;
-		case R.id.menu_find:
-			return true;
-		case R.id.menu_show:
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
-		case R.id.menu_close:
-			this.exit();
-			return true;
 		}
 	}
 
-	private void exit() {
-		Log.d(TAG, "Salir");
-		int pid = android.os.Process.myPid();
-		android.os.Process.killProcess(pid);
+	@Override
+	public void onResume() {
+		super.onResume();
+		wakeLock.acquire();
 	}
 
 	@Override
-	public boolean onTouch(View view, MotionEvent me) {
-		return false;
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent me) {
-		if (me.getAction() != MotionEvent.ACTION_UP)
-			return false;
-		
-		Entity entity = this.getMarkerAt(me.getX(), me.getY());
-		if(entity == null)
-			return false;
-		Intent i = new Intent(this.getApplicationContext(), EntityTabWidget.class);
-		i.putExtra("idEntity", entity.getId());
-		this.startActivity(i);
-		finish();
-		return true;
-	}
-
-	private Entity getMarkerAt(float x, float y) {
-		for (int i = 0 ; i < ARData.getMarkerCount(); i++) {
-			Marker marker = ARData.getMarker(i);
-			if(marker.clickedMe(x, y))
-				return marker.getEntity();
-		}
-		return null;
-	}
-	
-	@Override
-	protected void onPause() {
+	public void onPause() {
 		super.onPause();
-		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+		wakeLock.release();
 	}
-	
+
 	@Override
-	protected void onResume() {
-		super.onResume();
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
+	public void onSensorChanged(SensorEvent evt) {
+		super.onSensorChanged(evt);
+
+		if (evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER
+				|| evt.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+			augmentedView.postInvalidate();
+		}
 	}
-	
-	@Override
-	protected void onStop() {
-		super.onResume();
-		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); 
-	}
+
+	protected void updateDataOnZoom() {
+	};
 }

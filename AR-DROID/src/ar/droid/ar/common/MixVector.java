@@ -1,22 +1,3 @@
-/*
- * Copyright (C) 2010- Peer internet solutions
- * 
- * This file was an original part of mixare.
- * 
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or 
- * (at your option) any later version. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License 
- * for more details. 
- * 
- * You should have received a copy of the GNU General Public License along with 
- * this program. If not, see <http://www.gnu.org/licenses/>
- */
-
 package ar.droid.ar.common;
 
 public class MixVector {
@@ -37,11 +18,27 @@ public class MixVector {
 	}
 
 	public MixVector(float x, float y, float z) {
-		set(x, y, z);
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
+	public void set(MixVector v) {
+		if (v==null) return;
+		
+		set(v.x, v.y, v.z);
+	}
+
+	public void set(float x, float y, float z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
+		if (obj==null) return false;
+
 		MixVector v = (MixVector) obj;
 		return (v.x == x && v.y == y && v.z == z);
 	}
@@ -55,16 +52,6 @@ public class MixVector {
 		return "<" + x + ", " + y + ", " + z + ">";
 	}
 
-	public void set(MixVector v) {
-		set(v.x, v.y, v.z);
-	}
-
-	public void set(float x, float y, float z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-
 	public void add(float x, float y, float z) {
 		this.x += x;
 		this.y += y;
@@ -72,6 +59,8 @@ public class MixVector {
 	}
 
 	public void add(MixVector v) {
+		if (v==null) return;
+		
 		add(v.x, v.y, v.z);
 	}
 
@@ -80,6 +69,8 @@ public class MixVector {
 	}
 
 	public void sub(MixVector v) {
+		if (v==null) return;
+		
 		add(-v.x, -v.y, -v.z);
 	}
 
@@ -108,10 +99,14 @@ public class MixVector {
 	}
 
 	public float dot(MixVector v) {
+		if (v==null) return 0f;
+
 		return x * v.x + y * v.y + z * v.z;
 	}
 
 	public void cross(MixVector u, MixVector v) {
+		if (v==null || u==null) return;
+		
 		float x = u.y * v.z - u.z * v.y;
 		float y = u.z * v.x - u.x * v.z;
 		float z = u.x * v.y - u.y * v.x;
@@ -121,6 +116,8 @@ public class MixVector {
 	}
 
 	public void prod(Matrix m) {
+		if (m==null) return;
+		
 		float xTemp = m.a1 * x + m.a2 * y + m.a3 * z;
 		float yTemp = m.b1 * x + m.b2 * y + m.b3 * z;
 		float zTemp = m.c1 * x + m.c2 * y + m.c3 * z;

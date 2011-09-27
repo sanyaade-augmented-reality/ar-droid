@@ -6,27 +6,30 @@ import android.view.View;
 import ar.droid.ar.common.ARData;
 import ar.droid.ar.view.Marker;
 import ar.droid.ar.view.Radar;
+import ar.droid.config.ARDroidPreferences;
 
 public class AugmentedView extends View {
-    private static Radar radar = null;
+	private static Radar radar = null;
 
-    public AugmentedView(Context context) {
-        super(context);
+	public AugmentedView(Context context) {
+		super(context);
         
         // Crear Radar
-        if (radar == null) radar = new Radar();
-    }
+        if (radar == null)
+        	radar = new Radar();
+	}
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-
-        // Dibujar los marcadores RA!
-	    for (int i=0; i<ARData.getMarkerCount(); i++) {
-	        Marker marker = ARData.getMarker(i);
+	@Override
+	protected void onDraw(Canvas canvas) {
+		
+		// Dibujar los marcadores RA!
+	    for (Marker marker : ARData.getMarkers()) {
 	        marker.draw(canvas);
 	    }
-        
-        // Dibujar Radar y puntos
-        radar.draw(canvas);
-    }
+
+		// Dibujar circulo y marcas en el
+		if(ARDroidPreferences.getBool("raRadarPref", true)){
+			radar.draw(canvas);
+		}
+	}
 }

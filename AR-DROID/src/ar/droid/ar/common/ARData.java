@@ -1,43 +1,23 @@
 package ar.droid.ar.common;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import android.graphics.Bitmap;
 import android.location.Location;
 import ar.droid.ar.view.Marker;
+import ar.droid.config.ARDroidPreferences;
 
 public abstract class ARData {
 	private static final Logger logger = Logger.getLogger(ARData.class.getSimpleName());
+    private static final Map<Long,Marker> markerList = new ConcurrentHashMap<Long,Marker>();
 	
-    private static String zoomLevel = null;
-    private static int zoomProgress = 0;
-    private static float radius = 20;
+    private static float radius = ARDroidPreferences.getInt("raDistPref", 2000) / 1000;
     private static Location currentLocation = null;
-    private static Matrix rotationMatrix = new Matrix();
-    private static HashMap<String,Marker> markerList = new HashMap<String,Marker>();
-    private static ArrayList<Bitmap> icons = new ArrayList<Bitmap>();
-
-    public static void setZoomLevel(String zoomLevel) {
-        ARData.zoomLevel = zoomLevel;
-    }
-    public static String getZoomLevel() {
-        return zoomLevel;
-    }
+    private static Matrix rotationMatrix = null;
     
-    public static void setZoomProgress(int zoomProgress) {
-        ARData.zoomProgress = zoomProgress;
-    }
-    public static int getZoomProgress() {
-        return zoomProgress;
-    }
-    
-    public static void setRadius(float radius) {
-        ARData.radius = radius;
-    }
     public static float getRadius() {
         return radius;
     }
@@ -59,36 +39,34 @@ public abstract class ARData {
 
     //DataHandler
     public static void addMarkers(List<Marker> markers) {
+    	if (markers==null) return;
+    	
     	logger.info("Marker before: "+markerList.size());
         for(Marker ma : markers) {
             if (!markerList.containsKey(ma)) {
             	ma.calcRelativePosition(ARData.getCurrentLocation());
-            	markerList.put(ma.getEntity().getName(),ma);
+            	markerList.put(ma.getEntity().getId(),ma);
             }
         }
-        logger.info("Marker encontrados: "+markerList.size());
+        logger.info("Marker count: "+markerList.size());
     }
         
     public static void onLocationChanged(Location location) {
-        for(Marker ma: markerList.values()) {
+    	for(Marker ma: markerList.values()) {
             ma.calcRelativePosition(location);
         }
     }
 
-    public static int getMarkerCount() {
-        return markerList.size();
+    public static Collection<Marker> getMarkers() {
+        return markerList.values();
     }
     
     public static Marker getMarker(int index) {
-        String key = (String)markerList.keySet().toArray()[index];
+        Long key = (Long) markerList.keySet().toArray()[index];
         return markerList.get(key);
     }
     
-    public static void setBitmaps(Collection<Bitmap> icons) {
-        ARData.icons.addAll(icons);
-    }
-    
-    public static Bitmap getBitmap(int index) {
-        return ARData.icons.get(index);
-    }
+	public static int getMarkerCount() {
+		return markerList.size();
+	}
 }

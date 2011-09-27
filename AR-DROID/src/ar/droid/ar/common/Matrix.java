@@ -1,25 +1,12 @@
-/*
- * Copyright (C) 2010- Peer internet solutions
- * 
- * This file was an original part of mixare.
- * 
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or 
- * (at your option) any later version. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License 
- * for more details. 
- * 
- * You should have received a copy of the GNU General Public License along with 
- * this program. If not, see <http://www.gnu.org/licenses/>
- */
-
 package ar.droid.ar.common;
 
 public class Matrix {
+	private static final MixVector worldUp = new MixVector(0, 1, 0);
+	private static final MixVector dir = new MixVector();
+	private static final MixVector right = new MixVector();
+	private static final MixVector up = new MixVector();
+	private static final Matrix tmp = new Matrix();
+
     public float a1, a2, a3;
     public float b1, b2, b3;
     public float c1, c2, c3;
@@ -39,6 +26,8 @@ public class Matrix {
 	}
 
 	public void set(Matrix m) {
+		if (m==null) return;
+		
 		this.a1 = m.a1;
 		this.a2 = m.a2;
 		this.a3 = m.a3;
@@ -100,19 +89,19 @@ public class Matrix {
 	}
 
 	public void toAt(MixVector cam, MixVector obj) {
-		MixVector worldUp = new MixVector(0, 1, 0);
+		if (cam==null || obj==null) return;
 
-		MixVector dir = new MixVector();
+		dir.set(0, 0, 0);
 		dir.set(obj);
 		dir.sub(cam);
 		dir.mult(-1f);
 		dir.norm();
 
-		MixVector right = new MixVector();
+		right.set(0, 0, 0);
 		right.cross(worldUp, dir);
 		right.norm();
 
-		MixVector up = new MixVector();
+		up.set(0, 0, 0);
 		up.cross(dir, right);
 		up.norm();
 
@@ -175,7 +164,6 @@ public class Matrix {
 		a1 = a11;
 		b2 = a22;
 		c3 = a33;
-		
 	}
 
 	private float det2x2(float a, float b, float c, float d) {
@@ -202,6 +190,8 @@ public class Matrix {
 	}
 
 	public void add(Matrix n) {
+		if (n==null) return;
+		
 		a1 += n.a1;
 		a2 += n.a2;
 		a3 += n.a3;
@@ -216,22 +206,40 @@ public class Matrix {
 	}
 
 	public void prod(Matrix n) {
-		Matrix m = new Matrix();
-		m.set(this);
+		if (n==null) return;
 
-		a1 = (m.a1 * n.a1) + (m.a2 * n.b1) + (m.a3 * n.c1);
-		a2 = (m.a1 * n.a2) + (m.a2 * n.b2) + (m.a3 * n.c2);
-		a3 = (m.a1 * n.a3) + (m.a2 * n.b3) + (m.a3 * n.c3);
+		tmp.set(this);
+		a1 = (tmp.a1 * n.a1) + (tmp.a2 * n.b1) + (tmp.a3 * n.c1);
+		a2 = (tmp.a1 * n.a2) + (tmp.a2 * n.b2) + (tmp.a3 * n.c2);
+		a3 = (tmp.a1 * n.a3) + (tmp.a2 * n.b3) + (tmp.a3 * n.c3);
 
-		b1 = (m.b1 * n.a1) + (m.b2 * n.b1) + (m.b3 * n.c1);
-		b2 = (m.b1 * n.a2) + (m.b2 * n.b2) + (m.b3 * n.c2);
-		b3 = (m.b1 * n.a3) + (m.b2 * n.b3) + (m.b3 * n.c3);
+		b1 = (tmp.b1 * n.a1) + (tmp.b2 * n.b1) + (tmp.b3 * n.c1);
+		b2 = (tmp.b1 * n.a2) + (tmp.b2 * n.b2) + (tmp.b3 * n.c2);
+		b3 = (tmp.b1 * n.a3) + (tmp.b2 * n.b3) + (tmp.b3 * n.c3);
 
-		c1 = (m.c1 * n.a1) + (m.c2 * n.b1) + (m.c3 * n.c1);
-		c2 = (m.c1 * n.a2) + (m.c2 * n.b2) + (m.c3 * n.c2);
-		c3 = (m.c1 * n.a3) + (m.c2 * n.b3) + (m.c3 * n.c3);
+		c1 = (tmp.c1 * n.a1) + (tmp.c2 * n.b1) + (tmp.c3 * n.c1);
+		c2 = (tmp.c1 * n.a2) + (tmp.c2 * n.b2) + (tmp.c3 * n.c2);
+		c3 = (tmp.c1 * n.a3) + (tmp.c2 * n.b3) + (tmp.c3 * n.c3);
 	}
 
+	public boolean equals(Matrix n) {
+		if (n==null) return false;
+		
+		if (a1 != n.a1) return false;
+		if (a2 != n.a2) return false;
+		if (a3 != n.a3) return false;
+
+		if (b1 != n.b1) return false;
+		if (b2 != n.b2) return false;
+		if (b3 != n.b3) return false;
+
+		if (c1 != n.c1) return false;
+		if (c2 != n.c2) return false;
+		if (c3 != n.c3) return false;
+		
+		return true;
+	}
+	
 	@Override
 	public String toString() {
 		return "[ (" + a1 + "," + a2 + "," + a3 + ")"+
