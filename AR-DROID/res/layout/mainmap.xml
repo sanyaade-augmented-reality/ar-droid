@@ -7,16 +7,40 @@
 		android:id="@+id/mapview" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:clickable="true"
 		android:apiKey="0hrra9BicsBRgVwqLvqjvWBYkRG_Q9otd8j9g0A" />
-
+		
+	<LinearLayout
+        android:id="@+id/searchPanel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10sp" 
+        >
+        <EditText
+            android:id="@+id/searchText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_search"
+            />
+    </LinearLayout>
+    
 	<LinearLayout android:id="@+id/zoomview"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_alignBottom="@id/mapview"
 		android:layout_centerHorizontal="true" />
 
-	<TextView android:layout_alignParentTop="true"
+	<TextView android:layout_alignParentBottom="true"
 		android:text="Esperando ubicación..." android:id="@+id/address"
 		android:layout_height="wrap_content" android:layout_width="fill_parent"
 		android:gravity="right" android:textSize="15sp"
-		android:paddingTop="10sp" android:paddingRight="10sp"
+		android:paddingTop="40sp" android:paddingRight="10sp"
 		android:textColor="#FF0000" />
+		
+
 </RelativeLayout>
