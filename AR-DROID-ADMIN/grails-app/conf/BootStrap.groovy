@@ -16,20 +16,20 @@ class BootStrap {
 		servletContext.lsReaderNews = [new ReaderNewsNone(), new ReaderNewsRSS(), new ReaderNewsWeb(), new ReaderNewsFacebook(),new ReaderNewsTwitter()]
 		servletContext.lsReaderActivities = [new ReaderActivityNone(), new ReaderActivityFacebook(), new ReaderActivityApi()]
 		servletContext.lsEventCalendars = [new Unique(), new Daily(), new Weekly(), new Monthly()]
-		servletContext.mpDayOfTheWeek = ["0": "Domingo", "1": "Lunes", "2": "Martes", "3": "MÌercoles", "4": "Jueves", "5": "Viernes", "6": "S·bado"]
+		servletContext.mpDayOfTheWeek = ["0": "Domingo", "1": "Lunes", "2": "Martes", "3": "M√≠ercoles", "4": "Jueves", "5": "Viernes", "6": "S√°bado"]
 		
 		// tendria que crear si no existe el tipo de evento 1-ninguno
 		// template te gusta? si/no
 		
 		def typeEvent = TypeEvent.get(1)
 		if (typeEvent == null){
-			typeEvent = new TypeEvent(name:"Sin ClasificaciÛn")
+			typeEvent = new TypeEvent(name:"Sin Clasificaci√≥n")
 			typeEvent.save(flush:true)
 		}
 		
 		def template = SurveyTemplate.get(1)
 		if (template == null){
-			template = new SurveyTemplate(description:"Est·ndar AR-DROID")
+			template = new SurveyTemplate(description:"Est√°ndar AR-DROID")
 			def question = new MultipleChoiceQuestion(question:"Te gusta?",surveyTemplate:template,maxOptions:1)
 			def ch1 = new Choice(description:"Si",multipleChoiceQuestion:question)
 			def ch2 = new Choice(description:"No",multipleChoiceQuestion:question)

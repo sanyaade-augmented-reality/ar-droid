@@ -8,16 +8,16 @@ class ActivityService {
 		activityInstance.properties = params
 		def canSave = false
 		
-		// ubicaci髇 de la actividad
+		// ubicaci贸n de la actividad
 		if(params.positionSameAsEvent){
 			def event = Event.get(params.event.id)
 			activityInstance.geoPoint = entity.geoPoint
 			canSave = true
 		}
 		else{
-			// validar posici髇
+			// validar posici贸n
 			if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-				activityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaci髇')
+				activityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaci贸n')
 			}
 			else {
 				// armar geopoint
@@ -45,16 +45,16 @@ class ActivityService {
 			}
 			def canSave = false
 			
-			// ubicaci髇 de la actividad
+			// ubicaci贸n de la actividad
 			if(params.positionSameAsEvent){
 				def event = Event.get(params.event.id)
 				activityInstance.geoPoint = entity.geoPoint
 				canSave = true
 			}
 			else{
-				// validar posici髇
+				// validar posici贸n
 				if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-					activityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaci髇')
+					activityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaci贸n')
 				}
 				else {
 					// armar geopoint

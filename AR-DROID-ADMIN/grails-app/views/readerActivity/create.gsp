@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.reader.ReaderActivity" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=CP-1250" />
+        
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'readerActivity.label', default: 'ReaderActivity')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>

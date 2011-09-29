@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.Event" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=CP-1250" />
+        
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'event.label', default: 'Event')}" />
         <title>Eventos</title>
@@ -75,7 +75,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="title">Tìtulo</label>
+                                    <label for="title">Título</label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'title', 'errors')}">
                                     <g:textField name="title" value="${eventInstance?.title}" />

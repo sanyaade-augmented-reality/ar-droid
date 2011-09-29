@@ -21,7 +21,7 @@ class Event {
 	static hasMany = [activities: Activity, responses: SurveyResponse]
 	static belongsTo = [entity: Entity]
 	
-	/**Esto indicar que el GeoPoint es una composición*/
+	/**Esto indicar que el GeoPoint es una composiciÃ³n*/
 	static embedded = ['geoPoint']
 	
 	static mapping = {

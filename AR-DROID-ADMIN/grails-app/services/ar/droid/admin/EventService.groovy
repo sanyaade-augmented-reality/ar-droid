@@ -23,16 +23,16 @@ class EventService {
 			eventInstance.photo = filePhoto.getBytes()
 		}
 
-		// ubicaci髇 de la actividad
+		// ubicaci贸n de la actividad
 		if(params.positionSameAsEntity == "1"){
 			def entity = Entity.get(params.entity.id)
 			eventInstance.geoPoint = entity.geoPoint
 			canSave = true
 		}
 		else{
-			// validar posici髇
+			// validar posici贸n
 			if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-				eventInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaci髇')
+				eventInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaci贸n')
 			}
 			else {
 				// armar geopoint
@@ -66,7 +66,7 @@ class EventService {
 
 			def canSave = false
 
-			// ubicaci髇 de la actividad
+			// ubicaci贸n de la actividad
 			if(params.positionSameAsEntity == "1"){
 				def entity = Entity.get(params.entity.id)
 				eventInstance.geoPoint = entity.geoPoint

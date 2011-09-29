@@ -2,7 +2,7 @@
 <%@ page import="ar.droid.admin.survey.question.Choice" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=CP-1250" />
+        
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'choice.label', default: 'Choice')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>

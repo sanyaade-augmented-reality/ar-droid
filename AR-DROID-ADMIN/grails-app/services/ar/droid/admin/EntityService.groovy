@@ -32,9 +32,9 @@ class EntityService {
 			entityInstance.photo = filePhoto.getBytes()
 		}
 		
-		// validar posición
+		// validar posiciÃ³n
 		if(params.latitude == null || ''.equals(params.latitude) || params.longitude == null || ''.equals(params.longitude)){
-			entityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicación')
+			entityInstance.errors.rejectValue('geoPoint', 'Debe seleccionar la ubicaciÃ³n')
 		}
 		else {
 			// armar geopoint

@@ -68,7 +68,7 @@ class EventController {
 		if(eventInstance.hasErrors()){
 			eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [
 				message(code: 'event.label', default: 'Evento')]
-			as Object[], "Otro usuario modificó el objeto")
+			as Object[], "Otro usuario modificÃ³ el objeto")
 			render(view: "edit", model: [eventInstance: eventInstance])
 		}
 		else{
