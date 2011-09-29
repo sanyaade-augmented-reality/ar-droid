@@ -24,11 +24,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import ar.droid.activity.EventTabWidget;
+import ar.droid.admin.reader.view.EventAdapter;
 import ar.droid.admin.reader.view.TypeEntityAdapter;
 import ar.droid.admin.reader.view.TypeEventsAdapter;
 import ar.droid.ar.common.ARData;
@@ -71,8 +76,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	//private Resources resources;
 	private LocationManager locationManager;
 	private boolean showEvents=false;
-	private boolean showEntities=false;
-	
+		
 	private ProgressDialog progressDialog = null;
 	
 	private List<Event> allevents = new ArrayList<Event>();
@@ -124,6 +128,60 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, new LocationListenerGPS(getApplicationContext(), this, location));
  
+        Button searchButton = (Button)findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+			
+        	public void onClick(View v) {
+        		EditText texto = (EditText)findViewById(R.id.searchText);
+        		//Por lo menos 4 caracteres
+        		if (!"".equals(texto.getText().toString()) && texto.getText().toString().trim().length()>2){
+        			searchEvents(texto.getText().toString());
+        		}
+			}
+		});
+    }
+    
+    public void searchEvents(String textSearch){
+    	//Voy a buscar, muestro popUp y al seleccionar va a pantalla Endtidad
+    	List<Event> events = Resource.getInstance().searchEvents(textSearch);
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Resultado Búsqueda");
+		if (!events.isEmpty()){
+    		final ArrayAdapter<Event> itemlist = new EventAdapter(getApplicationContext(),R.layout.row_list_events,events);
+    		builder.setSingleChoiceItems(itemlist,-1,new DialogInterface.OnClickListener() {
+    			@Override
+    			public void onClick(DialogInterface dialog, final int which) {
+    				Event event = itemlist.getItem(which);
+    				dialog.dismiss();	
+    				///ir a actividad evento
+    				
+    				Bundle bundle = new Bundle();
+    				bundle.putLong("idEvent", event.getId());
+    				bundle.putLong("idEntity", event.getEntity().getId());
+    				Intent i = new Intent(getApplicationContext(), EventTabWidget.class);
+    		        i.putExtras(bundle);
+    			    startActivity(i);
+    			}
+    		});
+    		//builder.setCancelable(true);
+    		AlertDialog alert = builder.create();
+    		alert.getListView().setBackgroundColor(Color.WHITE);
+    		alert.show();	
+    	}
+    	else{
+    		builder.setMessage("NO se encontraron eventos");
+    		builder.setCancelable(false);
+    		builder.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	                
+    	           }
+    	      });
+    		AlertDialog alert = builder.create();
+    		alert.show();	
+    	}
+    	
+    	
+    	
     }
     
 	private void initMap(){
@@ -206,12 +264,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			 MenuInflater inflater = getMenuInflater();
 			 inflater.inflate(R.menu.menu_type_events, menu);
 		}
-		else 
-		if (showEntities){
-			menu.clear();
-			 MenuInflater inflater = getMenuInflater();
-			 inflater.inflate(R.menu.menu_type_entity, menu);
-		}
 		else{ 
 			menu.clear();
 			MenuInflater inflater = getMenuInflater();
@@ -270,13 +322,12 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		        return true;
 		        
 		    case R.id.menu_events:
-		    	showEvents=true;
 		    	showOptionsEvents();
 		        return true;
 		    case R.id.menu_entities:
-		    	showEntities=true;
 		    	showEntities();
-		        return true;
+		    	showOptionsTypeEntities();
+		        return true;		    	    	
 		    case R.id.menu_show_type_events:
 		    	showOptionsTypeEvents();
 		    	return true;
@@ -284,14 +335,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    	showEvents=false;
 		    	showEntities();
 		    	return true;
-		    case R.id.menu_show_type_entities:
-		    	showOptionsTypeEntities();
-		    	return true;
-		    case R.id.menu_goto2:
-		    	showEntities=false;
-		    	showEntities();
-		    	return true;
-		  
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
@@ -452,6 +495,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	/**muestra en el mapa los eventos de todas las entidades
 	 * */
 	private void showEvents(String option){
+		showEvents=true;
 		List<Event> ls =Resource.getInstance().getEvents(option);
 		allevents =  ls;
 		showEvents(ls);

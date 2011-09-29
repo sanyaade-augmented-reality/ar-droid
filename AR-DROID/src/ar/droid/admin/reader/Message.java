@@ -45,16 +45,39 @@ public class Message implements Comparable<Message>{
 
 
 	public String getDate() {
-		GregorianCalendar hoy = new GregorianCalendar();
-		//GregorianCalendar calHasta = new GregorianCalendar();
-		//Calendar hoy = Calendar.getInstance();
+		Calendar hoy = Calendar.getInstance();
+		hoy.set(Calendar.HOUR,0);
+		hoy.set(Calendar.MINUTE,0);
+		hoy.set(Calendar.SECOND,0);
+		hoy.set(Calendar.MILLISECOND,0);
 		
-		if (hoy.getTime().compareTo(date)==0)
+		Calendar otra = Calendar.getInstance();
+		otra.setTime(date);
+		otra.set(Calendar.HOUR,0);
+		otra.set(Calendar.MINUTE,0);
+		otra.set(Calendar.SECOND,0);
+		otra.set(Calendar.MILLISECOND,0);
+		
+		
+		//GregorianCalendar calHasta = new GregorianCalendar();
+		
+		
+		if (hoy.getTime().compareTo(otra.getTime())==0)
 			return "Hoy";
 		else{
 			hoy.add(Calendar.DATE, -1);
-			if (hoy.getTime().compareTo(date)==0)
+			if (hoy.getTime().compareTo(otra.getTime())==0)
 				return "Ayer";
+			else{
+				hoy.add(Calendar.DATE, -1);
+				if (hoy.getTime().compareTo(otra.getTime())==0)
+					return "Hace 2 días";
+				else{
+					hoy.add(Calendar.DATE, -1);
+					if (hoy.getTime().compareTo(otra.getTime())==0)
+						return "Hace 3 días";
+				}
+			}	
 		}
 		
 		SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es_ES"));

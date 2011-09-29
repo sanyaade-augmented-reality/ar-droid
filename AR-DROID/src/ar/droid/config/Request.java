@@ -12,4 +12,6 @@ public class Request {
 	
 	public static String GET_SUMMARY_FEEDBACK = "/request/summaryFeedbak";
 	
+	public static String GET_SEARCH_EVENTS = "/request/searchEvents";
+	
 }

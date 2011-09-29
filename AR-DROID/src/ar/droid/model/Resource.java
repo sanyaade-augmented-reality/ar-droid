@@ -83,6 +83,10 @@ public class Resource {
 		return ss;
 	}
 	
+	public List<Event> searchEvents(String text){
+		return ResourceHelperFactory.createResourceHelper().searchEvents(text);
+	}
+	
 	
 	
 }

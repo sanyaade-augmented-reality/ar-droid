@@ -22,4 +22,6 @@ public interface IResourceHelper {
 	public List<TypeEntity> getTypeEntities();
 	
 	public Summary getSummary(Event event);
+	
+	public  List<Event> searchEvents(String text);
 }

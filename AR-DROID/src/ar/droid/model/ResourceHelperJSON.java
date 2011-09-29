@@ -1,5 +1,6 @@
 package ar.droid.model;
 
+import java.io.InputStream;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -84,24 +85,7 @@ public class ResourceHelperJSON extends ResourceHelper {
 		if (!"".equals(option))
 			url = url + "/" + option;		
 		Reader inputStream = loadManySerialized(url);
-		Type listType = new TypeToken<ArrayList<Event>>() {}.getType();
-		
-		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.registerTypeAdapter(GeoPoint.class,new GeoPointDeserializer());
-		gsonBuilder.registerTypeAdapter(EventCalendar.class,new EventCalendarDeserializer());
-		gsonBuilder.registerTypeAdapter(SurveyTemplate.class,new SurveyTemplateDeserializer());
-		Gson gson =	gsonBuilder.create();	
-		
-		List<Event> events  = gson.fromJson(inputStream,listType);
-		
-		Iterator<Event> it = events.iterator();
-		
-		while (it.hasNext()) {
-			Event event = (Event) it.next();
-			event.setEntity(Resource.getInstance().getEntity(event.getIdEntity()));
-			event.getEntity().addEvent(event);
-		}	
-		return events;
+		return getEvents(inputStream);
 	}
 
 	@Override
@@ -133,4 +117,33 @@ public class ResourceHelperJSON extends ResourceHelper {
 		return (new Gson()).fromJson(inputStream, Summary.class);
 			
 	}
+
+	@Override
+	public List<Event> searchEvents(String text) {
+		String url = urlServer + Request.GET_SEARCH_EVENTS + "?text="+text;
+		Reader inputStream = loadManySerialized(url);
+		if (inputStream!=  null)
+			return getEvents(inputStream);
+		else return new ArrayList<Event>();
+	}
+	
+	
+	private List<Event> getEvents(Reader inputStream) {
+		Type listType = new TypeToken<ArrayList<Event>>() {}.getType();
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(GeoPoint.class,new GeoPointDeserializer());
+		gsonBuilder.registerTypeAdapter(EventCalendar.class,new EventCalendarDeserializer());
+		gsonBuilder.registerTypeAdapter(SurveyTemplate.class,new SurveyTemplateDeserializer());
+		Gson gson =	gsonBuilder.create();			
+		List<Event> events  = gson.fromJson(inputStream,listType);		
+		Iterator<Event> it = events.iterator();		
+		while (it.hasNext()) {
+			Event event = (Event) it.next();
+			event.setEntity(Resource.getInstance().getEntity(event.getIdEntity()));
+			event.getEntity().addEvent(event);
+		}	
+		return events;
+	}
+	
+	
 }
