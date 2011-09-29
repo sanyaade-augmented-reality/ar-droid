@@ -5,7 +5,7 @@ import org.springframework.core.io.ResourceLoader
 
 class EventService {
 	static transactional = true
-	ResourceLoader resourceLoader
+	def servletContext
 
 	def Event saveEvent(params) {
 		def eventInstance = new Event()
@@ -19,7 +19,7 @@ class EventService {
 
 		// agrego foto?
 		if(params.get("photo") == null || params.get("photo").size == 0){
-			def filePhoto = resourceLoader.getResource("/images/sin_imagen.jpg").file
+			def filePhoto = servletContext.getResource("/images/sin_imagen.jpg").file
 			eventInstance.photo = filePhoto.getBytes()
 		}
 

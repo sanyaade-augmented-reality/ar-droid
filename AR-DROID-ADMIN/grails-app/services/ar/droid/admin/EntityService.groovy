@@ -9,7 +9,7 @@ import ar.droid.admin.reader.ReaderActivity
 
 class EntityService {
 	static transactional = true
-	ResourceLoader resourceLoader
+	def servletContext
 	
 	def Entity saveEntity(params) {
 		def entityInstance = new Entity()
@@ -28,7 +28,7 @@ class EntityService {
 		
 		// agrego foto?
 		if(params.get("photo") == null || params.get("photo").size == 0){
-			def filePhoto = resourceLoader.getResource("/images/sin_imagen.jpg").file
+			def filePhoto = servletContext.getResource("/images/sin_imagen.jpg").file
 			entityInstance.photo = filePhoto.getBytes()
 		}
 		
