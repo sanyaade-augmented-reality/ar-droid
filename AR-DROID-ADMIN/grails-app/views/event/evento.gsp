@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.Event" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=CP-1250" />
         <meta name="layout" content="empty" />
      	<g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
 		<g:javascript src="maps.js" />

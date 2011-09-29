@@ -4,7 +4,7 @@
 <%@ page import="ar.droid.admin.survey.response.*" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=CP-1250" />
         <meta name="layout" content="main" />
         <title>Estadísticas de evento</title>
     	<script type="text/javascript" src="https://www.google.com/jsapi"></script>

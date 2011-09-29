@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" import="ar.droid.admin.TypeEntity" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=CP-1250" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'typeEntity.label', default: 'TypeEntity')}" />
         <title>Tipos de entidades</title>
