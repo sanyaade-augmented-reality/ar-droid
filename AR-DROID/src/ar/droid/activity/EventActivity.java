@@ -83,7 +83,10 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        	//rank.setText(summary.getDescription() + "-  Ver Todos" );
 	        	//Linkify.addLinks(rank,pattern, entity.getUrl(),null,null);
 	        	rank.setMovementMethod(LinkMovementMethod.getInstance());
-	        	String text = summary.getDescription()+ "<a href='http://www.google.com'>   Ver Todos</a>";
+	        	
+	        	String urlServer = ARDroidPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+	        	
+	        	String text = summary.getDescription()+ "<a href=\"" + urlServer + "/event/comentarios/" + event.getId() + ">   Ver Todos</a>";
 	        	rank.setText(Html.fromHtml(text));
 	         	comments.getLayoutParams().height =comments.getLayoutParams().height + (40*summary.getComments().size());
 	        	comments.setAdapter(new ArrayAdapter<String>(this,R.layout.row_list_comment ,R.id.comment,summary.getComments()));
@@ -108,7 +111,9 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        descr.setText(event.getDescription());
 	        
 	        TextView place = (TextView) this.findViewById(R.id.place);
-	        place.setText("Lugar: " + event.getPlace());
+	        if("".equals(event.getPlace()))
+	        	place.setText("Lugar: No definido");
+	        	place.setText("Lugar: " + event.getPlace());
 	        
 	     
 	        TextView initdate = (TextView) this.findViewById(R.id.Initdate);

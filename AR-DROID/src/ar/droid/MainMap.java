@@ -409,7 +409,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		mapView.getOverlays().clear();
         initMap();
 		
-        Runnable viewOrders = new Runnable(){
+        Runnable loadEntities = new Runnable(){
 	            public void run() {
 	            	//se agrupan entidades por tipo de entidad
 	        		Iterator<Entity> itEnt = entities.iterator();
@@ -438,8 +438,14 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	        			//Se crea el MapEntityOverlay que tendra todos las entidades para el mismo tipo
 	        			MapEntityItemizedOverlay mapEntityOverlay = new MapEntityItemizedOverlay(iconTypeEntity,mapView,MainMap.this);
 	        			while (itEnt.hasNext()) {
-	        				Entity entity = (Entity) itEnt.next();			
-	        				EntityOverlayItem overlayitemEntity = new EntityOverlayItem(entity.getGeoPoint(),entity.getName(),entity.getDescription(),entity);
+	        				Entity entity = (Entity) itEnt.next();
+	        				
+	        				// cortar descripción
+	        				String description = entity.getDescription();
+	        				if(description.length() > 200)
+	        					description = description.substring(0, 200) + "...";
+	        				
+	        				EntityOverlayItem overlayitemEntity = new EntityOverlayItem(entity.getGeoPoint(),entity.getName(),description,entity);
 	        				mapEntityOverlay.addOverlay(overlayitemEntity);
 	        				
 	        			}
@@ -450,7 +456,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	        		mapView.postInvalidate();
 	            }
 	        };
-	        Thread thread =  new Thread(null, viewOrders,"agentcargaentidades" );
+	        Thread thread =  new Thread(null, loadEntities, "agentcargaentidades" );
 	        thread.start();
 	}
 	
