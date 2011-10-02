@@ -9,10 +9,14 @@
 			android:summary="Ingrese la Zoom inicial del mapa"
 			android:defaultValue="14" android:title="Zoom Inicial" android:key="zoomMapPref" android:persistent="true" />
 
-		<CheckBoxPreference android:summary="Mostrar icono de orientación en vista Mapa"
+		<CheckBoxPreference android:summary="Mostrar radar de orientación en vista Mapa"
 			android:defaultValue="true" android:title="Mostrar orientación"
 			android:key="oriMapPref" android:persistent="true" />
 
+		<CheckBoxPreference android:summary="Mostrar icono de posición en vez vez de area en vista Mapa"
+			android:defaultValue="true" android:title="Mostrar posición"
+			android:key="posMapPref" android:persistent="true" />
+			
 		<ListPreference android:title="Tamaño de los iconos"
 			android:summary="Seleccione el tamaño de lo iconos en mapa y RA"
 			android:key="iconSizePref" android:defaultValue="2" android:entries="@array/iconSize"

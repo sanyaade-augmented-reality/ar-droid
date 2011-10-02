@@ -24,16 +24,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import ar.droid.activity.EventTabWidget;
-import ar.droid.admin.reader.view.EventAdapter;
 import ar.droid.admin.reader.view.TypeEntityAdapter;
 import ar.droid.admin.reader.view.TypeEventsAdapter;
 import ar.droid.ar.common.ARData;
@@ -81,6 +76,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	
 	private List<Event> allevents = new ArrayList<Event>();
 	
+	private boolean goToLocation = true;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,71 +124,31 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         
         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, new LocationListenerGPS(getApplicationContext(), this, location));
- 
-        Button searchButton = (Button)findViewById(R.id.searchButton);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-			
-        	public void onClick(View v) {
-        		EditText texto = (EditText)findViewById(R.id.searchText);
-        		//Por lo menos 4 caracteres
-        		if (!"".equals(texto.getText().toString()) && texto.getText().toString().trim().length()>2){
-        			searchEvents(texto.getText().toString());
-        		}
-			}
-		});
+
     }
     
-    public void searchEvents(String textSearch){
-    	//Voy a buscar, muestro popUp y al seleccionar va a pantalla Endtidad
-    	List<Event> events = Resource.getInstance().searchEvents(textSearch);
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Resultado Búsqueda");
-		if (!events.isEmpty()){
-    		final ArrayAdapter<Event> itemlist = new EventAdapter(getApplicationContext(),R.layout.row_list_events,events);
-    		builder.setSingleChoiceItems(itemlist,-1,new DialogInterface.OnClickListener() {
-    			@Override
-    			public void onClick(DialogInterface dialog, final int which) {
-    				Event event = itemlist.getItem(which);
-    				dialog.dismiss();	
-    				///ir a actividad evento
-    				
-    				Bundle bundle = new Bundle();
-    				bundle.putLong("idEvent", event.getId());
-    				bundle.putLong("idEntity", event.getEntity().getId());
-    				Intent i = new Intent(getApplicationContext(), EventTabWidget.class);
-    		        i.putExtras(bundle);
-    			    startActivity(i);
-    			}
-    		});
-    		//builder.setCancelable(true);
-    		AlertDialog alert = builder.create();
-    		alert.getListView().setBackgroundColor(Color.WHITE);
-    		alert.show();	
-    	}
-    	else{
-    		builder.setMessage("NO se encontraron eventos");
-    		builder.setCancelable(false);
-    		builder.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
-    	           public void onClick(DialogInterface dialog, int id) {
-    	                
-    	           }
-    	      });
-    		AlertDialog alert = builder.create();
-    		alert.show();	
-    	}
-    	
-    	
-    	
-    }
+    @Override
+    public boolean onSearchRequested() {
+         startSearch(null, false, null, false);
+         return true;
+     }
     
 	private void initMap(){
     	Log.d(TAG, "Inicializando localización");
-        myLocationOverlay = new MyCustomLocationOverlay(this, mapView);
+    	
+    	if(ARDroidPreferences.getBool("posMapPref", true))
+    		myLocationOverlay = new MyCustomLocationOverlay(this, mapView);
+    	else
+    		myLocationOverlay = new MyLocationOverlay(this, mapView);
+    	
         mapView.getOverlays().add(myLocationOverlay);
         myLocationOverlay.enableMyLocation();
         if(ARDroidPreferences.getBool("oriMapPref", true))
         	myLocationOverlay.enableCompass();
-        myLocationOverlay.runOnFirstFix(new MyLocationOverlayFirstRun(mapView, myLocationOverlay));
+        
+        if(goToLocation)
+        	myLocationOverlay.runOnFirstFix(new MyLocationOverlayFirstRun(mapView, myLocationOverlay));
+        goToLocation = false;
     } 
 
 	private void showMsgGPSDisabled() {
