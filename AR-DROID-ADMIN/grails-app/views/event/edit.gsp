@@ -156,8 +156,8 @@
                                     <div><div class="dates"><g:message code="event.eventCalendar.startDate" default="Init" /></div><g:datePicker name="event.eventCalendar.startDate" value="${eventInstance?.eventCalendar?.startDate}" years="${2011..2020}" /></div>
                                     <div><div class="dates"><g:message code="event.eventCalendar.endDate" default="End" /></div><g:datePicker name="event.eventCalendar.endDate" value="${eventInstance?.eventCalendar?.endDate}" years="${2011..2020}" /></div>
                                     
-                                    <div style="display: none" id="dayOfTheWeek"><div class="dates2">Día de la semana</div><g:select name="eventCalendar.dayOfWeek" optionKey="key" optionValue="value" from="${application.mpDayOfTheWeek}" /></div>
-                                    <div style="display: none" id="dayOfTheMonth"><div class="dates2">Día del mes</div><g:select name="eventCalendar.dayOfMonth" from="${1..31}" /></div>
+                                    <div style="display: none" id="dayOfTheWeek"><div class="dates2">Día de la semana</div><g:select name="event.eventCalendar.dayOfWeek" optionKey="key" optionValue="value" from="${application.mpDayOfTheWeek}" /></div>
+                                    <div style="display: none" id="dayOfTheMonth"><div class="dates2">Día del mes</div><g:select name="event.eventCalendar.dayOfMonth" from="${1..31}" /></div>
                                 </td>
                             </tr>
                         
