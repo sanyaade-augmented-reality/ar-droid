@@ -1,5 +1,5 @@
 package ar.droid.admin.calendar;
 
-public class RepeatCalendar extends EventCalendar {
+public abstract class RepeatCalendar extends EventCalendar {
 
 }

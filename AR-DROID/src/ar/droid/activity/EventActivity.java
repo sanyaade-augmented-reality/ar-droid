@@ -117,11 +117,12 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        
 	     
 	        TextView initdate = (TextView) this.findViewById(R.id.Initdate);
-	        initdate.setText("Inicio: " + formateador.format(event.getEventCalendar().getStartDate()));
-	        
+	        String linea1 = event.getEventCalendar().getLinea1();
+	        initdate.setText(linea1);
 
 	        TextView enddate = (TextView) this.findViewById(R.id.enddate);
-	        enddate.setText("Fin: "+formateador.format(event.getEventCalendar().getEndDate()));
+	        String linea2 = event.getEventCalendar().getLinea2();
+	        enddate.setText(linea2);
 	        
 	 	        
 	        final Button btnShare= (Button) findViewById(R.id.buttonShare);

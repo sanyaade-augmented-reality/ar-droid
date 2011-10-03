@@ -6,7 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import android.util.Log;
+import ar.droid.admin.calendar.Daily;
 import ar.droid.admin.calendar.EventCalendar;
+import ar.droid.admin.calendar.Monthly;
+import ar.droid.admin.calendar.Weekly;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -21,11 +24,11 @@ public class EventCalendarDeserializer implements JsonDeserializer<EventCalendar
 		//despues utilizar para el tipo correcto
 		String nameClass = json.getAsJsonObject().get("class").getAsString();
 		
-		EventCalendar eventCalendar = new EventCalendar();
+		EventCalendar eventCalendar = null;
 		
 		try {
-			Class c = Class.forName(nameClass);
-			eventCalendar = (EventCalendar)c.newInstance();
+			Class<?> c = Class.forName(nameClass);
+			eventCalendar = (EventCalendar) c.newInstance();
 			
 			//falta setar algunos campos para monthy y weekly
 
@@ -46,14 +49,19 @@ public class EventCalendarDeserializer implements JsonDeserializer<EventCalendar
 		
 		try {
 			eventCalendar.setStartDate(simpleDateFormat.parse(initDate));
+			eventCalendar.setEndDate(simpleDateFormat.parse(endDate));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		
-		try {
-			eventCalendar.setEndDate(simpleDateFormat.parse(endDate));
-		} catch (ParseException e) {
-			e.printStackTrace();
+		// Determinar atributos dependiendo el tipo de calendario
+		if(Monthly.class.equals(eventCalendar.getClass())){
+			Monthly calendar = (Monthly) eventCalendar;
+			calendar.setDayOfMonth(json.getAsJsonObject().get("dayOfMonth").getAsInt());
+		}
+		else if(Weekly.class.equals(eventCalendar.getClass())){
+			Weekly calendar = (Weekly) eventCalendar;
+			calendar.setDayOfWeek(json.getAsJsonObject().get("dayOfWeek").getAsInt());
 		}
 		
 		return eventCalendar;

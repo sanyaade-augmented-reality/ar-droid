@@ -3,7 +3,7 @@ package ar.droid.admin.calendar;
 import java.util.Date;
 
 
-public class EventCalendar {
+public abstract class EventCalendar {
 	
 	private Date startDate;
 	private Date endDate;
@@ -25,4 +25,7 @@ public class EventCalendar {
 		return "";
 	}
 	
+	public abstract String getLinea1();
+	
+	public abstract String getLinea2();
 }
