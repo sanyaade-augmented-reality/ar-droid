@@ -114,8 +114,8 @@ class EventController {
 			response.outputStream.write("NO existe el evento que quiere visualizar!")
 		}
 		else {
-			eventInstance.clientVisits = (eventInstance.clientVisits + 1)
-			eventInstance.save()
+			eventInstance.webVisits = (eventInstance.webVisits + 1)
+			eventInstance.save(flush: true)
 			[eventInstance: eventInstance]
 		}
 	}
