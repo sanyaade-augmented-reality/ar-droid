@@ -96,7 +96,7 @@ class EventService {
 	}
 
 	def saveResponse(survey) {
-		survey.save()
+		survey.save(flush: true)
 	}
 
 	def events (params) {
