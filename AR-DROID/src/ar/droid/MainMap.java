@@ -440,7 +440,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Filtro Eventos");
 		String options[] = new String[]{"Hoy","7 Días","30 Días"};
-		final String parameter[] = new String[]{"today","month","week"};
+		final String parameter[] = new String[]{"today","week","month"};
 		
 		builder.setItems(options,new DialogInterface.OnClickListener() {
 			@Override
