@@ -42,7 +42,7 @@ public class EntityActivity extends Activity  implements android.view.View.OnCli
         image.setImageDrawable(photoEntity);
         
         TextView url = (TextView) this.findViewById(R.id.site);
-        url.setText( Html.fromHtml("<a href=\'"+entity.getUrl()+"\'> Más Información</a>" ));
+        url.setText( Html.fromHtml("<a href=\'"+entity.getUrl()+"\'>"+entity.getUrl()+"</a>" ));
         url.setMovementMethod(LinkMovementMethod.getInstance());
         
         TextView descr = (TextView) this.findViewById(R.id.description);

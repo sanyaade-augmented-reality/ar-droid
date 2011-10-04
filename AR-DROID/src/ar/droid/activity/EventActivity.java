@@ -1,8 +1,6 @@
 package ar.droid.activity;
 
-import java.text.SimpleDateFormat;
 import java.util.Iterator;
-import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,7 +12,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,7 +42,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	
 		private Event event;
 		private Entity entity;
-		static SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy HH:mm 'hs.'");
+		
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -54,6 +51,9 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 			 //recupero la entidad
 			entity = Resource.getInstance().getEntity(getIntent().getExtras().getLong("idEntity"));
 			event = entity.getEvent(getIntent().getExtras().getLong("idEvent"));
+			
+			// registrar visita cliente
+			ResourceHelperFactory.createResourceHelper().makeVisit(event);
 			
 			//recuperar comentarios eventos
 			Summary summary = Resource.getInstance().getSummary(event);
@@ -86,7 +86,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        	
 	        	String urlServer = ARDroidPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
 	        	
-	        	String text = summary.getDescription()+ "<a href=\"" + urlServer + "/event/comentarios/" + event.getId() + ">   Ver Todos</a>";
+	        	String text = summary.getDescription()+ "   <a href=\"" + urlServer + "/event/comentarios/" + event.getId() + ">Ver Todos</a>";
 	        	rank.setText(Html.fromHtml(text));
 	         	comments.getLayoutParams().height =comments.getLayoutParams().height + (40*summary.getComments().size());
 	        	comments.setAdapter(new ArrayAdapter<String>(this,R.layout.row_list_comment ,R.id.comment,summary.getComments()));
