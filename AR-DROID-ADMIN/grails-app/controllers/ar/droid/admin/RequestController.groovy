@@ -65,7 +65,6 @@ class RequestController {
 		println json.toString()
 		if (!event.hasErrors()){
 			def survey = new SurveyResponse()
-			survey.fecha = new Date()
 			
 			survey.createResponsesFromJSON(event,json)
 			
@@ -83,7 +82,7 @@ class RequestController {
 	def summaryFeedbak = {
 		def event = Event.get(params.id);
 		def result = ["rating": -1, "description":"(0 votos)", "comments":[]];
-		if(event != null && event.surveyTemplate.first() == null)
+		if(event != null && event.surveyTemplate.first() != null)
 			result = event.surveyTemplate.first().getSummary(event.responses)
 		render result as JSON;	
 	}
@@ -91,10 +90,10 @@ class RequestController {
 	
 	def clientVisit = {
 		def json = request.JSON
-		def eventInstance = Event.get(json.event.id)
+		def eventInstance = Event.get(json.id)
 		if (!eventInstance.hasErrors()){
 			eventInstance.clientVisits = (eventInstance.clientVisits + 1)
-			eventInstance.save()
+			eventInstance.save(flush: true)
 		}
 	}
 	
