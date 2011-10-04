@@ -59,19 +59,24 @@ class MultipleChoiceQuestion extends Question{
 		String desc ="";
 		for (Choice c : result.keySet()) {
 			Integer total =  result.get(c);
-			desc = desc + c.getDescription() + "(" + total + ")/" 
-			//esto ta mal pero
-			if (rating == 0){
-				rating = rating + (5*total/responses.size());
-			}
-			else{
-				rating = rating - (5*total/responses.size());
-			}
-			
+			desc = desc + c.getDescription() + " (" + total + ") / " 
 		}
-		rating = Math.abs(rating);
-		desc = desc.substring(0,desc.length()-1);
-		return ["rating":rating,"description":desc,"comments":[]]
+		
+		// TODO si es me gusta?
+		if (this.id == 1){
+			int si = result.get(0)
+			rating = (5 * si / responses.size())
+			if(rating % 1 > 0.5)
+				rating = Math.ceil(rating)
+			else
+				rating = Math.floor(rating)
+		}
+		else{
+			rating = -1;
+		}
+		
+		desc = desc.substring(0,desc.length()-2);
+		return ["rating":rating, "description":desc, "comments":[]]
 	}
 	
 

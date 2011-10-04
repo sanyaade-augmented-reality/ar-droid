@@ -22,6 +22,7 @@ class WorkingDaily extends EventCalendar{
 	}
 
 	def isWeekle = {
+		Date hoy = new Date()
 		if(hoy.compareTo(this.startDate) >= 0)
 			return true
 		else
