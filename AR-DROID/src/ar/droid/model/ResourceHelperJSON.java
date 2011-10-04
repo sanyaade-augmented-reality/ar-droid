@@ -18,6 +18,7 @@ import ar.droid.config.Request;
 import ar.droid.connection.RESTClient;
 import ar.droid.location.GeoPoint;
 import ar.droid.model.deserializer.EventCalendarDeserializer;
+import ar.droid.model.deserializer.EventSerializer;
 import ar.droid.model.deserializer.GeoPointDeserializer;
 import ar.droid.model.deserializer.ReaderNewsDeserializer;
 import ar.droid.model.deserializer.ResponseSerializer;
@@ -70,8 +71,14 @@ public class ResourceHelperJSON extends ResourceHelper {
 		GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
 		gsonBuilder.registerTypeAdapter(Response.class, new ResponseSerializer());
 		Gson gson =	gsonBuilder.create();
-		RESTClient.doPut(gson.toJsonTree(surveyResponse).getAsJsonObject(), urlServer + "/request/feedback");
-		
+		RESTClient.doPut(gson.toJsonTree(surveyResponse).getAsJsonObject(), urlServer + Request.PUT_FEEDBACK);
+	}
+	
+	public void makeVisit(Event event){			
+		GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+		gsonBuilder.registerTypeAdapter(Event.class, new EventSerializer());
+		Gson gson =	gsonBuilder.create();
+		RESTClient.doPut(gson.toJsonTree(event).getAsJsonObject(), urlServer + Request.PUT_CLIENT_VISIT);
 	}
 
 	@Override

@@ -17,6 +17,8 @@ public interface IResourceHelper {
 	
 	public void saveResponse(SurveyResponse surveyResponse);
 	
+	public void makeVisit(Event event);
+	
 	public List<TypeEvent> getTypeEvents();
 	
 	public List<TypeEntity> getTypeEntities();
