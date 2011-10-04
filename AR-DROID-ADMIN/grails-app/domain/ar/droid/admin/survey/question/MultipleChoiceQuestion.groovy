@@ -64,7 +64,7 @@ class MultipleChoiceQuestion extends Question{
 		
 		// TODO si es me gusta?
 		if (this.id == 1){
-			int si = result.get(0)
+			int si = result.get(2)
 			if(si == null) si = 0
 			rating = (5 * si / responses.size())
 			if(rating % 1 > 0.5)
