@@ -49,9 +49,9 @@
 		</TextView>
 		<TextView android:id="@+id/enddate" android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:layout_marginTop="1px"
-			android:layout_marginBottom="2px" android:layout_marginLeft="1px"
+			android:layout_marginBottom="10px" android:layout_marginLeft="1px"
 			android:layout_marginRight="1px" android:text="TextView"
-			android:textSize="14sp" android:textColor="#ff000000">
+			android:textSize="14sp" android:textColor="#ff000000" >
 		</TextView>
 		<View android:id="@+id/widget1" android:background="#fff9f9f9"
 			android:layout_width="wrap_content" android:layout_height="1dip" />
@@ -63,7 +63,7 @@
 			android:textSize="14sp" android:textColor="#ff000000">
 		</TextView>
 		<TextView android:id="@+id/site" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:layout_marginTop="1px"
+			android:layout_height="wrap_content" android:layout_marginTop="10px"
 			android:text="TextView" android:textStyle="italic">
 		</TextView>
 		
