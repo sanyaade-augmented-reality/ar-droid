@@ -44,11 +44,16 @@ class MultipleChoiceQuestion extends Question{
 		
 	def getSummary (responses){
 		double rating = 0;
+		Choice csi = null
+		
 		Map<Choice,Integer> result = new HashMap<Choice,Integer>();
 		for (SurveyResponse sr : responses) {
 			MultipleChoiceResponse mcr = sr.first()
 			for (Choice c : mcr.options) {
 				Integer total = 1;
+				
+				// guardar si
+				if(c.id == 2) csi = c
 				if (result.get(c)!=null){
 					total = result.get(c);
 					total++;
@@ -64,8 +69,8 @@ class MultipleChoiceQuestion extends Question{
 		
 		// TODO si es me gusta?
 		if (this.id == 1){
-			int si = result.get(2)
-			if(si == null) si = 0
+			int si = 0
+			if(csi != null) si = result.get(csi)
 			rating = (5 * si / responses.size())
 			if(rating % 1 > 0.5)
 				rating = Math.ceil(rating)
