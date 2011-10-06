@@ -6,7 +6,7 @@ import android.view.View;
 import ar.droid.ar.common.ARData;
 import ar.droid.ar.view.Marker;
 import ar.droid.ar.view.Radar;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 
 public class AugmentedView extends View {
 	private static Radar radar = null;
@@ -28,7 +28,7 @@ public class AugmentedView extends View {
 	    }
 
 		// Dibujar circulo y marcas en el
-		if(ARDroidPreferences.getBool("raRadarPref", true)){
+		if(AppPreferences.getBool("raRadarPref", true)){
 			radar.draw(canvas);
 		}
 	}

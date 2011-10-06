@@ -30,7 +30,7 @@ import ar.droid.activity.EntityTabWidget;
 import ar.droid.ar.common.ARData;
 import ar.droid.ar.common.Matrix;
 import ar.droid.ar.view.Marker;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 import ar.droid.location.LocationListenerGPSAR;
 import ar.droid.model.Entity;
 import ar.droid.resources.ImageHelperFactory;
@@ -111,14 +111,14 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 				sensorMag = sensors.get(0);
 
 			sensorMgr.registerListener(this, sensorGrav,
-					SensorManager.SENSOR_DELAY_NORMAL);
+					SensorManager.SENSOR_DELAY_UI);
 			sensorMgr.registerListener(this, sensorMag,
-					SensorManager.SENSOR_DELAY_NORMAL);
+					SensorManager.SENSOR_DELAY_UI);
 
 			locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-			int minTime = ARDroidPreferences.getInt("gpsTimePref", 5000);
-			int minDistance = ARDroidPreferences.getInt("gpsDistPref", 5);
+			int minTime = AppPreferences.getInt("gpsTimePref", 5000);
+			int minDistance = AppPreferences.getInt("gpsDistPref", 5);
 
 			if (locationListener == null) {
 				Location location = locationMgr
