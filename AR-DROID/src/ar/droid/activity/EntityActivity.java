@@ -17,7 +17,7 @@ import ar.droid.model.Entity;
 import ar.droid.model.Resource;
 import ar.droid.resources.ImageHelperFactory;
 
-public class EntityActivity extends Activity  implements android.view.View.OnClickListener{
+public class EntityActivity extends Activity {
 	
 	private Entity entity;	
 	@Override
@@ -53,18 +53,6 @@ public class EntityActivity extends Activity  implements android.view.View.OnCli
    }
 
 	@Override
-	public void onClick(View v) {
-		//if (v.getId()==R.id.btn_ir_a){
-			//implemtar el Ir A
-			//para esto se debe pasar a la actividad principal que es la que muestra el mapa los puntos to y from del camino
-			//luego finalizar la actividad
-			
-			
-		}
-	//}
-
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_entity, menu);
@@ -82,6 +70,9 @@ public class EntityActivity extends Activity  implements android.view.View.OnCli
 	            mIntent.putExtras(bundle);
 	            getParent().setResult(RESULT_OK,mIntent);
 				finishFromChild(this);
+				return true;
+			case R.id.menu_close:
+				this.finish();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

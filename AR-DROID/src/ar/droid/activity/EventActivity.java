@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,7 +34,7 @@ import ar.droid.admin.survey.response.NumericValueResponse;
 import ar.droid.admin.survey.response.Summary;
 import ar.droid.admin.survey.response.SurveyResponse;
 import ar.droid.admin.survey.response.TextValueResponse;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 import ar.droid.model.Entity;
 import ar.droid.model.Event;
 import ar.droid.model.Resource;
@@ -84,7 +87,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        	//Linkify.addLinks(rank,pattern, entity.getUrl(),null,null);
 	        	rank.setMovementMethod(LinkMovementMethod.getInstance());
 	        	
-	        	String urlServer = ARDroidPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+	        	String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
 	        	
 	        	String text = summary.getDescription()+ "   <a href=\"" + urlServer + "/event/comentarios/" + event.getId() + ">Ver Todos</a>";
 	        	rank.setText(Html.fromHtml(text));
@@ -171,7 +174,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 		}
 		
 		protected void showDialogCompartir() {
-			String urlServer = ARDroidPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+			String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
 			Intent sendIntent = new Intent(Intent.ACTION_SEND);
 			
 		    sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Evento " + this.event.getTitle());
@@ -326,5 +329,31 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 			alert.show();
 		}
 
-
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			MenuInflater inflater = getMenuInflater();
+			inflater.inflate(R.menu.menu_events, menu);
+			return true;
+		}
+		
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			// Handle item selection
+			switch (item.getItemId()) {
+				case R.id.menu_goto_event:
+					Bundle bundle = new Bundle();
+					bundle.putLong("idEvent", event.getId());
+					bundle.putLong("idEntity", event.getIdEntity());
+					Intent mIntent = new Intent();
+		            mIntent.putExtras(bundle);
+		            getParent().setResult(RESULT_OK,mIntent);
+					finishFromChild(this);
+					return true;
+				case R.id.menu_close:
+		            finishFromChild(this);
+					return true;
+				default:
+					return super.onOptionsItemSelected(item);
+			}
+		}
 }

@@ -9,6 +9,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -50,16 +53,16 @@ public class ListNewsActivity extends ListActivity implements OnItemClickListene
         setListAdapter(adapter);
         
         //se cargan las noticias en un thread
-        Runnable viewOrders = new Runnable(){
+        Runnable viewNews = new Runnable(){
             public void run() {
                 getMessages();
             }
         };
-        Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
-        thread.start();
+        Thread thread =  new Thread(null, viewNews, "MagentoBackground");
         
         //se lanza el dialogo de espera hasta que se cargen las noticas
         progressDialog = ProgressDialog.show(this,"","Cargando Noticias....");
+        runOnUiThread(thread);
         
         getListView().setOnItemClickListener(this);
   	}
@@ -99,4 +102,31 @@ public class ListNewsActivity extends ListActivity implements OnItemClickListene
 		
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_entity, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+			case R.id.menu_goto_entity:
+				Bundle bundle = new Bundle();
+				bundle.putLong("idEntity", entity.getId());
+				Intent mIntent = new Intent();
+	            mIntent.putExtras(bundle);
+	            getParent().setResult(RESULT_OK,mIntent);
+				finishFromChild(this);
+				return true;
+			case R.id.menu_close:
+	            getParent().setResult(RESULT_CANCELED);
+				this.finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 }

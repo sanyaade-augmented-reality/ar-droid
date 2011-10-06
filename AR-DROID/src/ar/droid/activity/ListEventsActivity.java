@@ -64,7 +64,7 @@ public class ListEventsActivity extends ListActivity implements OnItemClickListe
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_events, menu);
+		inflater.inflate(R.menu.menu_entity, menu);
 		return true;
 	}
 	
@@ -72,16 +72,17 @@ public class ListEventsActivity extends ListActivity implements OnItemClickListe
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
-			case R.id.menu_show_events:
-				//this.finish();
+			case R.id.menu_goto_entity:
 				Bundle bundle = new Bundle();
 				bundle.putLong("idEntity", entity.getId());
 				Intent mIntent = new Intent();
 	            mIntent.putExtras(bundle);
-	            getParent().setResult(RESULT_EVENTS,mIntent);
-	         	finishFromChild(this);
+	            getParent().setResult(RESULT_OK,mIntent);
+				finishFromChild(this);
 				return true;
-			case R.id.menu_goto_event:
+			case R.id.menu_close:
+	            getParent().setResult(RESULT_CANCELED);
+				this.finish();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

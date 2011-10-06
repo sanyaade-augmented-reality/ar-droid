@@ -2,7 +2,11 @@ package ar.droid.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import ar.droid.R;
 import ar.droid.model.Entity;
@@ -42,5 +46,33 @@ public class WebNewsActivity extends Activity {
 			}
 		};
 		thread.start();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_entity, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+			case R.id.menu_goto_entity:
+				Bundle bundle = new Bundle();
+				bundle.putLong("idEntity", entity.getId());
+				Intent mIntent = new Intent();
+	            mIntent.putExtras(bundle);
+	            getParent().setResult(RESULT_OK,mIntent);
+				finishFromChild(this);
+				return true;
+			case R.id.menu_close:
+	            getParent().setResult(RESULT_CANCELED);
+				this.finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }

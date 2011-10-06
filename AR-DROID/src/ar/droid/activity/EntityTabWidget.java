@@ -3,6 +3,9 @@ package ar.droid.activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TabHost;
@@ -105,5 +108,5 @@ public class EntityTabWidget extends TabActivity implements IReaderListener {
 		TabHost.TabSpec  spec = getTabHost().newTabSpec(TAB_NEWS).setIndicator(getResources().getString(R.string.ic_tab_entity_news), getResources().getDrawable(ic_tab_selector)).setContent(intent);
 		getTabHost().addTab(spec);
 	}
-	
+
 }

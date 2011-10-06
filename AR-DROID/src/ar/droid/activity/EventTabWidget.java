@@ -3,10 +3,15 @@ package ar.droid.activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TabHost;
 import ar.droid.R;
+import ar.droid.model.Event;
+import ar.droid.model.Resource;
 
 public class EventTabWidget extends TabActivity {
 	
@@ -29,12 +34,11 @@ public class EventTabWidget extends TabActivity {
 		TabHost tabHost = getTabHost();
 		
 		//se crea inten para lanzar la actividad correspondiente al tab main
-		
 		Intent intent =  new Intent().setClass(this, EventActivity.class);
 		intent.putExtra("idEvent",getIntent().getExtras().getLong("idEvent"));    
 		intent.putExtra("idEntity",getIntent().getExtras().getLong("idEntity"));
 		
-	    //se crea e incializa el TabSpec y se in se incorpora al tabhost 
+		//se crea e incializa el TabSpec y se in se incorpora al tabhost 
 		TabHost.TabSpec spec = tabHost.newTabSpec(TAB_INFO).setIndicator(getResources().getString(R.string.ic_tab_events_main), getResources().getDrawable(R.drawable.ic_tab_event_main)).setContent(intent);
 		tabHost.addTab(spec);
 		
