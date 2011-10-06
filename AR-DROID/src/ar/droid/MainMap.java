@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -32,10 +33,11 @@ import android.widget.Toast;
 import ar.droid.admin.reader.view.TypeEntityAdapter;
 import ar.droid.admin.reader.view.TypeEventsAdapter;
 import ar.droid.ar.common.ARData;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 import ar.droid.driving.DrivingDirectionsFactory;
 import ar.droid.driving.IDirectionsListener;
 import ar.droid.driving.Leg;
+import ar.droid.driving.Mode;
 import ar.droid.driving.Route;
 import ar.droid.driving.Step;
 import ar.droid.driving.view.RouteOverlay;
@@ -61,6 +63,7 @@ import com.google.android.maps.MyLocationOverlay;
 
 public class MainMap extends MapActivity implements IDirectionsListener{
 	static String TAG = MainMap.class.getName();
+	static int RESULT_BACK = 10101;
 	
 	// splash screen
 	protected boolean _splashActive = true;
@@ -77,6 +80,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	private List<Event> allevents = new ArrayList<Event>();
 	
 	private boolean goToLocation = true;
+
+	private boolean isRouteDisplayed = false;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,8 +117,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         
         Location location;
      	// crear lisener para el GPS
-    	int minTime = ARDroidPreferences.getInt("gpsTimePref", 5000);
-        int minDistance = ARDroidPreferences.getInt("gpsDistPref", 5);
+    	int minTime = AppPreferences.getInt("gpsTimePref", 5000);
+        int minDistance = AppPreferences.getInt("gpsDistPref", 5);
         
     	// salir si ya esta creada la instancia
     	if(savedInstanceState != null){
@@ -133,21 +138,22 @@ public class MainMap extends MapActivity implements IDirectionsListener{
          return true;
      }
     
-	private void initMap(){
+	private synchronized void initMap(){
     	Log.d(TAG, "Inicializando localización");
-    	
-    	if(ARDroidPreferences.getBool("posMapPref", true))
+
+        if(!goToLocation)
+        	return;
+        
+    	if(AppPreferences.getBool("posMapPref", true))
     		myLocationOverlay = new MyCustomLocationOverlay(this, mapView);
     	else
     		myLocationOverlay = new MyLocationOverlay(this, mapView);
     	
         mapView.getOverlays().add(myLocationOverlay);
         myLocationOverlay.enableMyLocation();
-        if(ARDroidPreferences.getBool("oriMapPref", true))
+        if(AppPreferences.getBool("oriMapPref", true))
         	myLocationOverlay.enableCompass();
-        
-        if(goToLocation)
-        	myLocationOverlay.runOnFirstFix(new MyLocationOverlayFirstRun(mapView, myLocationOverlay));
+        myLocationOverlay.runOnFirstFix(new MyLocationOverlayFirstRun(mapView, myLocationOverlay));
         goToLocation = false;
     } 
 
@@ -190,7 +196,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	@Override
 	protected boolean isRouteDisplayed() {
 		
-		return true;
+		return isRouteDisplayed;
 	}
 	
 	@Override
@@ -214,21 +220,25 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	    inflater.inflate(R.menu.menu_map, menu);
 	    return true;
 	}
+	
 	@Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
+		MenuInflater inflater = getMenuInflater();
 		if (showEvents){
-			 menu.clear();
-			 MenuInflater inflater = getMenuInflater();
-			 inflater.inflate(R.menu.menu_type_events, menu);
+			if(this.isRouteDisplayed())
+				 inflater.inflate(R.menu.menu_type_events_route, menu);
+			else	
+				inflater.inflate(R.menu.menu_type_events, menu);
 		}
 		else{ 
-			menu.clear();
-			MenuInflater inflater = getMenuInflater();
-			inflater.inflate(R.menu.menu_map, menu);
+			if(this.isRouteDisplayed())
+				 inflater.inflate(R.menu.menu_map_route, menu);
+			else	
+				inflater.inflate(R.menu.menu_map, menu);
 		}
 		return true;
 	}
-
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -249,19 +259,19 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	    		}
 		    	// abrir realidad aumentada
 		    	try{ 		
-		    		ProgressDialog dialog = ProgressDialog.show(MainMap.this, "", 
-	                        "Cargando...", true);
-		    		dialog.show();
-		    		ARData.setCurrentLocation(myLocationOverlay.getLastFix());
-		    		Intent myIntent = new Intent(MainMap.this, MainAR.class);
-		    		startActivity(myIntent);
-		    		dialog.dismiss();
+		    		
+		            ARData.setCurrentLocation(myLocationOverlay.getLastFix());
+		    		Intent i = new Intent(getApplicationContext(), MainAR.class);
+		    		startActivityForResult(i, 0);
+		    		progressDialog.dismiss();
+		    			
+			    	return true;
 		    	}
 		    	catch (Exception e) {
 		    		this.showMsgCameraError();
 		    		Log.d(TAG, "Error inicializando Camara", e);
+			    	return true;
 				}
-		        return true;
 		    case R.id.menu_config:
 		    	Intent myIntent = new Intent(MainMap.this, Config.class);
 	    		startActivity(myIntent);
@@ -288,17 +298,25 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    case R.id.menu_show_type_events:
 		    	showOptionsTypeEvents();
 		    	return true;
-		    case R.id.menu_goto1:
-		    	showEvents=false;
+		    case R.id.borrar_ruta:
+		    	this.removeRoute();
+		        return true;	    	    	
+		    case R.id.menu_events_volver:
 		    	showEntities();
-		    	return true;
+		    	return true;	
 		    default:
 		        return super.onOptionsItemSelected(item);
 	    }
 	}
-	
-
 		
+	private void removeRoute() {
+		isRouteDisplayed = false;
+		if(showEvents)
+			showEvents(allevents);
+		else
+			this.showEntities();
+	}
+
 	private void showOptionsTypeEntities() {
 		//showEntities=true;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -356,6 +374,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	/**muestra en el mapa todo los eventos registrado en el sistema
 	 * */
 	private void showEntities(){
+    	showEvents = false;
 		//Se recupera las entidades a mostrar en el mapa
 		List<Entity> entities = Resource.getInstance().getEntities();
 		showEntities(entities);
@@ -364,10 +383,15 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	private void showEntities(final List<Entity> entities){
 		// inicializar mapa
 		mapView.getOverlays().clear();
+		
+		goToLocation = true;
         initMap();
 		
-        Runnable loadEntities = new Runnable(){
-	            public void run() {
+        Runnable thread = new Runnable() {
+			
+			@Override
+			public void run() {
+			
 	            	//se agrupan entidades por tipo de entidad
 	        		Iterator<Entity> itEnt = entities.iterator();
 	        		Map<TypeEntity, List<Entity>> types = new HashMap<TypeEntity, List<Entity>>();		
@@ -411,10 +435,10 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	        			
 	        		}
 	        		mapView.postInvalidate();
-	            }
-	        };
-	        Thread thread =  new Thread(null, loadEntities, "agentcargaentidades" );
-	        thread.start();
+			}
+		}; 
+		
+		runOnUiThread(thread);
 	}
 	
 	/**
@@ -424,7 +448,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	 * @return
 	 */
 	private Drawable scaleImage(Drawable drawable) {
-		float scale = ARDroidPreferences.getInt("iconSizePref", 2);
+		float scale = AppPreferences.getInt("iconSizePref", 2);
 		
 		BitmapDrawable bdImage = (BitmapDrawable) drawable;
 		Bitmap bitmapOrig = bdImage.getBitmap();
@@ -464,42 +488,57 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		showEvents(ls);
 	}	
 	
-	private void showEvents(List<Event> eventsToShow){
+	private void showEvents(final List<Event> eventsToShow){
 		mapView.getOverlays().clear();
-		initMap();
-		Map<ar.droid.location.GeoPoint,List<Event>> posiciones = new HashMap<ar.droid.location.GeoPoint,List<Event>>();
-		Iterator<Event> itEvent = eventsToShow.iterator();
-		while (itEvent.hasNext()) {
-			Event event = (Event) itEvent.next();
-			List<Event> listEvents = new ArrayList<Event>();
-			if (posiciones.get(event.getGeoPoint()) != null){
-				listEvents = posiciones.get(event.getGeoPoint());
-			}
-			listEvents.add(event);
-			
-			posiciones.put(event.getGeoPoint(),listEvents);
-		}
 		
-		Iterator <ar.droid.location.GeoPoint> itPoint = posiciones.keySet().iterator();
-		while (itPoint.hasNext()) {
-			ar.droid.location.GeoPoint geopoint = (ar.droid.location.GeoPoint) itPoint.next();
-			List<Event> events = posiciones.get(geopoint);
-			itEvent = events.iterator();
+		goToLocation = true;
+		initMap();
+
+		// copy references to final
+		final MapView mv = mapView;
+		final Activity ac = this;
+		
+        Runnable thread = new Runnable() {
 			
-			//aca cuando hay muchos eventos mostrar distinto en vez de circulo un cuadrado o circulo multicolor
-			Drawable drawable = new SpotBalloon(Color.parseColor("#"+events.get(0).getTypeEvent().getColor()));
-			if (events.size()>1)
-				drawable = getResources().getDrawable(R.drawable.multievent);
-			MapEventItemizedOverlay mapEventOverlay = new MapEventItemizedOverlay(drawable,mapView,this);
-			
-			while (itEvent.hasNext()) {
-				Event event = (Event) itEvent.next();			
-				EventOverlayItem overlayitemEvent = new EventOverlayItem(event.getGeoPoint(),event.getTitle(),event.getDescription(),event);
-				mapEventOverlay.addOverlay(overlayitemEvent);
-				mapView.getOverlays().add(mapEventOverlay);
-			}	
-		}
-		mapView.postInvalidate();
+			@Override
+			public void run() {
+				Map<ar.droid.location.GeoPoint,List<Event>> posiciones = new HashMap<ar.droid.location.GeoPoint,List<Event>>();
+				Iterator<Event> itEvent = eventsToShow.iterator();
+				while (itEvent.hasNext()) {
+					Event event = (Event) itEvent.next();
+					List<Event> listEvents = new ArrayList<Event>();
+					if (posiciones.get(event.getGeoPoint()) != null){
+						listEvents = posiciones.get(event.getGeoPoint());
+					}
+					listEvents.add(event);
+					
+					posiciones.put(event.getGeoPoint(),listEvents);
+				}
+				
+				Iterator <ar.droid.location.GeoPoint> itPoint = posiciones.keySet().iterator();
+				while (itPoint.hasNext()) {
+					ar.droid.location.GeoPoint geopoint = (ar.droid.location.GeoPoint) itPoint.next();
+					List<Event> events = posiciones.get(geopoint);
+					
+					//aca cuando hay muchos eventos mostrar distinto en vez de circulo un cuadrado o circulo multicolor
+					Drawable drawable = new SpotBalloon(Color.parseColor("#"+events.get(0).getTypeEvent().getColor()));
+					if (events.size()>1)
+						drawable = getResources().getDrawable(R.drawable.multievent);
+					MapEventItemizedOverlay mapEventOverlay = new MapEventItemizedOverlay(drawable, mv, ac);
+
+					itEvent = events.iterator();
+					while (itEvent.hasNext()) {
+						Event event = (Event) itEvent.next();			
+						EventOverlayItem overlayitemEvent = new EventOverlayItem(event.getGeoPoint(),event.getTitle(),event.getDescription(),event);
+						mapEventOverlay.addOverlay(overlayitemEvent);
+						mapView.getOverlays().add(mapEventOverlay);
+					}	
+				}
+				mapView.postInvalidate();
+			}
+		}; 
+		
+		runOnUiThread(thread);
 	}
 	
 	private void showMsgCameraError() {
@@ -527,56 +566,73 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, final Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+		
 		//limpiar mapa los overlays?? o no???
 		if (resultCode == RESULT_OK) {
 			 //recupero la entidad
 			 //se cargan las noticias en un thread
-	        	Runnable viewOrders = new Runnable(){
+	        	Runnable viewRoute = new Runnable(){
 	            public void run() {
+	            	Mode mode = ar.droid.driving.Mode.WALKING;
+	            	if(AppPreferences.getInt("routeType", 1) == 2)
+	            		mode = ar.droid.driving.Mode.DRIVING;
 	            	try{
-	            		Entity entity = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity"));
-	    				DrivingDirectionsFactory.createDrivingDirections().driveTo(myLocationOverlay.getMyLocation(), (GeoPoint)entity.getGeoPoint(), ar.droid.driving.Mode.WALKING,MainMap.this);
+	            		if(showEvents){
+	            			Event event = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity")).getEvent(intent.getExtras().getLong("idEvent"));
+	            			DrivingDirectionsFactory.createDrivingDirections().driveTo(myLocationOverlay.getMyLocation(), (GeoPoint) event.getGeoPoint(), mode, MainMap.this);
+	            		}
+	            		else{
+	            			Entity entity = Resource.getInstance().getEntity(intent.getExtras().getLong("idEntity"));
+	            			DrivingDirectionsFactory.createDrivingDirections().driveTo(myLocationOverlay.getMyLocation(), (GeoPoint) entity.getGeoPoint(), mode, MainMap.this);
+	            		}
 	    			}
 	    			catch (Throwable t) {
-	    				Toast.makeText(getApplicationContext(), "Ocurrió un error al determir el recorrido hacia el destino", Toast.LENGTH_LONG).show();
+	    				Log.e(TAG, "Error en recorrido", t);
+	    				Toast.makeText(getApplicationContext(), "Ocurrió un error al determinar el recorrido hacia el destino", Toast.LENGTH_LONG).show();
 	    			}
 	            }
 	        };
-	        Thread thread =  new Thread(null, viewOrders, "MagentoBackground");
-	        thread.start();
+	        Thread thread =  new Thread(null, viewRoute, "Recorrido");
 	        
-	        //se lanza el dialogo de espera hasta que se cargen las noticas
 	        progressDialog = ProgressDialog.show(this,"","Cargando recorrido....");
+	        runOnUiThread(thread);
+	        
 			
 	  }
-	 	
-				Log.i("onActivityResult ", ""+resultCode);
+		else if (resultCode == RESULT_BACK){
+			System.runFinalizersOnExit(true);
+			System.exit(0);
+		}
 	}
 
 	@Override
 	public void directionAvailable(Route route) {
-			Iterator<Leg> xIterator = route.getLegs().iterator();
-			while (xIterator.hasNext()) {
-				Leg leg = xIterator.next();
-				Iterator<Step> xItSteps = leg.getSteps().iterator();
-				while (xItSteps.hasNext()) {
-					Step step = xItSteps.next();
-					for (int i = 1; i < step.getPolyline().getPolylines().size(); i++) {
-						RouteOverlay routeOverlay = new RouteOverlay(null, mapView.getContext(), step.getPolyline().getPolylines().get(i-1),step.getPolyline().getPolylines().get(i), Color.rgb(202, 101, 0));
-						mapView.getOverlays().add(routeOverlay);	
-					}
+		if(isRouteDisplayed)
+			this.removeRoute();
+		else
+			isRouteDisplayed = true;
+		
+		Iterator<Leg> xIterator = route.getLegs().iterator();
+		while (xIterator.hasNext()) {
+			Leg leg = xIterator.next();
+			Iterator<Step> xItSteps = leg.getSteps().iterator();
+			while (xItSteps.hasNext()) {
+				Step step = xItSteps.next();
+				for (int i = 1; i < step.getPolyline().getPolylines().size(); i++) {
+					RouteOverlay routeOverlay = new RouteOverlay(null, mapView.getContext(), step.getPolyline().getPolylines().get(i-1),step.getPolyline().getPolylines().get(i), Color.BLUE);
+					mapView.getOverlays().add(routeOverlay);			
 				}
-			}				
-		// redraw map
+			}
+		}			
+
 		mapView.postInvalidate();
 		progressDialog.dismiss();
-		
 	}
 
 	@Override
 	public void directionNotAvailable() {
 		progressDialog.dismiss();
-		Toast.makeText(getApplicationContext(), "No se encontro recorrido hacia el destino", Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), "No se encontró un recorrido hasta el destino", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override

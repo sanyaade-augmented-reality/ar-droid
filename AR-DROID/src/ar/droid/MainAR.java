@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -32,7 +33,7 @@ import ar.droid.ar.common.ARDroidDataSource;
 import ar.droid.ar.common.DataSource;
 import ar.droid.ar.view.IconMarker;
 import ar.droid.ar.view.Marker;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 import ar.droid.model.Entity;
 import ar.droid.resources.ImageHelperFactory;
 
@@ -41,6 +42,7 @@ import ar.droid.resources.ImageHelperFactory;
  *
  */
 public class MainAR extends SensorsActivity {
+	static int RESULT_BACK = 10101;
 	private static final Logger logger = Logger.getLogger(MainAR.class
 			.getSimpleName());
 
@@ -56,7 +58,7 @@ public class MainAR extends SensorsActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		camScreen = new CameraSurface(this);
 		setContentView(camScreen);
 
@@ -65,31 +67,37 @@ public class MainAR extends SensorsActivity {
 				LayoutParams.WRAP_CONTENT);
 
 		addContentView(augmentedView, augLayout);
-
-		// agragar texto de posición
-		locationText = new TextView(this);
-		locationText.setTextColor(Color.RED);
-		locationText.setPadding(0, 10, 10, 0);
-		locationText.setTextSize(15);
-		locationText.setGravity(Gravity.RIGHT);
-		locationText.bringToFront();
-		LayoutParams textLayout = new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT);
-		addContentView(locationText, textLayout);
-
-		// Setear el alcance de realidad
-		updateDataOnZoom();
-
-		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		wakeLock = pm
-				.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
-
-		if (sources == null) {
-			sources = new ArrayList<DataSource>();
-
-			DataSource ardroidDS = new ARDroidDataSource();
-			sources.add(ardroidDS);
-		}
+		
+		Runnable thread = new Runnable() {
+			@Override
+			public void run() {
+				// agragar texto de posición
+				locationText = new TextView(getApplicationContext());
+				locationText.setTextColor(Color.RED);
+				locationText.setPadding(0, 10, 10, 0);
+				locationText.setTextSize(15);
+				locationText.setGravity(Gravity.RIGHT);
+				locationText.bringToFront();
+				LayoutParams textLayout = new LayoutParams(LayoutParams.FILL_PARENT,
+						LayoutParams.FILL_PARENT);
+				addContentView(locationText, textLayout);
+		
+				// Setear el alcance de realidad
+				updateDataOnZoom();
+		
+				PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+				wakeLock = pm
+						.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+		
+				if (sources == null) {
+					sources = new ArrayList<DataSource>();
+		
+					DataSource ardroidDS = new ARDroidDataSource();
+					sources.add(ardroidDS);
+				}
+			}
+		}; 
+		runOnUiThread(thread);
 	}
 
 	@Override
@@ -161,7 +169,7 @@ public class MainAR extends SensorsActivity {
 	 * @return
 	 */
 	private static Drawable scaleImage(Drawable drawable) {
-		float scale = ARDroidPreferences.getInt("iconSizePref", 2);
+		float scale = AppPreferences.getInt("iconSizePref", 2);
 		scale -= 0.5;
 		
 		BitmapDrawable bdImage = (BitmapDrawable) drawable;
@@ -186,7 +194,6 @@ public class MainAR extends SensorsActivity {
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.menu_mapa:
-
 			// volver al mapa
 			this.finish();
 			return true;

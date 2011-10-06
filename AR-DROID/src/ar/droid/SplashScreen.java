@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 import ar.droid.model.Resource;
 
 public class SplashScreen extends Activity {
@@ -51,7 +51,7 @@ public class SplashScreen extends Activity {
 		};
 		splashTread.start();
 		try {
-			ARDroidPreferences.createPreferences(this.getApplicationContext());
+			AppPreferences.createPreferences(this.getApplicationContext());
 			Resource.getInstance().getEntities();
 			_waitLoaded = false;
 		} catch (Exception e) {
