@@ -10,4 +10,12 @@
 		<item>2</item>
 		<item>3</item>
 	</string-array>
+	<string-array name="route">
+		<item>A pie</item>
+		<item>En auto</item>
+	</string-array>
+	<string-array name="route_values">
+		<item>1</item>
+		<item>2</item>
+	</string-array>
 </resources>
