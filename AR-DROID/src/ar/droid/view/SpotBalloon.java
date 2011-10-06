@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 
 public class SpotBalloon extends BitmapDrawable {
 
@@ -12,28 +12,23 @@ public class SpotBalloon extends BitmapDrawable {
 	private static final Paint blackTextPaint = new Paint();
 	private static final int HEIGHT = 20;
 	private static final int WIDTH = 100;
+	
+	private int multipler = AppPreferences.getInt("iconSizePref", 2);
 
-	// private String name;
-
-	public SpotBalloon(int alpha, int r, int g, int b) {
-		spotBalloonPaint.setARGB(alpha, r, g, b);
-		spotBalloonPaint.setAntiAlias(true);
-		blackTextPaint.setARGB(255, 0, 0, 0);
-		blackTextPaint.setAntiAlias(true);
-	}
-
-	public SpotBalloon(int color) {
+	public SpotBalloon(int color, boolean multiply) {
 		spotBalloonPaint.setColor(color);
 		spotBalloonPaint.setAntiAlias(true);
 		blackTextPaint.setARGB(255, 0, 0, 0);
 		blackTextPaint.setAntiAlias(true);
+		if(!multiply)
+			multipler = 1;
 	}
 
 	@Override
 	public void draw(Canvas canvas) {
 		canvas.setViewport(WIDTH, HEIGHT);
-		canvas.drawCircle(0, 0, 7 * ARDroidPreferences.getInt("iconSizePref", 2), blackTextPaint);
-		canvas.drawCircle(0, 0, 7 * ARDroidPreferences.getInt("iconSizePref", 2), spotBalloonPaint);
+		canvas.drawCircle(0, 0, 7 * multipler, blackTextPaint);
+		canvas.drawCircle(0, 0, 7 * multipler, spotBalloonPaint);
 
 	}
 

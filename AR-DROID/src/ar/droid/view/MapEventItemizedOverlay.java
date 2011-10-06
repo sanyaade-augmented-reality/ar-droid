@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import ar.droid.activity.EntityTabWidget;
 import ar.droid.activity.EventTabWidget;
 import ar.droid.location.GeoPoint;
 import ar.droid.model.Event;
@@ -77,8 +78,7 @@ public class MapEventItemizedOverlay extends BalloonItemizedOverlay<EventOverlay
 
 	@Override
 	public boolean onItemTap(DialogInterface arg0, int index) {
-		//recupero el elemento el la posicion arg1
-		Toast.makeText(mContext,((EventOverlayItem)getItemsToShow(index).get(index)).getEvent().getDescription(),Toast.LENGTH_LONG).show();		
+		//recupero el elemento el la posicion arg1	
 		Event event = ((EventOverlayItem)getItemsToShow(index).get(index)).getEvent();
 		startActivity(event);
 		return true;
@@ -88,17 +88,16 @@ public class MapEventItemizedOverlay extends BalloonItemizedOverlay<EventOverlay
 	@Override
 	protected boolean onBalloonTap(int index, EventOverlayItem item) {
 		hideBalloon();
-		Event event = ((EventOverlayItem)getItemsToShow(index).get(index)).getEvent();
+		Event event = item.getEvent();
 		startActivity(event);
 		return true;
 	}
 	
-	private void startActivity(Event event){
-		Bundle bundle = new Bundle();
-		bundle.putLong("idEvent", event.getId());
-		bundle.putLong("idEntity", event.getEntity().getId());
-		Intent i = new Intent(activity.getApplicationContext(), EventTabWidget.class);
-        i.putExtras(bundle);
-        activity.startActivity(i);		
+	private void startActivity(Event event){	
+        
+        Intent i = new Intent(activity.getApplicationContext(), EventTabWidget.class);
+        i.putExtra("idEntity", event.getEntity().getId());  
+        i.putExtra("idEvent", event.getId());  
+        activity.startActivityForResult(i,0);	
 	}
 }

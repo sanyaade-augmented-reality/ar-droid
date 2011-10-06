@@ -37,7 +37,7 @@ public class TypeEventsAdapter extends ArrayAdapter<TypeEvent> {
         		//se setan datos a mostrar
              	TextView tt = (TextView) v.findViewById(R.id.name_item_list_dialog);
              	ImageView dd = (ImageView)v.findViewById(R.id.name_image_list_dialog);
-        		Drawable drawable = new SpotBalloon(Color.parseColor("#"+te.getColor()));
+        		Drawable drawable = new SpotBalloon(Color.parseColor("#"+te.getColor()), false);
         		dd.setImageDrawable(drawable);
                 if (tt != null) {
                 	tt.setText(te.getDescription());
