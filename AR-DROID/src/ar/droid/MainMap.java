@@ -521,7 +521,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 					List<Event> events = posiciones.get(geopoint);
 					
 					//aca cuando hay muchos eventos mostrar distinto en vez de circulo un cuadrado o circulo multicolor
-					Drawable drawable = new SpotBalloon(Color.parseColor("#"+events.get(0).getTypeEvent().getColor()));
+					Drawable drawable = new SpotBalloon(Color.parseColor("#"+events.get(0).getTypeEvent().getColor()), true);
 					if (events.size()>1)
 						drawable = getResources().getDrawable(R.drawable.multievent);
 					MapEventItemizedOverlay mapEventOverlay = new MapEventItemizedOverlay(drawable, mv, ac);
