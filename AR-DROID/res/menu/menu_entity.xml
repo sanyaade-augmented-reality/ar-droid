@@ -2,5 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_goto_entity"
           android:icon="@drawable/icon_goto"
-          android:title="Cómo llegar?" />     
+          android:title="Como llegar?" />     
+    <item android:id="@+id/menu_close"
+          android:icon="@drawable/icon_back"
+          android:title="Volver" />  
 </menu>

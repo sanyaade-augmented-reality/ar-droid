@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_show_events"
-          android:icon="@drawable/icon_event"
-          android:title="Mostrar" />
    <item android:id="@+id/menu_goto_event"
-          android:icon="@drawable/icon_event"
-          android:title="ir a..." />   
+          android:icon="@drawable/icon_goto"
+          android:title="Como llegar?" /> 
+    <item android:id="@+id/menu_close"
+          android:icon="@drawable/icon_back"
+          android:title="Volver" />  
 </menu>
