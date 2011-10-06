@@ -20,6 +20,7 @@ import ar.droid.activity.EventTabWidget;
 import ar.droid.admin.reader.view.EventAdapter;
 import ar.droid.model.Event;
 import ar.droid.model.Resource;
+import ar.droid.sound.SoundManager;
 
 public class Searchable extends ListActivity implements OnItemClickListener {
 	static String TAG = Searchable.class.getName();
@@ -66,7 +67,10 @@ public class Searchable extends ListActivity implements OnItemClickListener {
 									Searchable.this.finish();
 								}
 							});
-			builder.create();
+		
+			SoundManager.playSound(R.raw.message);
+			AlertDialog alert = builder.create();
+			alert.show();
 		}
 	}
 

@@ -14,7 +14,7 @@ public class SoundManager {
 	}
 
 	public static void playSound(final int resource) {
-		if (soundEnable)
+		if (!soundEnable)
 			return;
 
 		Thread runnable = new Thread() {

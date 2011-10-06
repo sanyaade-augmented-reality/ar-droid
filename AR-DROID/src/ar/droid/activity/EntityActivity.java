@@ -16,6 +16,7 @@ import ar.droid.R;
 import ar.droid.model.Entity;
 import ar.droid.model.Resource;
 import ar.droid.resources.ImageHelperFactory;
+import ar.droid.sound.SoundManager;
 
 public class EntityActivity extends Activity {
 	
@@ -60,7 +61,14 @@ public class EntityActivity extends Activity {
 	}
 	
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		SoundManager.playSound(R.raw.action);
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		SoundManager.playSound(R.raw.button);
 		// Handle item selection
 		switch (item.getItemId()) {
 			case R.id.menu_goto_entity:

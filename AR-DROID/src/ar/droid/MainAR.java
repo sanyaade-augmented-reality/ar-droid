@@ -36,6 +36,7 @@ import ar.droid.ar.view.Marker;
 import ar.droid.config.AppPreferences;
 import ar.droid.model.Entity;
 import ar.droid.resources.ImageHelperFactory;
+import ar.droid.sound.SoundManager;
 
 /**
  * @author gabriel
@@ -188,9 +189,16 @@ public class MainAR extends SensorsActivity {
 		inflater.inflate(R.menu.menu_ar, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		SoundManager.playSound(R.raw.action);
+		return super.onPrepareOptionsMenu(menu);
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		SoundManager.playSound(R.raw.button);
 		// Handle item selection
 		switch (item.getItemId()) {
 		case R.id.menu_mapa:

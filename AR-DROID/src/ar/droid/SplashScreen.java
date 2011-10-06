@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import ar.droid.config.AppPreferences;
 import ar.droid.model.Resource;
+import ar.droid.sound.SoundManager;
 
 public class SplashScreen extends Activity {
 	static String TAG = SplashScreen.class.getName();
@@ -52,6 +53,7 @@ public class SplashScreen extends Activity {
 		splashTread.start();
 		try {
 			AppPreferences.createPreferences(this.getApplicationContext());
+			SoundManager.createInstance(this.getApplicationContext());
 			Resource.getInstance().getEntities();
 			_waitLoaded = false;
 		} catch (Exception e) {
@@ -69,6 +71,8 @@ public class SplashScreen extends Activity {
 						android.os.Process.killProcess(pid);
 					}
 				});
+
+		SoundManager.playSound(R.raw.message);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}

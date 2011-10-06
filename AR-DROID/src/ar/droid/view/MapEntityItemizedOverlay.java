@@ -7,7 +7,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import ar.droid.R;
 import ar.droid.activity.EntityTabWidget;
+import ar.droid.sound.SoundManager;
 
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
@@ -50,6 +52,7 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
 
 	@Override
 	protected boolean onBalloonTap(int index, EntityOverlayItem item) {
+		SoundManager.playSound(R.raw.action);
 		//Toast.makeText(mContext,item.getEntity().getUrl(),Toast.LENGTH_LONG).show();
 		//aca hay que disparar la vista de la actividad con los datos de la entidad
 		//tengo en el item la entidad seleccionada	

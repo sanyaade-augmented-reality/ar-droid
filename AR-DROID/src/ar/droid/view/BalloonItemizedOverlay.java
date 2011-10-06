@@ -30,6 +30,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import ar.droid.R;
 import ar.droid.location.GeoPoint;
+import ar.droid.sound.SoundManager;
 
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapController;
@@ -180,6 +181,8 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends I
 		}
 		builder.setItems(options,this);
 		builder.setCancelable(true);
+		
+		SoundManager.playSound(R.raw.message);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}

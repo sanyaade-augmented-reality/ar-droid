@@ -14,10 +14,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import ar.droid.R;
 import ar.droid.activity.EntityTabWidget;
 import ar.droid.activity.EventTabWidget;
 import ar.droid.location.GeoPoint;
 import ar.droid.model.Event;
+import ar.droid.sound.SoundManager;
 
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
@@ -87,6 +89,7 @@ public class MapEventItemizedOverlay extends BalloonItemizedOverlay<EventOverlay
 	
 	@Override
 	protected boolean onBalloonTap(int index, EventOverlayItem item) {
+		SoundManager.playSound(R.raw.action);
 		hideBalloon();
 		Event event = item.getEvent();
 		startActivity(event);

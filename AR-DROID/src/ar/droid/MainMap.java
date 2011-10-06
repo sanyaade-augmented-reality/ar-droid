@@ -50,6 +50,7 @@ import ar.droid.model.Resource;
 import ar.droid.model.TypeEntity;
 import ar.droid.model.TypeEvent;
 import ar.droid.resources.ImageHelperFactory;
+import ar.droid.sound.SoundManager;
 import ar.droid.view.EntityOverlayItem;
 import ar.droid.view.EventOverlayItem;
 import ar.droid.view.MapEntityItemizedOverlay;
@@ -179,6 +180,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     	        		textView.invalidate();
     	           }
     	       });
+    	
+    	SoundManager.playSound(R.raw.message);
     	AlertDialog alert = builder.create();  
     	alert.show();
 	}
@@ -223,6 +226,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	
 	@Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+		SoundManager.playSound(R.raw.action);
 		menu.clear();
 		MenuInflater inflater = getMenuInflater();
 		if (showEvents){
@@ -242,6 +246,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		SoundManager.playSound(R.raw.button);
 	    // Handle item selection
 	    switch (item.getItemId()) {
 		    case R.id.menu_close:
@@ -337,7 +342,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 				showEntities(entityFilter);
 			}
 		});
-		//builder.setCancelable(true);
+		
+		SoundManager.playSound(R.raw.message);
 		AlertDialog alert = builder.create();
 		alert.getListView().setBackgroundColor(Color.WHITE);
 		alert.show();
@@ -364,7 +370,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 				showEvents(eventsFilter);
 			}
 		});
-		//builder.setCancelable(true);
+		
+		SoundManager.playSound(R.raw.message);
 		AlertDialog alert = builder.create();
 		alert.getListView().setBackgroundColor(Color.WHITE);
 		alert.show();
@@ -475,6 +482,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			}
 		});
 		builder.setCancelable(true);
+		
+		SoundManager.playSound(R.raw.message);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
@@ -550,6 +559,8 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     	        	   finish();
     	           }
     	       });
+    	
+    	SoundManager.playSound(R.raw.message);
     	AlertDialog alert = builder.create();  
     	alert.show();
 	}
@@ -656,6 +667,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 					}
 				});
 
+		SoundManager.playSound(R.raw.message);
 		AlertDialog alert = builder.create();
 		alert.show();
 	}

@@ -21,6 +21,7 @@ import ar.droid.admin.reader.Message;
 import ar.droid.admin.reader.view.MessageNewsAdapter;
 import ar.droid.model.Entity;
 import ar.droid.model.Resource;
+import ar.droid.sound.SoundManager;
 
 public class ListNewsActivity extends ListActivity implements OnItemClickListener {
 	
@@ -110,7 +111,14 @@ public class ListNewsActivity extends ListActivity implements OnItemClickListene
 	}
 	
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		SoundManager.playSound(R.raw.action);
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		SoundManager.playSound(R.raw.button);
 		// Handle item selection
 		switch (item.getItemId()) {
 			case R.id.menu_goto_entity:

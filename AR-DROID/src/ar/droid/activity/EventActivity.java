@@ -40,6 +40,7 @@ import ar.droid.model.Event;
 import ar.droid.model.Resource;
 import ar.droid.model.ResourceHelperFactory;
 import ar.droid.resources.ImageHelperFactory;
+import ar.droid.sound.SoundManager;
 
 public class EventActivity extends Activity  implements android.view.View.OnClickListener,IQuestionListener {
 	
@@ -247,6 +248,8 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
                 	//no hace nada
                 }
             });
+			
+			SoundManager.playSound(R.raw.message);
 			AlertDialog alert = builder.create();
 			alert.show();
 		}
@@ -290,6 +293,8 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
                 	//no hace nada
                 }
             });
+			
+			SoundManager.playSound(R.raw.message);
 			AlertDialog alert = builder.create();
 			alert.show();
 		}
@@ -325,12 +330,15 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
                 	//no hace nada
                 }
             });
+			
+			SoundManager.playSound(R.raw.message);
 			AlertDialog alert = builder.create();
 			alert.show();
 		}
 
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
+			SoundManager.playSound(R.raw.action);
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.menu_events, menu);
 			return true;
@@ -338,6 +346,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 		
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
+			SoundManager.playSound(R.raw.button);
 			// Handle item selection
 			switch (item.getItemId()) {
 				case R.id.menu_goto_event:

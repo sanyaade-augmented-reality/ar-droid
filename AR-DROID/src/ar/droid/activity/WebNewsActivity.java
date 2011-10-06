@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import ar.droid.R;
 import ar.droid.model.Entity;
 import ar.droid.model.Resource;
+import ar.droid.sound.SoundManager;
 
 public class WebNewsActivity extends Activity {
 	private ProgressDialog progressDialog;
@@ -56,7 +57,14 @@ public class WebNewsActivity extends Activity {
 	}
 	
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		SoundManager.playSound(R.raw.action);
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		SoundManager.playSound(R.raw.button);
 		// Handle item selection
 		switch (item.getItemId()) {
 			case R.id.menu_goto_entity:
