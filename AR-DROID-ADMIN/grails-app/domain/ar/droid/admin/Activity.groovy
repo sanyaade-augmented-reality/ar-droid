@@ -14,6 +14,7 @@ class Activity {
 	}
 	static constraints = { 
 		name(blank: false)
+		description(blank: false)
 		geoPoint(nullable: true)
 	}
 	
