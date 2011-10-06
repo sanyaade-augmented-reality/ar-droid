@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class ARDroidPreferences {
+public class AppPreferences {
 
 	private static SharedPreferences preferences = null;
 
@@ -21,45 +21,45 @@ public class ARDroidPreferences {
 	}
 
 	public static String getString(String key, String defValue) {
-		if(ARDroidPreferences.getPreferences() == null)
+		if(AppPreferences.getPreferences() == null)
 			return defValue;
 		try {
-			return ARDroidPreferences.getPreferences().getString(key, defValue);
+			return AppPreferences.getPreferences().getString(key, defValue);
 		} catch (Exception e) {
 			return defValue;
 		}
 	}
 
 	public static int getInt(String key, int defValue) {
-		if(ARDroidPreferences.getPreferences() == null)
+		if(AppPreferences.getPreferences() == null)
 			return defValue;
 		try {
-			return new Integer(ARDroidPreferences.getPreferences().getString(
+			return new Integer(AppPreferences.getPreferences().getString(
 					key, new Integer(defValue).toString())).intValue();
 		} catch (Exception e) {
-			return ARDroidPreferences.getPreferences().getInt(key, defValue);
+			return AppPreferences.getPreferences().getInt(key, defValue);
 		}
 	}
 
 	public static float getFloat(String key, float defValue) {
-		if(ARDroidPreferences.getPreferences() == null)
+		if(AppPreferences.getPreferences() == null)
 			return defValue;
 		try {
-			return new Float(ARDroidPreferences.getPreferences().getString(key,
+			return new Float(AppPreferences.getPreferences().getString(key,
 					new Float(defValue).toString())).floatValue();
 		} catch (Exception e) {
-			return ARDroidPreferences.getPreferences().getFloat(key, defValue);
+			return AppPreferences.getPreferences().getFloat(key, defValue);
 		}
 	}
 
 	public static boolean getBool(String key, boolean defValue) {
-		if(ARDroidPreferences.getPreferences() == null)
+		if(AppPreferences.getPreferences() == null)
 			return defValue;
 		try {
-			return new Boolean(ARDroidPreferences.getPreferences().getString(
+			return new Boolean(AppPreferences.getPreferences().getString(
 					key, new Boolean(defValue).toString())).booleanValue();
 		} catch (Exception e) {
-			return ARDroidPreferences.getPreferences()
+			return AppPreferences.getPreferences()
 					.getBoolean(key, defValue);
 		}
 	}

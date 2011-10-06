@@ -21,6 +21,10 @@
 			android:summary="Seleccione el tamaño de lo iconos en mapa y RA"
 			android:key="iconSizePref" android:defaultValue="2" android:entries="@array/iconSize"
 			android:entryValues="@array/iconSize_values" android:persistent="true" />
+			
+		<CheckBoxPreference android:summary="Reproducir sonidos en las distintas actividades de la aplicación"
+			android:defaultValue="false" android:title="Reproducir sonidos"
+			android:key="soundEnable" android:persistent="true" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="Ubicación y GPS">
@@ -33,6 +37,11 @@
 			android:summary="Ingrese la cantidad de milisegundos mínimo para actualizar"
 			android:defaultValue="5000" android:title="Actualización - Tiempo"
 			android:key="gpsTimePref" android:persistent="true" />
+			
+		<ListPreference android:title="Mostrar rutas"
+			android:summary="Seleccione si mostrar rutas a pie o en auto"
+			android:key="routeType" android:defaultValue="1" android:entries="@array/route"
+			android:entryValues="@array/route_values" android:persistent="true" />
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="Realidad Aumentada">
