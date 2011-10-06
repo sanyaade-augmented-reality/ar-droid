@@ -13,7 +13,7 @@ import ar.droid.admin.survey.SurveyTemplate;
 import ar.droid.admin.survey.response.Response;
 import ar.droid.admin.survey.response.Summary;
 import ar.droid.admin.survey.response.SurveyResponse;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 import ar.droid.config.Request;
 import ar.droid.connection.RESTClient;
 import ar.droid.location.GeoPoint;
@@ -30,7 +30,7 @@ import com.google.gson.reflect.TypeToken;
 
 
 public class ResourceHelperJSON extends ResourceHelper {
-	private String urlServer = ARDroidPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+	private String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
 	
 	public List<Entity> getEntities(){
 		

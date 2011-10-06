@@ -8,13 +8,13 @@ import java.util.logging.Logger;
 
 import android.location.Location;
 import ar.droid.ar.view.Marker;
-import ar.droid.config.ARDroidPreferences;
+import ar.droid.config.AppPreferences;
 
 public abstract class ARData {
 	private static final Logger logger = Logger.getLogger(ARData.class.getSimpleName());
     private static final Map<Long,Marker> markerList = new ConcurrentHashMap<Long,Marker>();
 	
-    private static float radius = ARDroidPreferences.getInt("raDistPref", 2000) / 1000;
+    private static float radius = AppPreferences.getInt("raDistPref", 2000) / 1000;
     private static Location currentLocation = null;
     private static Matrix rotationMatrix = null;
     
