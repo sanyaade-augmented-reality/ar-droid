@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="Configuración de AR-DROID">
 		<EditTextPreference android:summary="Ingrese la dirección del servidor a conectar"
-			android:defaultValue="http://www.gabrielnegri.com.ar:8080/ardroid"
+			android:defaultValue="http://www.gabrielnegri.com.ar:8080/server"
 			android:title="URL Servidor" android:key="urlServerPref" android:persistent="true" />
 
 		<EditTextPreference android:inputType="number"

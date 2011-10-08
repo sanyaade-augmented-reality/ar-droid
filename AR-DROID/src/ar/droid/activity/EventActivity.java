@@ -88,7 +88,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        	//Linkify.addLinks(rank,pattern, entity.getUrl(),null,null);
 	        	rank.setMovementMethod(LinkMovementMethod.getInstance());
 	        	
-	        	String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+	        	String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/server");
 	        	
 	        	String text = summary.getDescription()+ "   <a href=\"" + urlServer + "/event/comentarios/" + event.getId() + ">Ver Todos</a>";
 	        	rank.setText(Html.fromHtml(text));
@@ -175,7 +175,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 		}
 		
 		protected void showDialogCompartir() {
-			String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+			String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/server");
 			Intent sendIntent = new Intent(Intent.ACTION_SEND);
 			
 		    sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Evento " + this.event.getTitle());

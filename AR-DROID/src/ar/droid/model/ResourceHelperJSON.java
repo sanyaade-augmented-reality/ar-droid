@@ -1,6 +1,5 @@
 package ar.droid.model;
 
-import java.io.InputStream;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ import com.google.gson.reflect.TypeToken;
 
 
 public class ResourceHelperJSON extends ResourceHelper {
-	private String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+	private String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/server");
 	
 	public List<Entity> getEntities(){
 		

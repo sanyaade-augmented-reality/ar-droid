@@ -20,7 +20,7 @@ public abstract class ImageHelper implements IImageHelper {
 		if(_IMAGES.containsKey(url))
 			return _IMAGES.get(url);
 					
-		String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/ardroid");
+		String urlServer = AppPreferences.getString("urlServerPref", "http://www.gabrielnegri.com.ar:8080/server");
 		InputStream instream = RESTClient.doGet(urlServer+url);
 		if (instream != null){
 			Drawable drawable = Drawable.createFromStream(instream, "offers task");
