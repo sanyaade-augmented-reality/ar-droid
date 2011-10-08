@@ -108,7 +108,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     	mapView.getController().setZoom(17);
     	
     	//carga entidades al iniciar el mapa
-    	showEntities();       
+    	showEntities(true);       
        
     	// si el GPS no esta habilitado informar
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
@@ -304,7 +304,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    	showOptionsEvents();
 		        return true;
 		    case R.id.menu_entities:
-		    	showEntities();
+		    	showEntities(false);
 		    	showOptionsTypeEntities();
 		        return true;		    	    	
 		    case R.id.menu_show_type_events:
@@ -314,7 +314,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		    	this.removeRoute();
 		        return true;	    	    	
 		    case R.id.menu_events_volver:
-		    	showEntities();
+		    	showEntities(false);
 		    	return true;	
 		    default:
 		        return super.onOptionsItemSelected(item);
@@ -326,7 +326,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		if(showEvents)
 			showEvents(allevents);
 		else
-			this.showEntities();
+			this.showEntities(false);
 	}
 
 	private void showOptionsTypeEntities() {
@@ -387,18 +387,18 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 
 	/**muestra en el mapa todo los eventos registrado en el sistema
 	 * */
-	private void showEntities(){
+	private void showEntities(boolean gotoLoc){
     	showEvents = false;
 		//Se recupera las entidades a mostrar en el mapa
 		List<Entity> entities = Resource.getInstance().getEntities();
+		
+		goToLocation = gotoLoc;
 		showEntities(entities);
 	}
 	
 	private void showEntities(final List<Entity> entities){
 		// inicializar mapa
 		mapView.getOverlays().clear();
-		
-		goToLocation = false;
         initMap();
 		
         Runnable thread = new Runnable() {
@@ -463,6 +463,15 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	 */
 	private Drawable scaleImage(Drawable drawable) {
 		float scale = AppPreferences.getInt("iconSizePref", 2);
+		if(scale == 1){
+			scale = (float) 0.75;
+		}
+		else if(scale == 2){
+			scale = (float) 1.25;
+		}
+		else if(scale == 3){
+			scale = (float) 2;
+		}	
 		
 		BitmapDrawable bdImage = (BitmapDrawable) drawable;
 		Bitmap bitmapOrig = bdImage.getBitmap();

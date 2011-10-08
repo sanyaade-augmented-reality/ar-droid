@@ -49,7 +49,7 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends I
 	private MapView mapView;
 	private BalloonOverlayView<Item> balloonView;
 	private View clickRegion;
-	private int viewOffset;
+	protected int viewOffset;
 	final MapController mc;
 	private Item currentFocussedItem;
 	private int currentFocussedIndex;
@@ -69,7 +69,6 @@ public abstract class BalloonItemizedOverlay<Item extends OverlayItem> extends I
 	public BalloonItemizedOverlay(Drawable defaultMarker, MapView mapView) {
 		super(defaultMarker);
 		this.mapView = mapView;
-		viewOffset = 25;
 		mc = mapView.getController();	
 		
 	}

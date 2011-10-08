@@ -40,6 +40,7 @@ public class MapEventItemizedOverlay extends BalloonItemizedOverlay<EventOverlay
 	
 	public MapEventItemizedOverlay(Drawable defaultMarker,MapView mapView,Activity activity) {
 		super(boundCenterBottom(defaultMarker),mapView);
+		viewOffset = 40;
 		mContext = mapView.getContext();
 		this.mapView = mapView;
 		this.activity = activity;

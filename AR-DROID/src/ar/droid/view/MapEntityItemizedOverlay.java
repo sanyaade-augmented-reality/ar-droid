@@ -24,6 +24,7 @@ public class MapEntityItemizedOverlay extends BalloonItemizedOverlay<EntityOverl
 	
 	public MapEntityItemizedOverlay(Drawable defaultMarker,MapView mapView,Activity activity) {
 		super(boundCenterBottom(defaultMarker),mapView);
+		viewOffset = 30;
 		mContext = mapView.getContext();
 		this.mapView = mapView;
 		this.activity = activity;
