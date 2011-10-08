@@ -85,8 +85,10 @@ class MultipleChoiceQuestion extends Question{
 		else{
 			rating = -1;
 		}
-		
-		desc = desc.substring(0,desc.length()-2);
+		if(desc == "")
+			desc = "(0 votos)"
+		else
+			desc = desc.substring(0,desc.length()-2);
 		return ["rating":rating, "description":desc, "comments":[]]
 	}
 	
