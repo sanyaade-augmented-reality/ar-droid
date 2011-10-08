@@ -7,18 +7,23 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import ar.droid.R;
 import ar.droid.activity.EntityTabWidget;
 import ar.droid.activity.EventTabWidget;
+import ar.droid.admin.reader.view.MultiEventsAdapter;
+import ar.droid.admin.reader.view.TypeEventsAdapter;
 import ar.droid.location.GeoPoint;
 import ar.droid.model.Event;
+import ar.droid.model.TypeEvent;
 import ar.droid.sound.SoundManager;
 
 import com.google.android.maps.MapView;
@@ -62,6 +67,24 @@ public class MapEventItemizedOverlay extends BalloonItemizedOverlay<EventOverlay
 		return mOverlays.size()>1;
 	}
 
+	@Override
+	protected  void createOnTapItem(int index) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mapView.getContext());
+		builder.setTitle("Varios eventos");
+		final ArrayAdapter<OverlayItem> itemlist = new MultiEventsAdapter(mContext, getItemsToShow(index));
+
+		builder.setSingleChoiceItems(itemlist,-1,new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, final int which) {
+				dialog.dismiss();
+				onItemTap(dialog, which);
+			}
+		});
+		
+		SoundManager.playSound(R.raw.message);
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
 	
 	public List<OverlayItem> getItemsToShow(int index) {
 		//aca necesito mostar en el diaglo los eventos de la misma ubicacion

@@ -3,15 +3,15 @@ package ar.droid.view;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import ar.droid.config.AppPreferences;
 
-public class SpotBalloon extends BitmapDrawable {
+public class SpotBalloon extends Drawable {
 
 	private Paint spotBalloonPaint = new Paint();
 	private static final Paint blackTextPaint = new Paint();
-	private static final int HEIGHT = 20;
-	private static final int WIDTH = 100;
+	private static final int HEIGHT = 24;
+	private static final int WIDTH = 30;
 	
 	private int multipler = AppPreferences.getInt("iconSizePref", 2);
 
@@ -21,14 +21,14 @@ public class SpotBalloon extends BitmapDrawable {
 		blackTextPaint.setARGB(255, 0, 0, 0);
 		blackTextPaint.setAntiAlias(true);
 		if(!multiply)
-			multipler = 1;
+			multipler = 2;
 	}
 
 	@Override
 	public void draw(Canvas canvas) {
 		canvas.setViewport(WIDTH, HEIGHT);
-		canvas.drawCircle(0, 0, 7 * multipler, blackTextPaint);
-		canvas.drawCircle(0, 0, 7 * multipler, spotBalloonPaint);
+		canvas.drawCircle(0, 0, 10 * multipler, blackTextPaint);
+		canvas.drawCircle(0, 0, 10 * multipler, spotBalloonPaint);
 
 	}
 
