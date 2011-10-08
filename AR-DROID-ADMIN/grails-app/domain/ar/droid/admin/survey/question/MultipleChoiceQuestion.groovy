@@ -71,11 +71,16 @@ class MultipleChoiceQuestion extends Question{
 		if (this.id == 1){
 			int si = 0
 			if(csi != null) si = result.get(csi)
-			rating = (5 * si / responses.size())
-			if(rating % 1 > 0.5)
-				rating = Math.ceil(rating)
-			else
-				rating = Math.floor(rating)
+			if(responses.size() == 0){
+				rating = 3
+			}
+			else{
+				rating = (5 * si / responses.size())
+				if(rating % 1 > 0.5)
+					rating = Math.ceil(rating)
+				else
+					rating = Math.floor(rating)
+			}
 		}
 		else{
 			rating = -1;
