@@ -171,7 +171,15 @@ public class MainAR extends SensorsActivity {
 	 */
 	private static Drawable scaleImage(Drawable drawable) {
 		float scale = AppPreferences.getInt("iconSizePref", 2);
-		scale -= 0.5;
+		if(scale == 1){
+			scale = (float) 0.75;
+		}
+		else if(scale == 2){
+			scale = (float) 1.25;
+		}
+		else if(scale == 3){
+			scale = (float) 1.75;
+		}	
 		
 		BitmapDrawable bdImage = (BitmapDrawable) drawable;
 		Bitmap bitmapOrig = bdImage.getBitmap();
