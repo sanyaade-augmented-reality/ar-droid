@@ -463,15 +463,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	 */
 	private Drawable scaleImage(Drawable drawable) {
 		float scale = AppPreferences.getInt("iconSizePref", 2);
-		if(scale == 1){
-			scale = (float) 0.75;
-		}
-		else if(scale == 2){
-			scale = (float) 1.25;
-		}
-		else if(scale == 3){
-			scale = (float) 2;
-		}	
 		
 		BitmapDrawable bdImage = (BitmapDrawable) drawable;
 		Bitmap bitmapOrig = bdImage.getBitmap();

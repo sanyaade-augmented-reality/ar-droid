@@ -65,7 +65,16 @@ public class SplashScreen extends Activity {
 	private void showError() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("No se puede conectar con el servidor!").setCancelable(false)
-				.setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
+				.setPositiveButton("Ir a configuración", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						Intent intent = new Intent(getApplicationContext(), Config.class);
+						startActivity(intent);
+						
+						// luego terminar
+						int pid = android.os.Process.myPid();
+						android.os.Process.killProcess(pid);
+					}
+				}).setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						int pid = android.os.Process.myPid();
 						android.os.Process.killProcess(pid);
