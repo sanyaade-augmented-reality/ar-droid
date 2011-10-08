@@ -62,6 +62,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 	private static LocationManager locationMgr = null;
 	private LocationListenerGPSAR locationListener = null;
 	protected TextView locationText;
+	protected Entity entitySelected = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -272,7 +273,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 		if (me.getAction() != MotionEvent.ACTION_UP)
 			return false;
 		
-		final Entity entitySelected = this.getMarkerAt(me.getX(), me.getY());
+		entitySelected = this.getMarkerAt(me.getX(), me.getY());
 		if(entitySelected == null)
 			return false;
 		
@@ -282,8 +283,8 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 		dialog.setTitle(entitySelected.getName());
 
 		TextView text = (TextView) dialog.findViewById(R.id.text_e_ar);
-		if(entitySelected.getDescription().length() > 150)
-			text.setText(entitySelected.getDescription().substring(0, 150) + " ...");
+		if(entitySelected.getDescription().length() > 200)
+			text.setText(entitySelected.getDescription().substring(0, 200) + " ...");
 		else
 			text.setText(entitySelected.getDescription());
 		ImageView image = (ImageView) dialog.findViewById(R.id.image_e_ar);
@@ -296,7 +297,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, On
 			public void onClick(View v) {
 				Intent i = new Intent(getApplicationContext(), EntityTabWidget.class);
 				i.putExtra("idEntity", entitySelected.getId());
-				startActivity(i);
+				startActivityForResult(i, 0);
 				dialog.dismiss();
 			}
 		});

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -211,6 +212,7 @@ public class MainAR extends SensorsActivity {
 		switch (item.getItemId()) {
 		case R.id.menu_mapa:
 			// volver al mapa
+			setResult(RESULT_CANCELED);
 			this.finish();
 			return true;
 		default:
@@ -242,4 +244,25 @@ public class MainAR extends SensorsActivity {
 
 	protected void updateDataOnZoom() {
 	};
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(resultCode == RESULT_OK){
+			Bundle bundle = new Bundle();
+			bundle.putLong("idEntity", entitySelected.getId());
+			Intent mIntent = new Intent();
+            mIntent.putExtras(bundle);
+    		setResult(RESULT_OK, mIntent);
+			finishFromChild(this);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		setResult(RESULT_CANCELED);
+	}
 }

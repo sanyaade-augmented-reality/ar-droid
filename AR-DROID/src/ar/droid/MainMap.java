@@ -141,9 +141,6 @@ public class MainMap extends MapActivity implements IDirectionsListener{
     
 	private synchronized void initMap(){
     	Log.d(TAG, "Inicializando localización");
-
-        if(!goToLocation)
-        	return;
         
     	if(AppPreferences.getBool("posMapPref", true))
     		myLocationOverlay = new MyCustomLocationOverlay(this, mapView);
@@ -154,8 +151,12 @@ public class MainMap extends MapActivity implements IDirectionsListener{
         myLocationOverlay.enableMyLocation();
         if(AppPreferences.getBool("oriMapPref", true))
         	myLocationOverlay.enableCompass();
+        
+        if(!goToLocation)
+        	return;
+        
         myLocationOverlay.runOnFirstFix(new MyLocationOverlayFirstRun(mapView, myLocationOverlay));
-        goToLocation = false;
+        goToLocation = true;
     } 
 
 	private void showMsgGPSDisabled() {
@@ -264,12 +265,18 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	    		}
 		    	// abrir realidad aumentada
 		    	try{ 		
+		    		Runnable arrun = new Runnable() {
+						
+						@Override
+						public void run() {
+							ARData.setCurrentLocation(myLocationOverlay.getLastFix());
+				    		Intent i = new Intent(getApplicationContext(), MainAR.class);
+				    		startActivityForResult(i, 0);
+						}
+					};
+		    		Thread thread = new Thread(null, arrun, "RA");
+		    		runOnUiThread(thread);
 		    		
-		            ARData.setCurrentLocation(myLocationOverlay.getLastFix());
-		    		Intent i = new Intent(getApplicationContext(), MainAR.class);
-		    		startActivityForResult(i, 0);
-		    		progressDialog.dismiss();
-		    			
 			    	return true;
 		    	}
 		    	catch (Exception e) {
@@ -391,7 +398,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		// inicializar mapa
 		mapView.getOverlays().clear();
 		
-		goToLocation = true;
+		goToLocation = false;
         initMap();
 		
         Runnable thread = new Runnable() {
@@ -500,7 +507,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	private void showEvents(final List<Event> eventsToShow){
 		mapView.getOverlays().clear();
 		
-		goToLocation = true;
+		goToLocation = false;
 		initMap();
 
 		// copy references to final
@@ -601,6 +608,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 	    				Log.e(TAG, "Error en recorrido", t);
 	    				Toast.makeText(getApplicationContext(), "Ocurrió un error al determinar el recorrido hacia el destino", Toast.LENGTH_LONG).show();
 	    			}
+	            	progressDialog.dismiss();
 	            }
 	        };
 	        Thread thread =  new Thread(null, viewRoute, "Recorrido");
