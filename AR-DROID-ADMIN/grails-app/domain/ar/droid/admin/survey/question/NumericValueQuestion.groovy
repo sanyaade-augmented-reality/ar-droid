@@ -35,9 +35,10 @@ class NumericValueQuestion extends Question{
 			NumericValueResponse rn = sr.first()
 			rating = rating + rn.value;
 		}
-		if (rating != 0){
-			rating = rating/responses.size()
-		}		
+		if (rating != 0 && responses.size() != 0)
+			rating = rating / responses.size()
+		else
+			rating = 3;
 		return ["rating":rating,"description":"("+responses.size() + " votos)","comments":[]]
 	}
 
