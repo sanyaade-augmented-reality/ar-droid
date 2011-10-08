@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_ar"
-          android:icon="@drawable/icon_ra"
-          android:title="Vista RA" />
-    <item android:id="@+id/menu_position"
-          android:icon="@drawable/icon_posicion"
-          android:title="Mi posición" />
-    <item android:id="@+id/menu_config"
-          android:icon="@drawable/icon_config"
-          android:title="Configuración" />
-    <item android:id="@+id/menu_events"
-          android:icon="@drawable/icon_mostrar"
-          android:title="Eventos" />
-   <item android:id="@+id/menu_entities"
-        android:icon="@drawable/icon_layers"
-          android:title="Tipos de Entidades" />
-   <item android:id="@+id/borrar_ruta"
-        android:icon="@drawable/remove"
-          android:title="Borrar ruta" />
-    <item android:id="@+id/menu_close"
-          android:icon="@drawable/icon_cerrar"
-          android:title="Salir" />
+	<item android:id="@+id/menu_ar" android:icon="@drawable/icon_ra"
+		android:title="Vista RA" />
+	<item android:id="@+id/menu_position" android:icon="@drawable/icon_posicion"
+		android:title="Mi posición" />
+	<item android:id="@+id/menu_config" android:icon="@drawable/icon_config"
+		android:title="Configuración" />
+	<item android:id="@+id/menu_events" android:icon="@drawable/icon_mostrar"
+		android:title="Eventos" />
+	<item android:id="@+id/menu_entities" android:icon="@drawable/icon_layers"
+		android:title="Tipos de Entidades" />
+	<item android:id="@+id/borrar_ruta" android:icon="@drawable/remove"
+		android:title="Borrar ruta" />
+	<item android:id="@+id/menu_close" android:icon="@drawable/icon_cerrar"
+		android:title="Salir" />
 </menu>

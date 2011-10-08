@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_show_type_events"
-          android:icon="@drawable/icon_layers"
-          android:title="Tipos de Eventos" />
-   <item android:id="@+id/menu_events_volver"
-          android:icon="@drawable/icon_back"
-          android:title="Volver" />   
-    <item android:id="@+id/menu_close"
-          android:icon="@drawable/icon_cerrar"
-          android:title="Salir" />
+	<item android:id="@+id/menu_show_type_events" android:icon="@drawable/icon_layers"
+		android:title="Tipos de Eventos" />
+	<item android:id="@+id/menu_position" android:icon="@drawable/icon_posicion"
+		android:title="Mi posición" />
+	<item android:id="@+id/menu_events_volver" android:icon="@drawable/icon_back"
+		android:title="Volver" />
+	<item android:id="@+id/menu_close" android:icon="@drawable/icon_cerrar"
+		android:title="Salir" />
 </menu>
