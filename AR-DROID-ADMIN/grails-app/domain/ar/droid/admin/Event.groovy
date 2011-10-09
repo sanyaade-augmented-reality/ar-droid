@@ -53,5 +53,12 @@ class Event {
 	def isMonthly = {
 		this.eventCalendar.isMonthly()
 	}
+	
+	public boolean active() {
+		Date hoy = new Date()
+		if(hoy.compareTo(this.eventCalendar.endDate) > 0)
+			return false
+		return true
+	}
 }
 

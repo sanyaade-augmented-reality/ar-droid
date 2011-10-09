@@ -40,6 +40,15 @@ class Entity {
 	public String toString() {
 		return name
 	}
+	
+	public List activeEvents() {
+		def act_events = []
+		events.each {
+			if(it.active())
+				act_events.add(it)
+		}
+		return act_events
+	}
 }
 
 /**De esta forma se mapea una composicion, GeoPoint NO se transforma en una tabla*/
