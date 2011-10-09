@@ -33,7 +33,7 @@ class TextValueQuestion extends Question {
 			TextValueResponse tvr = sr.first()
 			Calendar date = new GregorianCalendar()
 			date.setTimeInMillis(tvr.surveyResponse.fecha.getTime())
-			commentarios.add(date.getAt(Calendar.DAY_OF_MONTH) + "/" + (date.getAt(Calendar.MONTH)+1) + "/" +  date.getAt(Calendar.YEAR).toString().substring(2) + ": " + tvr.getComment() + "\n\r")
+			commentarios.add(date.getAt(Calendar.DAY_OF_MONTH) + "/" + (date.getAt(Calendar.MONTH)+1) + "/" +  date.getAt(Calendar.YEAR).toString().substring(2) + ": " + tvr.getComment())
 		}
 		return ["rating":-1,"description": responses.size() + " comentarios","comments":commentarios]
 	}
