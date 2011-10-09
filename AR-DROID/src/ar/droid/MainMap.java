@@ -631,6 +631,14 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 		else
 			isRouteDisplayed = true;
 		
+		int color;
+		// determinar color
+		int routeType = AppPreferences.getInt("routeType", 1);
+		if(routeType == 1)
+			color = Color.BLUE;
+		else
+			color = Color.GREEN;
+			
 		Iterator<Leg> xIterator = route.getLegs().iterator();
 		while (xIterator.hasNext()) {
 			Leg leg = xIterator.next();
@@ -638,7 +646,7 @@ public class MainMap extends MapActivity implements IDirectionsListener{
 			while (xItSteps.hasNext()) {
 				Step step = xItSteps.next();
 				for (int i = 1; i < step.getPolyline().getPolylines().size(); i++) {
-					RouteOverlay routeOverlay = new RouteOverlay(null, mapView.getContext(), step.getPolyline().getPolylines().get(i-1),step.getPolyline().getPolylines().get(i), Color.BLUE);
+					RouteOverlay routeOverlay = new RouteOverlay(null, mapView.getContext(), step.getPolyline().getPolylines().get(i-1),step.getPolyline().getPolylines().get(i), color);
 					mapView.getOverlays().add(routeOverlay);			
 				}
 			}
