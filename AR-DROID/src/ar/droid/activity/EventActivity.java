@@ -92,7 +92,9 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 	        	
 	        	String text = summary.getDescription()+ "   <a href=\"" + urlServer + "/event/comentarios/" + event.getId() + ">Ver Todos</a>";
 	        	rank.setText(Html.fromHtml(text));
-	         	//comments.getLayoutParams().height = comments.getLayoutParams().height + (40 * summary.getComments().size());
+	        	comments.setSelected(false);
+	        	
+	        	comments.getLayoutParams().height = summary.getComments().size() * 40;
 	        	comments.setAdapter(new ArrayAdapter<String>(this,R.layout.row_list_comment ,R.id.comment,summary.getComments()));
 	        }
 	        else{
