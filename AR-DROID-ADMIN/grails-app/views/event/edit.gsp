@@ -139,12 +139,10 @@
                                 <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'typeEvent', 'errors')}">
                                     <g:select name="typeEvent.id" from="${ar.droid.admin.TypeEvent.list()}" optionKey="id" value="${eventInstance?.typeEvent?.id}"  />
                                 </td>
-                                <td valign="top" class="name">
-                                  <label for="surveyTemplate">Plantilla de Encuesta</label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: eventInstance, field: 'surveyTemplate', 'errors')}">
-                                    <g:select name="surveyTemplate.id" from="${ar.droid.admin.survey.SurveyTemplate.list()}" optionKey="id" value="${eventInstance?.surveyTemplate?.id}" noSelection="['null': '']" />
-                                </td>
+                                <td valign="top" class="name">Plantilla de Encuesta</td>
+                            
+                                <td valign="top" class="value"><g:link controller="surveyTemplate" action="show" id="${eventInstance?.surveyTemplate?.id}">${eventInstance?.surveyTemplate?.encodeAsHTML()}</g:link></td>
+                            
                             </tr>
                         
                            <tr class="prop">                                
