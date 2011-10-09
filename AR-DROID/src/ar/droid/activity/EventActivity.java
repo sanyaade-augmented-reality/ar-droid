@@ -306,10 +306,10 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 			builder.setTitle(textValueQuestion.getQuestion());
 			
 			final EditText input = new EditText(this);
-		    input.setInputType(InputType.TYPE_CLASS_TEXT);
+		    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+		    input.setLines(2);
 		    builder.setView(input);
 
-			
 			builder.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                 	//armar respuesta
