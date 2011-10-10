@@ -265,7 +265,7 @@ public class EventActivity extends Activity  implements android.view.View.OnClic
 			final RatingBar ratingBar = new RatingBar(getApplicationContext());
 			ratingBar.setRating(0f);
 			ratingBar.setMax(numericValueQuestion.getLimitTo());
-			ratingBar.setStepSize(0.5f);
+			ratingBar.setStepSize(1f);
 			
 			/*final EditText input = new EditText(this);
 		    input.setInputType(InputType.TYPE_CLASS_NUMBER);*/
