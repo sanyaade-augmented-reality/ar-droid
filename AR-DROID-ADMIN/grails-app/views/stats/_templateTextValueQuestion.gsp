@@ -6,7 +6,7 @@
 		<tr>
 			<th>Fecha</th>
 			<g:sortableColumn property="comment"
-				title="${message(code: 'response.comment.label', default: 'Comentarios')}" />
+				title="Comentarios" />
 			<th>Acciones</th>
 		</tr>
 	</thead>

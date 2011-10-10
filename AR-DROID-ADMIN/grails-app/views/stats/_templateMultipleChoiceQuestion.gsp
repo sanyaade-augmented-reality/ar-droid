@@ -4,16 +4,25 @@
 		var data = new google.visualization.DataTable();
 		data.addColumn('string', 'Opcion');
         data.addColumn('number', 'Valor');
-		
-        data.addRows(${questions.size()+1});
+        var cant_items = 0;
         
         <g:each in="${question.options}" var="option_c">
         	var opt${option_c.id} = 0;
+        	cant_items++;
         </g:each>
+		
+        data.addRows(cant_items);
         
         <g:each in="${responses}" var="r">
-        	opt${r.first().first().id}++;
-        </g:each>
+        	<g:if test="${r.options == 1}">
+        		opt${r.first().first().id}++;
+        	</g:if>
+        	<g:else>
+        		<g:each in="${r.options}" var="o">
+        			opt${o.id}++;
+        		</g:each>
+        	</g:else>
+        </g:each> 
         
         <g:each in="${question.options}" status="i" var="option_d">
         	data.setValue(${i}, 0, '${option_d.description}');
