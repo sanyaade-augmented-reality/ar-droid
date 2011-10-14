@@ -1,7 +1,6 @@
 package ar.droid.admin
 
 class ActivityController {
-	def activityService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -16,19 +15,18 @@ class ActivityController {
 
     def create = {
         def activityInstance = new Activity()
-		activityInstance.geoPoint = new GeoPoint()
         activityInstance.properties = params
         return [activityInstance: activityInstance]
     }
 
     def save = {
-        def activityInstance = activityService.saveActivity(params)
-        if (activityInstance.hasErrors()) {
-            render(view: "create", model: [activityInstance: activityInstance])
+        def activityInstance = new Activity(params)
+        if (activityInstance.save(flush: true)) {
+            flash.message = "${message(code: 'default.created.message', args: [message(code: 'activity.label', default: 'Actividad'), activityInstance.id])}"
+            redirect(action: "show", id: activityInstance.id)
         }
         else {
-			flash.message = "${message(code: 'default.created.message', args: [message(code: 'activity.label', default: 'Actividad'), entityInstance.id])}"
-            redirect(action: "show", id: activityInstance.id)
+            render(view: "create", model: [activityInstance: activityInstance])
         }
     }
 
@@ -55,14 +53,30 @@ class ActivityController {
     }
 
     def update = {
-		def activityInstance = activityService.updateActivity(params)
-		if(activityInstance.hasErrors()){
-			render(view: "edit", model: [activityService: activityService])
-		}
-		else{
-			flash.message = "${message(code: 'default.updated.message', args: [message(code: 'activity.label', default: 'Actividad'), entityInstance.id])}"
-			redirect(action: "show", id: activityService.id)
-		}
+        def activityInstance = Activity.get(params.id)
+        if (activityInstance) {
+            if (params.version) {
+                def version = params.version.toLong()
+                if (activityInstance.version > version) {
+                    
+                    activityInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'activity.label', default: 'Actividad')] as Object[], "Otro usuario ha actualizado el objeto")
+                    render(view: "edit", model: [activityInstance: activityInstance])
+                    return
+                }
+            }
+            activityInstance.properties = params
+            if (!activityInstance.hasErrors() && activityInstance.save(flush: true)) {
+                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'activity.label', default: 'Actividad'), activityInstance.id])}"
+                redirect(action: "show", id: activityInstance.id)
+            }
+            else {
+                render(view: "edit", model: [activityInstance: activityInstance])
+            }
+        }
+        else {
+            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'activity.label', default: 'Tipo de actividad'), params.id])}"
+            redirect(action: "list")
+        }
     }
 
     def delete = {

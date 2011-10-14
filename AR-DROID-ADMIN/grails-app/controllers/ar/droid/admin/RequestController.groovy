@@ -30,6 +30,11 @@ class RequestController {
 		def entity = Entity.get(params.id)
 		render entity.activeEvents() as JSON 
 	}
+	
+	def activities = {
+		def event = Event.get(params.id)
+		render event.activities as JSON 
+	}
 		
 	def allevents = {
 		//tomar parametro y filtro

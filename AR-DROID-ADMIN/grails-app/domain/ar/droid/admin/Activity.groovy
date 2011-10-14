@@ -4,7 +4,6 @@ class Activity {
 	
 	String name	
 	String description
-	GeoPoint geoPoint	
 	TypeActivity typeActivity
 		
 	static belongsTo = [event: Event]
@@ -15,11 +14,7 @@ class Activity {
 	static constraints = { 
 		name(blank: false)
 		description(blank: false)
-		geoPoint(nullable: true)
 	}
-	
-	/**Esto indicar que el GeoPoint es una composición*/
-	static embedded = ['geoPoint']
 	
 	@Override
 	public String toString() {
