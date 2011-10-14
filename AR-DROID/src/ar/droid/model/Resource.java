@@ -13,14 +13,10 @@ public class Resource {
 	}
 	
 	public List<Entity> entities = null;
-	
 	public List<TypeEvent> typeEvents = null;
-	
 	public List<TypeEntity> typeEntities = null;
-	
+	public List<TypeActivity> typeActivities = null;
 	private HashMap<String, List<Event>> allevents = new HashMap<String, List<Event>>(); 
-	
-	
 	
 	public  List<TypeEvent> getTypeEvents(){
 		if (typeEvents ==null)
@@ -35,6 +31,15 @@ public class Resource {
 		return typeEntities;
 		
 	}
+	
+
+	public  List<TypeActivity> getTypeActivities(){
+		if (typeActivities ==null)
+			typeActivities = ResourceHelperFactory.createResourceHelper().getTypeActivities();
+		return typeActivities;
+		
+	}
+	
 	public  List<Entity> getEntities(){
 		if (entities ==null)
 			entities = 	 ResourceHelperFactory.createResourceHelper().getEntities();
@@ -46,6 +51,10 @@ public class Resource {
 			entity.setEvents(ResourceHelperFactory.createResourceHelper().getEvents(entity));
 		}
 		return entity.getEvents();
+	}
+
+	public  List<Activity> getAtivities(Long idEvent){
+		return ResourceHelperFactory.createResourceHelper().getActivities(idEvent);
 	}
 	
 	public  List<Event> getEvents(String param){

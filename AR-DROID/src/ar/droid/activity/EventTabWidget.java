@@ -43,8 +43,8 @@ public class EventTabWidget extends TabActivity {
 		tabHost.addTab(spec);
 		
 		//se crean de la misma manera los demas tabs
-		intent =  new Intent().setClass(this, ActivityView.class);
-		intent.putExtra("idEvent",getIntent().getExtras().getLong("idEvent"));  
+		intent =  new Intent().setClass(this, ListActivitiesActivity.class);
+		intent.putExtra("idEvent",getIntent().getExtras().getLong("idEvent"));
 		intent.putExtra("idEntity",getIntent().getExtras().getLong("idEntity"));
 		//se crea e incializa el TabSpec y se in se incorpora al tabhost 
 		spec = tabHost.newTabSpec(TAB_ACTIVITY).setIndicator(getResources().getString(R.string.ic_tab_events_act), getResources().getDrawable(R.drawable.ic_tab_event_activity)).setContent(intent);

@@ -66,6 +66,19 @@ public class ResourceHelperJSON extends ResourceHelper {
 		return events;
 	}
 	
+	@Override
+	public List<Activity> getActivities(Long idEvent) {
+		Reader inputStream = loadManySerialized(urlServer + Request.GET_ACTIVITIES + "/" + idEvent);
+		Type listType = new TypeToken<ArrayList<Activity>>() {}.getType();
+		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(TypeActivity.class,new TypeActivity());
+		Gson gson =	gsonBuilder.create();	
+		
+		List<Activity> activities = gson.fromJson(inputStream,listType);
+		return activities;
+	}
+	
 	public void saveResponse(SurveyResponse surveyResponse){			
 		GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
 		gsonBuilder.registerTypeAdapter(Response.class, new ResponseSerializer());
@@ -114,6 +127,17 @@ public class ResourceHelperJSON extends ResourceHelper {
 		Gson gson =	gsonBuilder.create();	
 		List<TypeEntity> typeEntities  = gson.fromJson(inputStream,listType);
 		return typeEntities;
+	}
+
+	@Override
+	public List<TypeActivity> getTypeActivities() {
+		String url = urlServer + Request.GET_ALL_TYPE_ACTIVITIES;
+		Reader inputStream = loadManySerialized(url);
+		Type listType = new TypeToken<ArrayList<TypeEntity>>() {}.getType();
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		Gson gson =	gsonBuilder.create();	
+		List<TypeActivity> typeActivities  = gson.fromJson(inputStream,listType);
+		return typeActivities;
 	}
 
 	@Override
