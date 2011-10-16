@@ -72,7 +72,6 @@ public class ResourceHelperJSON extends ResourceHelper {
 		Type listType = new TypeToken<ArrayList<Activity>>() {}.getType();
 		
 		GsonBuilder gsonBuilder = new GsonBuilder();
-		gsonBuilder.registerTypeAdapter(TypeActivity.class,new TypeActivity());
 		Gson gson =	gsonBuilder.create();	
 		
 		List<Activity> activities = gson.fromJson(inputStream,listType);

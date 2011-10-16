@@ -2,10 +2,11 @@ package ar.droid.activity;
 
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,10 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import ar.droid.R;
 import ar.droid.admin.reader.view.ActivityAdapter;
-import ar.droid.admin.reader.view.EventAdapter;
 import ar.droid.model.Activity;
-import ar.droid.model.Entity;
-import ar.droid.model.Event;
 import ar.droid.model.Resource;
 import ar.droid.sound.SoundManager;
 
@@ -61,9 +59,19 @@ public class ListActivitiesActivity extends ListActivity implements
 	public void onItemClick(AdapterView<?> adapter, View v, int posistion,
 			long id) {
 		Activity activity = activities.get(posistion);
-		if(activity.getId() == null)
-			return;
-		
+		if(activity.getId() != null){
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(activity.getName());
+	    	builder.setMessage(activity.getDescription())
+	    	       .setCancelable(false)
+	    	       .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+	    	           public void onClick(DialogInterface dialog, int id) {
+	    	             
+	    	           }
+	    	       });
+	    	AlertDialog alert = builder.create();  
+	    	alert.show();
+		}
 		// TODO Mostrar la descripción en un Dialog
 	}
 
