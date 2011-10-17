@@ -1,6 +1,4 @@
-import java.sql.Date;
 
-import org.codehaus.groovy.grails.commons.spring.GrailsApplicationContext;
 
 import ar.droid.admin.reader.*
 import ar.droid.admin.calendar.*
@@ -120,13 +118,25 @@ class BootStrap {
 		grails.converters.JSON.registerObjectMarshaller(Choice) {
 			def returnArray = [:]
 			returnArray['class'] = it.class
-			returnArray['id'] = it.id
+			returnArray['id'] = it.id				
 			returnArray['description'] = it.description
 			return returnArray
 		}
+		
 		grails.converters.JSON.registerObjectMarshaller(java.util.Date) {
 			return  it?.format("yyyy-MM-dd'T'HH:mm:ss'Z'")
 		
+		}
+		
+		grails.converters.JSON.registerObjectMarshaller(Activity) {
+			def returnArray = [:]
+			returnArray['class'] = it.class
+			returnArray['id'] = it.id
+			returnArray['description'] = it.description
+			returnArray['typeActivity'] = it.typeActivity		
+			returnArray['name'] = it.name
+			returnArray['idEvent'] = it.event.id
+			return returnArray
 		}
 		
 		
