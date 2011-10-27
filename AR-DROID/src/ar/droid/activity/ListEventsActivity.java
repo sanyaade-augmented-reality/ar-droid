@@ -15,6 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import ar.droid.R;
 import ar.droid.admin.reader.view.EventAdapter;
+import ar.droid.model.Activity;
 import ar.droid.model.Entity;
 import ar.droid.model.Event;
 import ar.droid.model.Resource;
@@ -38,6 +39,12 @@ public class ListEventsActivity extends ListActivity implements OnItemClickListe
         //se recupera eventos de la entidad
         events = Resource.getInstance().getEvents(entity);
 		
+     	if(events.size() == 0){
+     		Event evt = new Event();
+     		evt.setTitle("Sin eventos");
+     		events.add(evt);
+     	}
+        
         //se crea el modelo para la actidad listactivity
 	    adapter= new EventAdapter(getApplicationContext(),R.layout.list_item_events,events);
 	        
@@ -53,13 +60,14 @@ public class ListEventsActivity extends ListActivity implements OnItemClickListe
 		// TODO Auto-generated method stub
 		Log.i("list", posistion + " " + id);	
 		Event event = events.get(posistion);
-		Bundle bundle = new Bundle();
-		bundle.putLong("idEvent", event.getId());
-		bundle.putLong("idEntity", entity.getId());
-		Intent i = new Intent(getApplicationContext(), EventTabWidget.class);
-        i.putExtras(bundle);
-	    startActivity(i);
-	    //finishFromChild(this);	
+		if(event.getId() != null){
+			Bundle bundle = new Bundle();
+			bundle.putLong("idEvent", event.getId());
+			bundle.putLong("idEntity", entity.getId());
+			Intent i = new Intent(getApplicationContext(), EventTabWidget.class);
+	        i.putExtras(bundle);
+		    startActivity(i);
+		}
 	}
 	
 	@Override

@@ -35,8 +35,12 @@ public class EventAdapter extends ArrayAdapter<Event> {
                     tt.setText(e.getTitle());
                }
                 if(bt != null){
-                      bt.setText(e.getTypeEvent().getDescription());
-                      bt.setTextColor(Color.parseColor("#" + e.getTypeEvent().getColor()));
+                	if(e.getTypeEvent() == null)
+    					bt.setText("La entidad no define eventos próximos");
+    				else {
+    					bt.setText(e.getTypeEvent().getDescription());
+    					bt.setTextColor(Color.parseColor("#" + e.getTypeEvent().getColor()));
+    				}
                 }
         }
         return v;
