@@ -8,10 +8,10 @@ public class WorkingDaily extends EventCalendar {
 
 	@Override
 	public String getLinea1() {
-		String linea = "De " + this.getStartDate().getHours() + ":"
-				+ this.getStartDate().getMinutes() + " a "
-				+ this.getEndDate().getHours() + ":"
-				+ this.getEndDate().getMinutes();
+		String linea = "De " + this.formatNumber(this.getStartDate().getHours()) + ":"
+				+ this.formatNumber(this.getStartDate().getMinutes()) + " a "
+				+ this.formatNumber(this.getEndDate().getHours()) + ":"
+				+ this.formatNumber(this.getEndDate().getMinutes());
 		return linea;
 	}
 

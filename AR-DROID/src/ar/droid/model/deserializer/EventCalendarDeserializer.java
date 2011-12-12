@@ -41,11 +41,10 @@ public class EventCalendarDeserializer implements JsonDeserializer<EventCalendar
 			e.printStackTrace();
 		}
 		
-		SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",Locale.ENGLISH);
+		SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 		
-		String initDate= json.getAsJsonObject().get("startDate").getAsString();
-		String endDate= json.getAsJsonObject().get("endDate").getAsString();
-		
+		String initDate = json.getAsJsonObject().get("startDate").getAsString();
+		String endDate = json.getAsJsonObject().get("endDate").getAsString();
 		
 		try {
 			eventCalendar.setStartDate(simpleDateFormat.parse(initDate));

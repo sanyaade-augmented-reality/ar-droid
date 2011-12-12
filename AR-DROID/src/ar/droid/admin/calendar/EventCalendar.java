@@ -28,4 +28,10 @@ public abstract class EventCalendar {
 	public abstract String getLinea1();
 	
 	public abstract String getLinea2();
+	
+	protected String formatNumber(Integer number){
+		if(number > 9)
+			return number.toString();
+		return "0" + number.toString();
+	}
 }
