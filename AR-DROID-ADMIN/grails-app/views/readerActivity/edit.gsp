@@ -43,7 +43,7 @@
                                   <label for="url"><g:message code="readerActivity.url.label" default="Url" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: readerActivityInstance, field: 'url', 'errors')}">
-                                    <g:textField name="url" value="${readerActivityInstance?.url}" disabled />
+                                    <g:textField name="url" value="${readerActivityInstance?.url}" disabled="true" />
                                 </td>
                             </tr>
                         

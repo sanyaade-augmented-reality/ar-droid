@@ -5,8 +5,7 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'entity.label', default: 'Entity')}" />
         <title>Entidades</title>
-        
-        <g:javascript src="js?sensor=false" base="http://maps.google.com/maps/api/" />
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<g:javascript src="maps.js" />
 		<g:javascript src="viewparams.js" />
 		<g:javascript library="prototype" />

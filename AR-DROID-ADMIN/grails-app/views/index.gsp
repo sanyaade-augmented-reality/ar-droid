@@ -130,6 +130,9 @@
                 </ul>
             </div>
              -->
+             <br />
+             <br />
+             <a href="client/AR-DROID.apk" style="font-size: 20px; font-weight: bold; text-align: right;">DESCARGAR APLICACIÓN CLIENTE</a>
         </div>
     </body>
 </html>

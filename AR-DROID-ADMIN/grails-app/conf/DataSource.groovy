@@ -2,9 +2,9 @@ dataSource {
 	pooled = true
 	driverClassName ="com.mysql.jdbc.Driver"
 	username = "root"
-	password = "marisa"
+	password = "vicky"
 	dbCreate = "update"
-	url = "jdbc:mysql://localhost:3306/TestGrails"
+	url = "jdbc:mysql://localhost:3306/ardroid"
 }
 
 
