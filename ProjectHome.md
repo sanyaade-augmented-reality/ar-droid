@@ -1,0 +1,3 @@
+<p><b>ar-droid</b> tries to be a prototype mobile application for the geolocation of resources. Users may provide geo data while traveling on university educational environment, where sources of information and physical entities are often scattered throughout the cities.</p>
+<p>The application will provide information about different activities offered by different university departments, such as workshops, courses, conferences, etc.<br />
+The apliacación consume this information in real time using tracking devices (such as GPS and compass).</p>
